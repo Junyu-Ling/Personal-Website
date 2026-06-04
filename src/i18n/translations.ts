@@ -39,6 +39,7 @@ const en = {
     scrollAbout: "Scroll to about section",
   },
   hero: {
+    name: "Junyu Ling",
     collaborate: "Open to collaborate",
     location: "Shanghai · Age 17",
     role: "Student · Developer · Musician",
@@ -298,6 +299,7 @@ const en = {
     contact: "Contact with Me",
     emailAria: "Email",
     rights: "All rights reserved.",
+    copyrightName: "Junyu Ling",
   },
 };
 
@@ -313,6 +315,7 @@ const zh: typeof en = {
     scrollAbout: "滚动到关于部分",
   },
   hero: {
+    name: "灵俊宇",
     collaborate: "欢迎合作",
     location: "上海 · 17 岁",
     role: "学生 · 开发者 · 音乐人",
@@ -343,7 +346,7 @@ const zh: typeof en = {
   },
   about: {
     title: "关于我",
-    p1: "我是凌俊宇，来自上海的 17 岁高中生，热爱 Web 开发与计算机科学，喜欢探索新技术，把创意变成可用的项目。",
+    p1: "我是灵俊宇，来自上海的 17 岁高中生，热爱 Web 开发与计算机科学，喜欢探索新技术，把创意变成可用的项目。",
     p2: "除编程外，我热爱音乐。4 岁半开始学习钢琴，已取得英皇钢琴七级，目前也在学习单簧管。课余时常为小朋友钢琴伴奏，在合作演奏中获得快乐与灵感。",
     p3: "我也积极参与校内活动，多次担任升旗仪式、运动会、元旦歌舞晚会等活动主持，并与搭档一起撰写、打磨主持稿；还参加「天籁之音」等才艺比赛与学校晚会，分享对艺术的热爱。",
     email: "邮箱",
@@ -353,7 +356,7 @@ const zh: typeof en = {
     statusValue: "学生 · 自学开发者",
     music: "音乐",
     musicValue: "英皇钢琴七级 · 学习中：单簧管",
-    profileAlt: "凌俊宇",
+    profileAlt: "灵俊宇",
   },
   journey: {
     badge: "技能演进",
@@ -550,6 +553,7 @@ const zh: typeof en = {
     contact: "联系我",
     emailAria: "发送邮件",
     rights: "版权所有。",
+    copyrightName: "灵俊宇",
   },
 };
 

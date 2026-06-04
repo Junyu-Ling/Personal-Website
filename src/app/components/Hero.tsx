@@ -59,7 +59,7 @@ export function Hero() {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const nameChars = "Junyu Ling".split("");
+  const nameChars = t.hero.name.split("");
   const statLabels = [t.hero.stats.awards, t.hero.stats.projects, t.hero.stats.age];
   const navLabels = [
     t.nav.about,

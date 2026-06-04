@@ -50,7 +50,7 @@ export function Footer() {
           transition={transition({ duration: 0.6, delay: 0.4 })}
         >
           <p>
-            © {currentYear} Junyu Ling. {t.footer.rights}
+            © {currentYear} {t.footer.copyrightName}. {t.footer.rights}
           </p>
         </motion.div>
       </div>
