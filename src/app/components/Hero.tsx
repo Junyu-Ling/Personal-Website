@@ -12,7 +12,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 
 const highlightIcons = [Sparkles, Code2, Music2];
 
-const statValues = ["9+", "8+", "17"];
+const statValues = ["9+", "9+", "17"];
 
 const quickLinkHrefs = [
   "#about",

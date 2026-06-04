@@ -294,6 +294,12 @@ const en = {
           "A fast-paced endless runner inspired by the Chrome dinosaur game with fun power-ups",
         tags: ["Game Dev", "JavaScript", "Canvas"],
       },
+      {
+        title: "Echo Chamber",
+        description:
+          "A showcase website for our school band with member profiles and an interactive song request system",
+        tags: ["React", "Web App", "Music"],
+      },
     ] as ProjectItem[],
   },
   footer: {
@@ -548,6 +554,12 @@ const zh: typeof en = {
         description:
           "快节奏无尽跑酷，灵感来自 Chrome 小恐龙，含加速、护盾等道具。",
         tags: ["游戏开发", "JavaScript", "Canvas"],
+      },
+      {
+        title: "Echo Chamber",
+        description:
+          "为学校乐队打造的展示网站，包含成员介绍与点歌系统。",
+        tags: ["React", "Web 应用", "音乐"],
       },
     ],
   },

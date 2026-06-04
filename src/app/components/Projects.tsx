@@ -12,6 +12,7 @@ const projectLinks = [
   "https://api-check.figma.site",
   "https://gpa-calculator.figma.site/",
   "https://pony.figma.site",
+  "https://echo-chamber-delta.vercel.app/",
 ];
 
 const projectStyles = [
@@ -61,6 +62,12 @@ const projectStyles = [
     color: "from-violet-500 to-fuchsia-600",
     bg: "bg-violet-50",
     text: "text-violet-600",
+    featured: false,
+  },
+  {
+    color: "from-amber-500 to-orange-600",
+    bg: "bg-amber-50",
+    text: "text-amber-600",
     featured: false,
   },
 ];
