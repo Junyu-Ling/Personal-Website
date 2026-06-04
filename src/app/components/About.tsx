@@ -39,33 +39,15 @@ export function About() {
             </motion.div>
 
             <motion.div
-              className="md:col-span-2 space-y-6 md:-mt-4"
+              className="md:col-span-2 flex flex-col gap-6 md:-mt-4"
               initial={{ opacity: 0, x: 50 }}
               animate={isVisible ? { opacity: 1, x: 0 } : {}}
               transition={transition({ duration: 0.8, delay: 0.4 })}
             >
-              <motion.div
-                className="flex justify-center mb-4"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isVisible ? { opacity: 1, scale: 1 } : {}}
-                transition={transition({ duration: 0.8, delay: 0.5 })}
-              >
-                <div className="relative">
-                  <motion.img
-                    src={profileImage}
-                    alt={t.about.profileAlt}
-                    className="w-48 h-48 rounded-full object-cover border-4 border-gray-200 shadow-lg"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.div
-                    className="absolute inset-0 rounded-full border-4 border-gray-900"
-                    initial={{ scale: 1, opacity: 0 }}
-                    whileHover={{ scale: 1.1, opacity: 0.2 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </motion.div>
+              <div className="space-y-6 order-2 md:order-1">
+                <h3 className="text-2xl font-semibold text-center md:text-left hidden md:block">
+                  {t.hero.name}
+                </h3>
 
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-gray-100 rounded-lg">
@@ -106,6 +88,30 @@ export function About() {
                   <p className="text-gray-600">{t.about.musicValue}</p>
                 </div>
               </div>
+              </div>
+
+              <motion.div
+                className="flex justify-center order-1 md:order-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+                transition={transition({ duration: 0.8, delay: 0.5 })}
+              >
+                <div className="relative">
+                  <motion.img
+                    src={profileImage}
+                    alt={t.about.profileAlt}
+                    className="w-48 h-48 rounded-full object-cover border-4 border-gray-200 shadow-lg"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-4 border-gray-900"
+                    initial={{ scale: 1, opacity: 0 }}
+                    whileHover={{ scale: 1.1, opacity: 0.2 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </motion.div>
