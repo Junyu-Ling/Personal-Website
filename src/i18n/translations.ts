@@ -234,7 +234,7 @@ const en = {
     ] as AwardTranslation[],
     dukeCerts: [
       "Duke Math Meet China 2025 Certificate of Participation",
-      "Duke Math Meet China Best Visual Design award announcement",
+      "Duke Math Meet China — Best Visual Design (Poster Design Award)",
       "Fourier: Math & Music — presentation poster at Duke Math Meet China",
     ],
   },
@@ -495,7 +495,7 @@ const zh: typeof en = {
     ],
     dukeCerts: [
       "Duke Math Meet China 2025 参与证书",
-      "Duke Math Meet China 最佳视觉设计获奖公示",
+      "Duke Math Meet China — 海报设计最佳奖 (Best Visual Design)",
       "Fourier: Math & Music — 答辩海报现场",
     ],
   },
