@@ -19,6 +19,7 @@ import himcmHonorableMentionCertificate from "@/assets/himcm-honorable-mention-c
 import amc12Certificate from "@/assets/amc12-certificate.png";
 import dukeParticipationCertificate from "@/assets/duke-participation-certificate.png";
 import dukeBestVisualDesign from "@/assets/duke-best-visual-design.png";
+import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.png";
 import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -54,6 +55,7 @@ const awardMeta = [
     certificates: [
       { src: dukeParticipationCertificate },
       { src: dukeBestVisualDesign },
+      { src: dukeBestVisualDesignSchools },
       { src: dukeFourierPoster },
     ],
   },
