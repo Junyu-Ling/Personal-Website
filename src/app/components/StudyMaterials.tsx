@@ -314,247 +314,246 @@ export function StudyMaterials() {
         </motion.div>
 
         <motion.div
-          className="rounded-2xl border border-gray-300 shadow-xl overflow-hidden bg-[#f0f0f0]"
+          className="rounded-xl border border-gray-200/80 shadow-lg overflow-hidden bg-white"
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.15 })}
         >
-          <div className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-gray-100 to-gray-50 border-b border-gray-300">
-            <div className="flex gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-red-400" />
-              <span className="w-3 h-3 rounded-full bg-amber-400" />
-              <span className="w-3 h-3 rounded-full bg-emerald-400" />
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-[#ececec] border-b border-gray-300/80">
+            <div className="flex gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+              <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+              <span className="w-3 h-3 rounded-full bg-[#28c840]" />
             </div>
-            <span className="text-sm font-medium text-gray-600 ml-2">
+            <span className="flex-1 text-center text-sm font-medium text-gray-600 pr-14">
               {t.studyMaterials.windowTitle}
             </span>
           </div>
 
-          <div className="min-h-[560px] flex flex-col bg-white">
+          <div className="min-h-[520px] flex flex-col bg-white">
             <motion.div
               key={currentFolderId ?? "root"}
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
               className="flex-1 flex flex-col min-w-0"
             >
-                  <div className="flex items-center gap-1 px-3 py-2 border-b border-gray-200 bg-gray-50">
-                    <button
-                      type="button"
-                      onClick={goBack}
-                      disabled={historyIndex <= 0}
-                      className="p-1.5 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"
-                      title={t.studyMaterials.back}
-                    >
-                      <ChevronLeft size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={goForward}
-                      disabled={historyIndex >= navHistory.length - 1}
-                      className="p-1.5 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"
-                      title={t.studyMaterials.forward}
-                    >
-                      <ChevronRight size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={goUp}
-                      disabled={currentFolderId === null}
-                      className="p-1.5 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"
-                      title={t.studyMaterials.up}
-                    >
-                      <ArrowUp size={18} />
-                    </button>
+              <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-gray-200 bg-[#fafafa]">
+                <button
+                  type="button"
+                  onClick={goBack}
+                  disabled={historyIndex <= 0}
+                  className="p-1.5 rounded-md text-gray-600 hover:bg-gray-200/70 disabled:opacity-25 transition-colors"
+                  title={t.studyMaterials.back}
+                >
+                  <ChevronLeft size={17} />
+                </button>
+                <button
+                  type="button"
+                  onClick={goForward}
+                  disabled={historyIndex >= navHistory.length - 1}
+                  className="p-1.5 rounded-md text-gray-600 hover:bg-gray-200/70 disabled:opacity-25 transition-colors"
+                  title={t.studyMaterials.forward}
+                >
+                  <ChevronRight size={17} />
+                </button>
+                <button
+                  type="button"
+                  onClick={goUp}
+                  disabled={currentFolderId === null}
+                  className="p-1.5 rounded-md text-gray-600 hover:bg-gray-200/70 disabled:opacity-25 transition-colors"
+                  title={t.studyMaterials.up}
+                >
+                  <ArrowUp size={17} />
+                </button>
 
-                    <div className="flex-1 flex items-center gap-1 mx-2 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm min-w-0 overflow-x-auto">
-                      <FolderOpen size={14} className="text-amber-600 shrink-0" />
+                <div className="flex-1 flex items-center gap-1.5 mx-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm min-w-0 overflow-x-auto shadow-sm">
+                  <FolderOpen size={15} className="text-amber-500 shrink-0" />
+                  <button
+                    type="button"
+                    onClick={() => navigateTo(null)}
+                    className={`shrink-0 text-gray-800 ${
+                      currentFolderId === null ? "font-medium" : "hover:underline"
+                    }`}
+                  >
+                    {t.studyMaterials.apRoot}
+                  </button>
+                  {breadcrumbTrail.map((folder) => (
+                    <span key={folder.id} className="flex items-center gap-1 shrink-0">
+                      <ChevronRight size={12} className="text-gray-400" />
                       <button
                         type="button"
-                        onClick={() => navigateTo(null)}
-                        className="shrink-0 hover:underline text-gray-700"
+                        onClick={() => navigateTo(folder.id)}
+                        className={`text-gray-800 ${
+                          folder.id === currentFolderId
+                            ? "font-medium"
+                            : "hover:underline"
+                        }`}
                       >
-                        {t.studyMaterials.apRoot}
+                        {folderName(folder)}
                       </button>
-                      {breadcrumbTrail.map((folder) => (
-                        <span key={folder.id} className="flex items-center gap-1 shrink-0">
-                          <ChevronRight size={12} className="text-gray-400" />
-                          <button
-                            type="button"
-                            onClick={() => navigateTo(folder.id)}
-                            className="hover:underline text-gray-700"
-                          >
-                            {folderName(folder)}
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="relative w-44 shrink-0 hidden sm:block">
-                      <Search
-                        size={14}
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
-                      />
-                      <input
-                        type="search"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder={t.studyMaterials.searchFiles}
-                        className="w-full pl-8 pr-2 py-1.5 text-sm border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-400"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="px-3 py-2 border-b border-gray-100 text-sm text-gray-600 flex items-center gap-2">
-                    <span className="font-medium text-gray-800">{currentLocationLabel}</span>
-                    <span className="text-gray-400">·</span>
-                    <span>
-                      {explorerItems.length} {t.studyMaterials.items}
                     </span>
-                  </div>
+                  ))}
+                </div>
 
-                  <div className="flex-1 overflow-auto">
-                    <table className="w-full text-sm">
-                      <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 text-left text-xs text-gray-500 uppercase tracking-wide">
-                        <tr>
-                          <th className="px-4 py-2 font-medium">{t.studyMaterials.name}</th>
-                          <th className="px-4 py-2 font-medium hidden sm:table-cell">
-                            {t.studyMaterials.type}
-                          </th>
-                          <th className="px-4 py-2 font-medium hidden md:table-cell">
-                            {t.studyMaterials.size}
-                          </th>
-                          <th className="px-4 py-2 font-medium text-right">
-                            {t.studyMaterials.actions}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {explorerItems.length === 0 ? (
-                          <tr>
-                            <td colSpan={4} className="px-4 py-16 text-center text-gray-500">
-                              {t.studyMaterials.noResults}
+                <div className="relative w-40 shrink-0 hidden sm:block">
+                  <Search
+                    size={14}
+                    className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
+                  />
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={t.studyMaterials.searchFiles}
+                    className="w-full pl-8 pr-2 py-1.5 text-sm border border-gray-200 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
+                  />
+                </div>
+              </div>
+
+              <div className="px-4 py-2 border-b border-gray-100 text-sm text-gray-500">
+                <span className="font-medium text-gray-700">{currentLocationLabel}</span>
+                <span className="mx-1.5">·</span>
+                <span>
+                  {explorerItems.length} {t.studyMaterials.items}
+                </span>
+              </div>
+
+              <div className="flex-1 overflow-auto min-h-[320px]">
+                <table className="w-full text-sm">
+                  <thead className="sticky top-0 z-10 bg-white border-b border-gray-200 text-left text-[11px] text-gray-400 uppercase tracking-wider">
+                    <tr>
+                      <th className="px-4 py-2.5 font-medium">{t.studyMaterials.name}</th>
+                      <th className="px-4 py-2.5 font-medium hidden sm:table-cell">
+                        {t.studyMaterials.type}
+                      </th>
+                      <th className="px-4 py-2.5 font-medium hidden md:table-cell">
+                        {t.studyMaterials.size}
+                      </th>
+                      <th className="px-4 py-2.5 font-medium text-right pr-5">
+                        {t.studyMaterials.actions}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {explorerItems.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-20 text-center text-gray-400">
+                          {t.studyMaterials.noResults}
+                        </td>
+                      </tr>
+                    ) : (
+                      explorerItems.map((item) => {
+                        const rowId =
+                          item.kind === "folder" ? item.folder.id : item.file.id;
+                        const isSelected = selectedId === rowId;
+                        const rowClass = `border-b border-gray-100 cursor-pointer select-none transition-colors ${
+                          isSelected ? "bg-blue-50/80" : "hover:bg-gray-50/80"
+                        }`;
+
+                        if (item.kind === "folder") {
+                          return (
+                            <tr
+                              key={rowId}
+                              onClick={() => setSelectedId(rowId)}
+                              onDoubleClick={() => handleItemOpen(item)}
+                              className={rowClass}
+                            >
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <Folder
+                                    size={20}
+                                    className="text-amber-400 fill-amber-100 shrink-0"
+                                  />
+                                  <span className="truncate font-medium text-gray-900">
+                                    {folderName(item.folder)}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="px-4 py-3 text-gray-500 hidden sm:table-cell">
+                                {t.studyMaterials.fileFolder}
+                              </td>
+                              <td className="px-4 py-3 text-gray-500 hidden md:table-cell">
+                                {getFolderItemCount(item.folder)} {t.studyMaterials.files}
+                              </td>
+                              <td className="px-4 py-3 text-right pr-4">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleItemOpen(item);
+                                  }}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                >
+                                  <FolderOpen size={13} />
+                                  {t.studyMaterials.open}
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        }
+
+                        const url = getStudyFileUrl(
+                          item.storagePath,
+                          item.file.filename
+                        );
+
+                        return (
+                          <tr
+                            key={rowId}
+                            onClick={() => setSelectedId(rowId)}
+                            onDoubleClick={() => openPreview(item.file, item.storagePath)}
+                            className={rowClass}
+                          >
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-3 min-w-0">
+                                <FileIcon type={item.file.type} size={20} />
+                                <span className="truncate text-gray-900">
+                                  {fileName(item.file)}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 text-gray-500 uppercase hidden sm:table-cell">
+                              {item.file.type}
+                            </td>
+                            <td className="px-4 py-3 text-gray-500 hidden md:table-cell">
+                              {formatFileSize(item.file.size)}
+                            </td>
+                            <td className="px-4 py-3 text-right pr-4">
+                              <div className="flex items-center justify-end gap-2">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openPreview(item.file, item.storagePath);
+                                  }}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                >
+                                  <Eye size={13} />
+                                  {t.studyMaterials.preview}
+                                </button>
+                                <a
+                                  href={url}
+                                  download
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                >
+                                  <Download size={13} />
+                                  {t.studyMaterials.download}
+                                </a>
+                              </div>
                             </td>
                           </tr>
-                        ) : (
-                          explorerItems.map((item, index) => {
-                            const rowId =
-                              item.kind === "folder" ? item.folder.id : item.file.id;
-                            const isSelected = selectedId === rowId;
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-                            if (item.kind === "folder") {
-                              return (
-                                <motion.tr
-                                  key={rowId}
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  transition={{ duration: 0.15, delay: index * 0.02 }}
-                                  onClick={() => setSelectedId(rowId)}
-                                  onDoubleClick={() => handleItemOpen(item)}
-                                  className={`border-b border-gray-100 cursor-pointer select-none ${
-                                    isSelected ? "bg-blue-50" : "hover:bg-gray-50"
-                                  }`}
-                                >
-                                  <td className="px-4 py-2.5">
-                                    <div className="flex items-center gap-2.5 min-w-0">
-                                      <Folder
-                                        size={18}
-                                        className="text-amber-500 fill-amber-100 shrink-0"
-                                      />
-                                      <span className="truncate font-medium text-gray-900">
-                                        {folderName(item.folder)}
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td className="px-4 py-2.5 text-gray-500 hidden sm:table-cell">
-                                    {t.studyMaterials.fileFolder}
-                                  </td>
-                                  <td className="px-4 py-2.5 text-gray-500 hidden md:table-cell">
-                                    {getFolderItemCount(item.folder)} {t.studyMaterials.files}
-                                  </td>
-                                  <td className="px-4 py-2.5 text-right">
-                                    <button
-                                      type="button"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleItemOpen(item);
-                                      }}
-                                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
-                                    >
-                                      <FolderOpen size={13} />
-                                      {t.studyMaterials.open}
-                                    </button>
-                                  </td>
-                                </motion.tr>
-                              );
-                            }
-
-                            const url = getStudyFileUrl(
-                              item.storagePath,
-                              item.file.filename
-                            );
-
-                            return (
-                              <motion.tr
-                                key={rowId}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.15, delay: index * 0.02 }}
-                                onClick={() => setSelectedId(rowId)}
-                                onDoubleClick={() => openPreview(item.file, item.storagePath)}
-                                className={`border-b border-gray-100 cursor-pointer select-none ${
-                                  isSelected ? "bg-blue-50" : "hover:bg-gray-50"
-                                }`}
-                              >
-                                <td className="px-4 py-2.5">
-                                  <div className="flex items-center gap-2.5 min-w-0">
-                                    <FileIcon type={item.file.type} size={18} />
-                                    <span className="truncate text-gray-900">
-                                      {fileName(item.file)}
-                                    </span>
-                                  </div>
-                                </td>
-                                <td className="px-4 py-2.5 text-gray-500 uppercase hidden sm:table-cell">
-                                  {item.file.type}
-                                </td>
-                                <td className="px-4 py-2.5 text-gray-500 hidden md:table-cell">
-                                  {formatFileSize(item.file.size)}
-                                </td>
-                                <td className="px-4 py-2.5">
-                                  <div className="flex items-center justify-end gap-1.5">
-                                    <button
-                                      type="button"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        openPreview(item.file, item.storagePath);
-                                      }}
-                                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-                                    >
-                                      <Eye size={13} />
-                                      {t.studyMaterials.preview}
-                                    </button>
-                                    <a
-                                      href={url}
-                                      download
-                                      onClick={(e) => e.stopPropagation()}
-                                      className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors"
-                                    >
-                                      <Download size={13} />
-                                      {t.studyMaterials.download}
-                                    </a>
-                                  </div>
-                                </td>
-                              </motion.tr>
-                            );
-                          })
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="px-4 py-2 border-t border-gray-200 bg-gray-50 text-xs text-gray-500">
-                    {t.studyMaterials.hint}
-                  </div>
+              <div className="px-4 py-2.5 border-t border-gray-200 bg-[#fafafa] text-xs text-gray-400">
+                {t.studyMaterials.hint}
+              </div>
             </motion.div>
           </div>
         </motion.div>
