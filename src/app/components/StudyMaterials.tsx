@@ -13,7 +13,6 @@ import {
   Eye,
   X,
   ChevronLeft,
-  HardDrive,
   Loader2,
 } from "lucide-react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
@@ -173,45 +172,11 @@ function PreviewModal({
   );
 }
 
-function DriveLanding({
-  label,
-  hint,
-  onOpen,
-}: {
-  label: string;
-  hint: string;
-  onOpen: () => void;
-}) {
-  return (
-    <div className="flex-1 flex items-center justify-center bg-white min-h-[480px] p-8">
-      <button
-        type="button"
-        onDoubleClick={onOpen}
-        onClick={onOpen}
-        className="group flex flex-col items-center gap-4 p-10 rounded-2xl hover:bg-blue-50/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-      >
-        <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-100 to-slate-200 shadow-inner group-hover:from-blue-50 group-hover:to-blue-100 transition-colors">
-          <HardDrive
-            size={72}
-            className="text-slate-500 group-hover:text-blue-600 transition-colors"
-            strokeWidth={1.25}
-          />
-        </div>
-        <div className="text-center">
-          <p className="text-lg font-semibold text-gray-900">{label}</p>
-          <p className="text-sm text-gray-500 mt-1">{hint}</p>
-        </div>
-      </button>
-    </div>
-  );
-}
-
 export function StudyMaterials() {
   const { t, locale } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
-  const [isDriveView, setIsDriveView] = useState(true);
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -274,15 +239,6 @@ export function StudyMaterials() {
     return [];
   }, [currentFolder, filteredRootFolders, normalizedQuery, locale]);
 
-  const openDrive = () => {
-    setIsDriveView(false);
-    setCurrentFolderId(null);
-    setSearchQuery("");
-    setSelectedId(null);
-    setNavHistory([null]);
-    setHistoryIndex(0);
-  };
-
   const navigateTo = (folderId: string | null, pushHistory = true) => {
     setCurrentFolderId(folderId);
     setSelectedId(null);
@@ -294,21 +250,8 @@ export function StudyMaterials() {
     }
   };
 
-  const returnToDrive = () => {
-    setIsDriveView(true);
-    setCurrentFolderId(null);
-    setSearchQuery("");
-    setSelectedId(null);
-    setNavHistory([null]);
-    setHistoryIndex(0);
-  };
-
   const goBack = () => {
-    if (isDriveView) return;
-    if (historyIndex <= 0) {
-      returnToDrive();
-      return;
-    }
+    if (historyIndex <= 0) return;
     const nextIndex = historyIndex - 1;
     setHistoryIndex(nextIndex);
     setCurrentFolderId(navHistory[nextIndex]);
@@ -316,7 +259,7 @@ export function StudyMaterials() {
   };
 
   const goForward = () => {
-    if (isDriveView || historyIndex >= navHistory.length - 1) return;
+    if (historyIndex >= navHistory.length - 1) return;
     const nextIndex = historyIndex + 1;
     setHistoryIndex(nextIndex);
     setCurrentFolderId(navHistory[nextIndex]);
@@ -324,13 +267,9 @@ export function StudyMaterials() {
   };
 
   const goUp = () => {
-    if (isDriveView) return;
-    if (currentFolderId !== null) {
-      const parentId = findParentFolderId(currentFolderId);
-      navigateTo(parentId ?? null);
-      return;
-    }
-    returnToDrive();
+    if (currentFolderId === null) return;
+    const parentId = findParentFolderId(currentFolderId);
+    navigateTo(parentId ?? null);
   };
 
   const openPreview = (file: StudyFile, storagePath: string) => {
@@ -392,36 +331,19 @@ export function StudyMaterials() {
           </div>
 
           <div className="min-h-[560px] flex flex-col bg-white">
-            <AnimatePresence mode="wait">
-              {isDriveView ? (
-                <motion.div
-                  key="drive-view"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col"
-                >
-                  <DriveLanding
-                    label={t.studyMaterials.apRoot}
-                    hint={t.studyMaterials.openDriveHint}
-                    onOpen={openDrive}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={currentFolderId ?? "root"}
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col min-w-0"
-                >
+            <motion.div
+              key={currentFolderId ?? "root"}
+              initial={{ opacity: 0, x: 8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 flex flex-col min-w-0"
+            >
                   <div className="flex items-center gap-1 px-3 py-2 border-b border-gray-200 bg-gray-50">
                     <button
                       type="button"
                       onClick={goBack}
-                      className="p-1.5 rounded hover:bg-gray-200 transition-colors"
+                      disabled={historyIndex <= 0}
+                      className="p-1.5 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"
                       title={t.studyMaterials.back}
                     >
                       <ChevronLeft size={18} />
@@ -438,14 +360,15 @@ export function StudyMaterials() {
                     <button
                       type="button"
                       onClick={goUp}
-                      className="p-1.5 rounded hover:bg-gray-200 transition-colors"
+                      disabled={currentFolderId === null}
+                      className="p-1.5 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"
                       title={t.studyMaterials.up}
                     >
                       <ArrowUp size={18} />
                     </button>
 
                     <div className="flex-1 flex items-center gap-1 mx-2 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm min-w-0 overflow-x-auto">
-                      <HardDrive size={14} className="text-slate-500 shrink-0" />
+                      <FolderOpen size={14} className="text-amber-600 shrink-0" />
                       <button
                         type="button"
                         onClick={() => navigateTo(null)}
@@ -632,9 +555,7 @@ export function StudyMaterials() {
                   <div className="px-4 py-2 border-t border-gray-200 bg-gray-50 text-xs text-gray-500">
                     {t.studyMaterials.hint}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            </motion.div>
           </div>
         </motion.div>
       </div>
