@@ -1,14 +1,7 @@
-import { lazy, Suspense } from "react";
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-
-const HeroEarthParticles = lazy(() =>
-  import("@/app/components/HeroEarthParticles").then((module) => ({
-    default: module.HeroEarthParticles,
-  })),
-);
 
 const statValues = ["9+", "9+", "17"];
 
@@ -47,31 +40,64 @@ export function Hero() {
       ref={ref}
     >
       {/* background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-100/80 via-white to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-100/50 via-white to-slate-50/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-50/35 via-transparent to-sky-50/25 pointer-events-none" />
       <div
-        className="absolute inset-0 opacity-[0.25]"
+        className="absolute inset-0 opacity-[0.35]"
         style={{
-          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
+      <div
+        className="absolute inset-0 opacity-[0.025] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.6) 1px, transparent 1px)`,
+          backgroundSize: "72px 72px",
+        }}
+      />
 
-      {/* 3D particle earth */}
-      <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none">
-        <div className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(130vw,920px)] h-[min(130vw,920px)] md:top-[48%] md:left-[56%] md:-translate-x-1/2 md:-translate-y-1/2 md:w-[min(72vw,780px)] md:h-[min(72vw,780px)]">
-          <Suspense fallback={null}>
-            <HeroEarthParticles />
-          </Suspense>
-        </div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.55)_42%,rgba(255,255,255,0.92)_72%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/70" />
-      </div>
+      {/* ambient orbs */}
+      <motion.div
+        className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-violet-200/30 blur-3xl pointer-events-none"
+        animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0.75, 0.55] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -bottom-16 -left-16 w-[360px] h-[360px] rounded-full bg-sky-200/35 blur-3xl pointer-events-none"
+        animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.7, 0.5] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+      />
+      <motion.div
+        className="absolute top-[18%] left-[8%] w-48 h-48 rounded-full bg-emerald-100/35 blur-3xl pointer-events-none hidden md:block"
+        animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.6, 0.4] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+      />
+
+      {/* decorative rings & dots */}
+      <div className="absolute top-28 right-[14%] w-28 h-28 rounded-full border border-violet-200/50 pointer-events-none hidden lg:block" />
+      <div className="absolute top-32 right-[calc(14%+6px)] w-[88px] h-[88px] rounded-full border border-violet-100/40 pointer-events-none hidden lg:block" />
+      <div className="absolute bottom-36 left-[10%] w-20 h-20 rounded-full border border-sky-200/55 pointer-events-none hidden lg:block" />
+      <div className="absolute top-[42%] right-[6%] w-2.5 h-2.5 rounded-full bg-violet-300/50 pointer-events-none hidden md:block" />
+      <div className="absolute top-[38%] left-[7%] w-2 h-2 rounded-full bg-sky-300/50 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-[32%] right-[18%] w-1.5 h-1.5 rounded-full bg-emerald-300/50 pointer-events-none hidden md:block" />
 
       {/* corner accents */}
-      <div className="absolute top-20 left-8 w-12 h-12 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
-      <div className="absolute top-20 right-8 w-12 h-12 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
-      <div className="absolute bottom-24 left-8 w-12 h-12 border-b border-l border-gray-200/80 pointer-events-none hidden md:block" />
-      <div className="absolute bottom-24 right-8 w-12 h-12 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute top-20 left-8 w-16 h-16 border-t border-l border-gray-300/70 pointer-events-none hidden md:block" />
+      <div className="absolute top-[84px] left-[36px] w-10 h-10 border-t border-l border-gray-200/50 pointer-events-none hidden md:block" />
+      <div className="absolute top-20 right-8 w-16 h-16 border-t border-r border-gray-300/70 pointer-events-none hidden md:block" />
+      <div className="absolute top-[84px] right-[36px] w-10 h-10 border-t border-r border-gray-200/50 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-24 left-8 w-16 h-16 border-b border-l border-gray-300/70 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-[92px] left-[36px] w-10 h-10 border-b border-l border-gray-200/50 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-24 right-8 w-16 h-16 border-b border-r border-gray-300/70 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-[92px] right-[36px] w-10 h-10 border-b border-r border-gray-200/50 pointer-events-none hidden md:block" />
+
+      {/* side guide lines */}
+      <div className="absolute left-1/2 -translate-x-[min(44vw,340px)] top-[22%] bottom-[22%] w-px bg-gradient-to-b from-transparent via-gray-200/70 to-transparent pointer-events-none hidden xl:block" />
+      <div className="absolute left-1/2 translate-x-[min(44vw,340px)] top-[22%] bottom-[22%] w-px bg-gradient-to-b from-transparent via-gray-200/70 to-transparent pointer-events-none hidden xl:block" />
+
+      {/* soft color glow behind name */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[320px] rounded-full bg-gradient-to-br from-violet-100/40 via-sky-50/25 to-emerald-50/25 blur-3xl pointer-events-none" />
 
       {/* top status bar */}
       <motion.div
@@ -106,15 +132,17 @@ export function Hero() {
           animate={isVisible ? { opacity: 1 } : {}}
           transition={transition({ delay: 0.15, duration: 0.7 })}
         >
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-gray-300" />
+          <span className="h-px w-10 bg-gradient-to-r from-transparent to-violet-200" />
+          <span className="w-1 h-1 rotate-45 bg-violet-300/60 shrink-0" />
           <p className="text-xs tracking-[0.35em] uppercase text-gray-400 font-medium">
             {t.hero.role}
           </p>
-          <span className="h-px w-8 bg-gradient-to-l from-transparent to-gray-300" />
+          <span className="w-1 h-1 rotate-45 bg-sky-300/60 shrink-0" />
+          <span className="h-px w-10 bg-gradient-to-l from-transparent to-sky-200" />
         </motion.div>
 
         {/* name */}
-        <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[0.92] mb-10 text-gray-950">
+        <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[0.92] mb-4 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
           {nameChars.map((char, i) => (
             <motion.span
               key={i}
@@ -127,6 +155,17 @@ export function Hero() {
             </motion.span>
           ))}
         </h1>
+
+        <motion.div
+          className="flex items-center gap-3 mb-10"
+          initial={{ opacity: 0, scaleX: 0.6 }}
+          animate={isVisible ? { opacity: 1, scaleX: 1 } : {}}
+          transition={transition({ delay: 0.85, duration: 0.7 })}
+        >
+          <span className="h-px w-16 bg-gradient-to-r from-transparent via-violet-200 to-sky-200" />
+          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-violet-300 to-sky-300" />
+          <span className="h-px w-16 bg-gradient-to-l from-transparent via-sky-200 to-emerald-200" />
+        </motion.div>
 
         {/* highlight tags */}
         <motion.div
@@ -180,11 +219,12 @@ export function Hero() {
 
         {/* stats strip */}
         <motion.div
-          className="flex items-center gap-0 rounded-2xl border border-gray-200/80 bg-white/70 backdrop-blur-md overflow-hidden shadow-sm"
+          className="relative flex items-center gap-0 rounded-2xl border border-gray-200/80 bg-white/75 backdrop-blur-md overflow-hidden shadow-sm"
           initial={{ opacity: 0, y: 16 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ delay: 1.2, duration: 0.6 })}
         >
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-200/80 via-sky-200/80 to-transparent" />
           {statLabels.map((label, i) => (
             <div key={i} className="flex items-center">
               <div className="px-8 py-5 text-center">
@@ -231,7 +271,9 @@ export function Hero() {
         animate={isVisible ? { opacity: 1 } : {}}
         transition={transition({ delay: 1.5, duration: 0.7 })}
       >
-        <div className="overflow-hidden border-t border-gray-100">
+        <div className="relative overflow-hidden border-t border-gray-100">
+          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           <motion.div
             className="flex gap-10 pt-4 whitespace-nowrap"
             animate={{ x: ["0%", "-50%"] }}
