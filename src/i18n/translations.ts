@@ -30,13 +30,14 @@ export type ProjectItem = {
 const en = {
   lang: { en: "EN", zh: "中文", switchTo: "Switch to Chinese" },
   nav: {
+    home: "Home",
     about: "About",
     journey: "Journey",
     achievements: "Academics",
+    studyMaterials: "Materials",
     awards: "Awards",
     projects: "Projects",
-    sections: "Page sections",
-    scrollAbout: "Scroll to about section",
+    sections: "Site navigation",
   },
   hero: {
     name: "Junyu Ling",
@@ -348,13 +349,14 @@ const en = {
 const zh: typeof en = {
   lang: { en: "EN", zh: "中文", switchTo: "切换到英文" },
   nav: {
+    home: "首页",
     about: "关于",
     journey: "编程历程",
     achievements: "学术成绩",
+    studyMaterials: "学习资料",
     awards: "奖项荣誉",
     projects: "项目作品",
-    sections: "页面导航",
-    scrollAbout: "滚动到关于部分",
+    sections: "站点导航",
   },
   hero: {
     name: "灵俊宇",

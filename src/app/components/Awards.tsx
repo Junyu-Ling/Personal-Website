@@ -98,7 +98,7 @@ export function Awards() {
     );
 
   return (
-    <section id="awards" className="min-h-screen py-32 px-6 bg-white section-divide" ref={ref}>
+    <section id="awards" className="min-h-[calc(100dvh-4.25rem)] py-32 px-6 bg-white" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.h2
           className="text-5xl md:text-7xl mb-20 tracking-tight"
