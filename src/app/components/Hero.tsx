@@ -1,25 +1,42 @@
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
-import { ChevronRight, MapPin } from "lucide-react";
+import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { useNavigation } from "@/app/navigation";
 
 const statValues = ["9+", "9+", "17"];
 
+const quickLinkHrefs = [
+  "#about",
+  "#journey",
+  "#achievements",
+  "#awards",
+  "#projects",
+];
+
 export function Hero() {
   const { t } = useLanguage();
-  const { navigate } = useNavigation();
   const { ref, isVisible, transition, shouldAnimate } = useInViewOnScrollDown({
     margin: "-100px",
   });
 
+  const scrollToNext = () => {
+    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const nameChars = t.hero.name.split("");
   const statLabels = [t.hero.stats.awards, t.hero.stats.projects, t.hero.stats.age];
+  const navLabels = [
+    t.nav.about,
+    t.nav.journey,
+    t.nav.achievements,
+    t.nav.awards,
+    t.nav.projects,
+  ];
 
   return (
     <section
       id="home"
-      className="page-min-h flex flex-col justify-center relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center relative overflow-hidden"
       ref={ref}
     >
       {/* background */}
@@ -84,7 +101,7 @@ export function Hero() {
 
       {/* top status bar */}
       <motion.div
-        className="relative z-10 flex justify-center pt-12 pb-0"
+        className="relative z-10 flex justify-center pt-24 pb-0"
         initial={{ opacity: 0, y: -8 }}
         animate={isVisible ? { opacity: 1, y: 0 } : {}}
         transition={transition({ delay: 0.05, duration: 0.6 })}
@@ -181,25 +198,23 @@ export function Hero() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ delay: 1.05, duration: 0.6 })}
         >
-          <motion.button
-            type="button"
-            onClick={() => navigate("projects")}
+          <motion.a
+            href="#projects"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-gray-950 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/15"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
             {t.hero.viewProjects}
             <ChevronRight size={15} />
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={() => navigate("awards")}
+          </motion.a>
+          <motion.a
+            href="#awards"
             className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-gray-700 rounded-full border border-gray-300 bg-white/80 hover:border-gray-900 hover:text-gray-900 transition-colors backdrop-blur-sm"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
             {t.hero.awardsHonors}
-          </motion.button>
+          </motion.a>
         </motion.div>
 
         {/* stats strip */}
@@ -228,9 +243,30 @@ export function Hero() {
         </motion.div>
       </div>
 
+      {/* nav quick links */}
+      <motion.nav
+        className="relative z-10 flex justify-center pb-10"
+        initial={{ opacity: 0 }}
+        animate={isVisible ? { opacity: 1 } : {}}
+        transition={transition({ delay: 1.35, duration: 0.6 })}
+        aria-label={t.nav.sections}
+      >
+        <div className="flex items-center gap-1 px-2 py-1.5 rounded-full border border-gray-200/80 bg-white/70 backdrop-blur-md shadow-sm">
+          {navLabels.map((label, i) => (
+            <a
+              key={quickLinkHrefs[i]}
+              href={quickLinkHrefs[i]}
+              className="text-xs px-4 py-2 rounded-full text-gray-500 hover:bg-gray-950 hover:text-white transition-all duration-200 font-medium"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </motion.nav>
+
       {/* skills ticker */}
       <motion.div
-        className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-10"
+        className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-16"
         initial={{ opacity: 0 }}
         animate={isVisible ? { opacity: 1 } : {}}
         transition={transition({ delay: 1.5, duration: 0.7 })}
@@ -255,6 +291,18 @@ export function Hero() {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* scroll indicator */}
+      <motion.button
+        type="button"
+        onClick={scrollToNext}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-300 hover:text-gray-600 transition-colors z-10"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        aria-label={t.nav.scrollAbout}
+      >
+        <ArrowDown size={20} strokeWidth={1.5} />
+      </motion.button>
     </section>
   );
 }

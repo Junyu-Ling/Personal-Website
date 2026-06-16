@@ -2,7 +2,6 @@
 
 :root {
   --font-size: 16px;
-  --site-nav-offset: 5rem;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -235,12 +234,4 @@
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;
-}
-
-.site-nav-offset {
-  padding-top: var(--site-nav-offset);
-}
-
-.page-min-h {
-  min-height: calc(100dvh - var(--site-nav-offset));
 }

@@ -38,6 +38,7 @@ const en = {
     awards: "Awards",
     projects: "Projects",
     sections: "Site navigation",
+    scrollAbout: "Scroll to about section",
   },
   hero: {
     name: "Junyu Ling",
@@ -357,6 +358,7 @@ const zh: typeof en = {
     awards: "奖项荣誉",
     projects: "项目作品",
     sections: "站点导航",
+    scrollAbout: "滚动到关于部分",
   },
   hero: {
     name: "灵俊宇",
