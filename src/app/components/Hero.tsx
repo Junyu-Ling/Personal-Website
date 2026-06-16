@@ -1,7 +1,14 @@
+import { lazy, Suspense } from "react";
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+
+const HeroEarthParticles = lazy(() =>
+  import("@/app/components/HeroEarthParticles").then((module) => ({
+    default: module.HeroEarthParticles,
+  })),
+);
 
 const statValues = ["9+", "9+", "17"];
 
@@ -40,21 +47,31 @@ export function Hero() {
       ref={ref}
     >
       {/* background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/40 via-white to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-100/80 via-white to-white" />
       <div
-        className="absolute inset-0 opacity-[0.35]"
+        className="absolute inset-0 opacity-[0.25]"
         style={{
-          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
+
+      {/* 3D particle earth */}
+      <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none">
+        <div className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(130vw,920px)] h-[min(130vw,920px)] md:top-[48%] md:left-[56%] md:-translate-x-1/2 md:-translate-y-1/2 md:w-[min(72vw,780px)] md:h-[min(72vw,780px)]">
+          <Suspense fallback={null}>
+            <HeroEarthParticles />
+          </Suspense>
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.55)_42%,rgba(255,255,255,0.92)_72%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/70" />
+      </div>
+
       {/* corner accents */}
       <div className="absolute top-20 left-8 w-12 h-12 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
       <div className="absolute top-20 right-8 w-12 h-12 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
       <div className="absolute bottom-24 left-8 w-12 h-12 border-b border-l border-gray-200/80 pointer-events-none hidden md:block" />
       <div className="absolute bottom-24 right-8 w-12 h-12 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
-      {/* soft color glow behind name */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[280px] rounded-full bg-gradient-to-br from-violet-100/30 via-sky-50/20 to-emerald-50/20 blur-3xl pointer-events-none" />
 
       {/* top status bar */}
       <motion.div
