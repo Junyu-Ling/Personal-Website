@@ -142,11 +142,11 @@ export function Hero() {
         </motion.div>
 
         {/* name */}
-        <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[0.92] mb-4 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
+        <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[1.05] pb-[0.08em] overflow-visible mb-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
           {nameChars.map((char, i) => (
             <motion.span
               key={i}
-              className="inline-block"
+              className="inline-block overflow-visible pb-[0.06em]"
               initial={shouldAnimate ? { opacity: 0, y: 40 } : false}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={transition({ duration: 0.5, delay: 0.25 + i * 0.035 })}
