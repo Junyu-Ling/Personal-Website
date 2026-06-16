@@ -59,7 +59,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen py-32 px-6 bg-white overflow-hidden"
+      className="min-h-screen py-32 px-6 section-divide section-surface-alt overflow-hidden"
       ref={ref}
     >
       <div className="max-w-7xl mx-auto">

@@ -27,7 +27,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="min-h-screen py-32 px-6 relative overflow-hidden bg-white"
+      className="min-h-screen py-32 px-6 relative overflow-hidden bg-white section-divide"
       ref={ref}
     >
       {/* background */}

@@ -292,7 +292,7 @@ export function StudyMaterials() {
   return (
     <section
       id="study-materials"
-      className="py-32 px-6 bg-white"
+      className="py-32 px-6 section-divide section-surface-alt"
       ref={ref}
     >
       <div className="max-w-7xl mx-auto">
