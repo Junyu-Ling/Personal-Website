@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Mail, MapPin, Briefcase, Music } from "lucide-react";
+import { Mail, MapPin, Briefcase, Music, Sparkles } from "lucide-react";
 import profileImage from "@/assets/profile.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -27,32 +27,71 @@ export function About() {
   return (
     <section
       id="about"
-      className="min-h-screen py-32 px-6 bg-gradient-to-b from-white via-slate-50/50 to-white"
+      className="min-h-screen py-32 px-6 relative overflow-hidden bg-gradient-to-b from-white via-slate-50/60 to-white"
       ref={ref}
     >
-      <div className="max-w-4xl mx-auto">
-        <motion.h2
-          className="text-5xl md:text-7xl mb-16 tracking-tight"
+      {/* background */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-50/25 via-transparent to-sky-50/20 pointer-events-none" />
+      <div
+        className="absolute inset-0 opacity-[0.3] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }}
+      />
+      <div className="absolute top-32 -left-24 w-80 h-80 rounded-full bg-violet-100/35 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-24 -right-20 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -translate-y-1/2 right-[6%] w-44 h-44 rounded-full bg-emerald-50/50 blur-3xl pointer-events-none hidden lg:block" />
+
+      {/* corner accents */}
+      <div className="absolute top-24 left-6 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute top-24 right-6 w-14 h-14 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-20 left-6 w-14 h-14 border-b border-l border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-20 right-6 w-14 h-14 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
+
+      {/* rings & dots */}
+      <div className="absolute top-40 right-[12%] w-24 h-24 rounded-full border border-violet-200/40 pointer-events-none hidden lg:block" />
+      <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-sky-200/45 pointer-events-none hidden lg:block" />
+      <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-violet-300/45 pointer-events-none hidden md:block" />
+      <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-sky-300/45 pointer-events-none hidden md:block" />
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8 })}
+          className="mb-16"
         >
-          {t.about.title}
-        </motion.h2>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/70 shadow-sm backdrop-blur-sm mb-6">
+            <Sparkles className="text-violet-500 w-4 h-4" />
+            <span className="text-sm font-medium text-gray-600">
+              {t.about.badge}
+            </span>
+          </div>
+          <h2 className="text-5xl md:text-7xl mb-4 tracking-tight">
+            {t.about.title}
+          </h2>
+          <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl">
+            {t.about.subtitle}
+          </p>
+        </motion.div>
 
         <motion.div
-          className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-gray-200/70"
+          className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-gray-200/60"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.1 })}
         >
-          <motion.img
-            src={profileImage}
-            alt={t.about.profileAlt}
-            className="w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-lg shadow-gray-200/60 shrink-0"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
-          />
+          <div className="relative shrink-0">
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
+            <motion.img
+              src={profileImage}
+              alt={t.about.profileAlt}
+              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-lg shadow-gray-200/60"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
 
           <div className="min-w-0 flex-1 text-center sm:text-left">
             <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
