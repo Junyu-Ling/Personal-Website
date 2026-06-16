@@ -29,18 +29,10 @@ export function CodingJourney() {
   return (
     <section
       id="journey"
-      className="py-32 px-6 relative overflow-hidden bg-gradient-to-b from-gray-50 via-slate-50/80 to-gray-50"
+      className="py-32 px-6 relative overflow-hidden bg-white"
       ref={ref}
     >
-      <div
-        className="absolute inset-0 opacity-[0.25] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }}
-      />
-      <div className="absolute top-40 -right-24 w-72 h-72 rounded-full bg-amber-100/30 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-32 -left-20 w-64 h-64 rounded-full bg-indigo-100/30 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots" />
 
       <div className="max-w-3xl mx-auto relative z-10">
         <motion.div

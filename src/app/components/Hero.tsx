@@ -40,7 +40,7 @@ export function Hero() {
       ref={ref}
     >
       {/* background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-100/50 via-white to-slate-50/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/40 via-white to-white" />
       <div className="absolute inset-0 bg-gradient-to-tr from-violet-50/35 via-transparent to-sky-50/25 pointer-events-none" />
       <div
         className="absolute inset-0 opacity-[0.35]"

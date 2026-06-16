@@ -27,21 +27,13 @@ export function About() {
   return (
     <section
       id="about"
-      className="min-h-screen py-32 px-6 relative overflow-hidden bg-gradient-to-b from-white via-slate-50/60 to-white"
+      className="min-h-screen py-32 px-6 relative overflow-hidden bg-white"
       ref={ref}
     >
       {/* background */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-violet-50/25 via-transparent to-sky-50/20 pointer-events-none" />
       <div
-        className="absolute inset-0 opacity-[0.3] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }}
+        className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots"
       />
-      <div className="absolute top-32 -left-24 w-80 h-80 rounded-full bg-violet-100/35 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-24 -right-20 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 -translate-y-1/2 right-[6%] w-44 h-44 rounded-full bg-emerald-50/50 blur-3xl pointer-events-none hidden lg:block" />
 
       {/* corner accents */}
       <div className="absolute top-24 left-6 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
@@ -50,10 +42,10 @@ export function About() {
       <div className="absolute bottom-20 right-6 w-14 h-14 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
       {/* rings & dots */}
-      <div className="absolute top-40 right-[12%] w-24 h-24 rounded-full border border-violet-200/40 pointer-events-none hidden lg:block" />
-      <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-sky-200/45 pointer-events-none hidden lg:block" />
-      <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-violet-300/45 pointer-events-none hidden md:block" />
-      <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-sky-300/45 pointer-events-none hidden md:block" />
+      <div className="absolute top-40 right-[12%] w-24 h-24 rounded-full border border-gray-200/50 pointer-events-none hidden lg:block" />
+      <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-gray-200/45 pointer-events-none hidden lg:block" />
+      <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
+      <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
