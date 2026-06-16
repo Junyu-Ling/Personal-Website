@@ -293,7 +293,7 @@ export function Awards() {
                       if (images.length === 0) return null;
 
                       return (
-                        <div className="mt-6 space-y-3 w-full max-w-[min(36rem,100%)]">
+                        <div className="mt-6 space-y-3 w-full max-w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
                           {images.map((image, imageIndex) => (
                             <motion.div
                               key={`${index}-${imageIndex}`}
