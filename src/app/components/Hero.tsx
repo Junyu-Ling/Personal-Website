@@ -40,14 +40,21 @@ export function Hero() {
       ref={ref}
     >
       {/* background */}
-      <div className="absolute inset-0 bg-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/40 via-white to-white" />
       <div
-        className="absolute inset-0 opacity-[0.3]"
+        className="absolute inset-0 opacity-[0.35]"
         style={{
-          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
       />
+      {/* corner accents */}
+      <div className="absolute top-20 left-8 w-12 h-12 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute top-20 right-8 w-12 h-12 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-24 left-8 w-12 h-12 border-b border-l border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute bottom-24 right-8 w-12 h-12 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
+      {/* soft color glow behind name */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[280px] rounded-full bg-gradient-to-br from-violet-100/30 via-sky-50/20 to-emerald-50/20 blur-3xl pointer-events-none" />
 
       {/* top status bar */}
       <motion.div
@@ -76,14 +83,18 @@ export function Hero() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center text-center py-16">
 
         {/* role label */}
-        <motion.p
-          className="text-xs tracking-[0.35em] uppercase text-gray-400 mb-8 font-medium"
+        <motion.div
+          className="flex items-center gap-3 mb-8"
           initial={{ opacity: 0 }}
           animate={isVisible ? { opacity: 1 } : {}}
           transition={transition({ delay: 0.15, duration: 0.7 })}
         >
-          {t.hero.role}
-        </motion.p>
+          <span className="h-px w-8 bg-gradient-to-r from-transparent to-gray-300" />
+          <p className="text-xs tracking-[0.35em] uppercase text-gray-400 font-medium">
+            {t.hero.role}
+          </p>
+          <span className="h-px w-8 bg-gradient-to-l from-transparent to-gray-300" />
+        </motion.div>
 
         {/* name */}
         <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[0.92] mb-10 text-gray-950">
