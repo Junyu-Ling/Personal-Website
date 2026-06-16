@@ -39,7 +39,7 @@ export function About() {
             </motion.div>
 
             <motion.div
-              className="md:col-span-2 flex flex-col gap-6 md:-mt-4"
+              className="md:col-span-2 flex flex-col gap-6 md:-mt-4 min-w-0"
               initial={{ opacity: 0, x: 50 }}
               animate={isVisible ? { opacity: 1, x: 0 } : {}}
               transition={transition({ duration: 0.8, delay: 0.4 })}
@@ -72,18 +72,20 @@ export function About() {
                   {t.hero.name}
                 </h3>
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-violet-50 text-violet-600 rounded-lg">
+              <div className="flex items-start gap-4 min-w-0">
+                <div className="p-3 bg-violet-50 text-violet-600 rounded-lg shrink-0">
                   <Mail size={24} />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="text-lg mb-1">{t.about.email}</h3>
-                  <p className="text-gray-600">LingJunYu20081201@gmail.com</p>
+                  <p className="text-gray-600 break-all text-sm sm:text-base">
+                    LingJunYu20081201@gmail.com
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-sky-50 text-sky-600 rounded-lg">
+              <div className="flex items-start gap-4 min-w-0">
+                <div className="p-3 bg-sky-50 text-sky-600 rounded-lg shrink-0">
                   <MapPin size={24} />
                 </div>
                 <div>
@@ -92,8 +94,8 @@ export function About() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-amber-50 text-amber-600 rounded-lg">
+              <div className="flex items-start gap-4 min-w-0">
+                <div className="p-3 bg-amber-50 text-amber-600 rounded-lg shrink-0">
                   <Briefcase size={24} />
                 </div>
                 <div>
@@ -102,8 +104,8 @@ export function About() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-rose-50 text-rose-600 rounded-lg">
+              <div className="flex items-start gap-4 min-w-0">
+                <div className="p-3 bg-rose-50 text-rose-600 rounded-lg shrink-0">
                   <Music size={24} />
                 </div>
                 <div>

@@ -146,10 +146,10 @@ export function Awards() {
               })}
             >
               <motion.div
-                className="bg-white p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden"
+                className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden"
                 whileHover={{ y: -4 }}
               >
-                <div className="flex items-start gap-6 relative z-10">
+                <div className="flex items-start gap-4 sm:gap-6 relative z-10 min-w-0">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.85 }}
                     animate={
@@ -171,7 +171,7 @@ export function Awards() {
                     </motion.div>
                   </motion.div>
 
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <motion.div
@@ -293,11 +293,11 @@ export function Awards() {
                       if (images.length === 0) return null;
 
                       return (
-                        <div className="mt-6 space-y-3 max-w-xl">
+                        <div className="mt-6 space-y-3 w-full max-w-[min(36rem,100%)]">
                           {images.map((image, imageIndex) => (
                             <motion.div
                               key={`${index}-${imageIndex}`}
-                              className="rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
+                              className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
                               initial={{ opacity: 0, y: 16 }}
                               animate={
                                 isVisible
@@ -312,7 +312,7 @@ export function Awards() {
                               <img
                                 src={image.src}
                                 alt={image.alt}
-                                className="w-full h-auto object-contain"
+                                className="block w-full h-auto max-w-full object-contain"
                               />
                             </motion.div>
                           ))}
