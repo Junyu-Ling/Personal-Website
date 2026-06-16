@@ -70,6 +70,10 @@ const en = {
   },
   about: {
     title: "About Me",
+    badge: "Get to Know Me",
+    subtitle:
+      "Developer by curiosity, musician by heart, host on stage.",
+    pillars: ["Development", "Music", "Campus & Arts"],
     p1: "I'm Junyu Ling, a 17-year-old high school student from Shanghai with a deep passion for web development and computer science. I love exploring new technologies and turning creative ideas into functional projects.",
     p2: "Beyond coding, I'm passionate about music. I started learning piano at the age of 4.5 and have achieved Grade 7 in ABRSM Piano. Currently, I'm also learning the clarinet. In my free time, I often serve as a piano accompanist for children, finding joy and creative inspiration in collaborative performance.",
     p3: "I'm also deeply involved in school activities, frequently serving as a host for events like the Flag-Raising Ceremony, Sports Meet, and the New Year's Song and Dance Party. I enjoy collaborating with co-hosts to draft and refine scripts. Additionally, I actively participate in talent showcases such as the \"Sounds of Nature\" competition and school galas to share my artistic passion.",
@@ -384,6 +388,9 @@ const zh: typeof en = {
   },
   about: {
     title: "关于我",
+    badge: "认识我",
+    subtitle: "因好奇而编程，因热爱而演奏，因舞台而发光。",
+    pillars: ["开发", "音乐", "校园与艺术"],
     p1: "我是灵俊宇，来自上海的 17 岁高中生，热爱 Web 开发与计算机科学，喜欢探索新技术，把创意变成可用的项目。",
     p2: "除编程外，我热爱音乐。4 岁半开始学习钢琴，已取得英皇钢琴七级，目前也在学习单簧管。课余时常为小朋友钢琴伴奏，在合作演奏中获得快乐与灵感。",
     p3: "我也积极参与校内活动，多次担任升旗仪式、运动会、元旦歌舞晚会等活动主持，并与搭档一起撰写、打磨主持稿；还参加「天籁之音」等才艺比赛与学校晚会，分享对艺术的热爱。",
