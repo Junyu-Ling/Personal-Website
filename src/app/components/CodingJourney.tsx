@@ -29,7 +29,7 @@ export function CodingJourney() {
   return (
     <section
       id="journey"
-      className="min-h-[calc(100dvh-4.25rem)] py-32 px-6 relative overflow-hidden bg-white"
+      className="page-min-h py-32 px-6 relative overflow-hidden bg-white"
       ref={ref}
     >
       <div className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots" />

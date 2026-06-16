@@ -59,7 +59,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-[calc(100dvh-4.25rem)] py-32 px-6 bg-white overflow-hidden"
+      className="page-min-h py-32 px-6 bg-white overflow-hidden"
       ref={ref}
     >
       <div className="max-w-7xl mx-auto">

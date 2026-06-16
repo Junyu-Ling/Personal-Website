@@ -45,7 +45,7 @@ export default function App() {
     <LanguageProvider>
       <NavigationProvider>
         <SiteNav />
-        <div className="min-h-screen bg-white text-gray-900 pt-[4.25rem]">
+        <div className="min-h-screen bg-white text-gray-900 site-nav-offset">
           <PageContent />
           <Footer />
         </div>

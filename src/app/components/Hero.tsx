@@ -19,7 +19,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[calc(100dvh-4.25rem)] flex flex-col justify-center relative overflow-hidden"
+      className="page-min-h flex flex-col justify-center relative overflow-hidden"
       ref={ref}
     >
       {/* background */}

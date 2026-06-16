@@ -31,7 +31,7 @@ export function AcademicAchievements() {
   });
 
   return (
-    <section id="achievements" className="min-h-[calc(100dvh-4.25rem)] py-32 px-6 bg-white" ref={ref}>
+    <section id="achievements" className="page-min-h py-32 px-6 bg-white" ref={ref}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

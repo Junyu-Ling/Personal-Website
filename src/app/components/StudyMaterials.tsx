@@ -292,7 +292,7 @@ export function StudyMaterials() {
   return (
     <section
       id="study-materials"
-      className="min-h-[calc(100dvh-4.25rem)] py-32 px-6 bg-white"
+      className="page-min-h py-32 px-6 bg-white"
       ref={ref}
     >
       <div className="max-w-7xl mx-auto">
