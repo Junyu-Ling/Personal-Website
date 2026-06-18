@@ -235,32 +235,3 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
-
-.journey-grid {
-  background-image:
-    linear-gradient(to right, rgba(99, 102, 241, 0.35) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(99, 102, 241, 0.35) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.journey-spine {
-  background: linear-gradient(
-    180deg,
-    rgba(199, 210, 254, 0.2) 0%,
-    rgba(129, 140, 248, 0.55) 25%,
-    rgba(167, 139, 250, 0.55) 50%,
-    rgba(244, 114, 182, 0.45) 75%,
-    rgba(251, 191, 36, 0.35) 100%
-  );
-  background-size: 100% 200%;
-  animation: journey-spine-flow 6s linear infinite;
-}
-
-@keyframes journey-spine-flow {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
-}
