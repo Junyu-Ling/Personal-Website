@@ -1,6 +1,19 @@
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
-import { ExternalLink, ArrowUpRight, FolderGit2 } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Calculator,
+  FolderGit2,
+  Gamepad2,
+  Gift,
+  Grid3x3,
+  LineChart,
+  Music,
+  Puzzle,
+  Store,
+  Webhook,
+} from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
 import { SectionHeader } from "@/app/components/SectionHeader";
@@ -21,6 +34,7 @@ const projectLinks = [
 
 const projectStyles = [
   {
+    icon: LineChart,
     bg: "bg-emerald-50",
     text: "text-emerald-600",
     cardHover:
@@ -28,6 +42,7 @@ const projectStyles = [
     btnHover: "hover:bg-emerald-600 hover:border-emerald-600 hover:text-white",
   },
   {
+    icon: BookOpen,
     bg: "bg-amber-50",
     text: "text-amber-600",
     cardHover:
@@ -35,6 +50,7 @@ const projectStyles = [
     btnHover: "hover:bg-amber-500 hover:border-amber-500 hover:text-white",
   },
   {
+    icon: Calculator,
     bg: "bg-teal-50",
     text: "text-teal-600",
     cardHover:
@@ -42,6 +58,7 @@ const projectStyles = [
     btnHover: "hover:bg-teal-600 hover:border-teal-600 hover:text-white",
   },
   {
+    icon: Grid3x3,
     bg: "bg-blue-50",
     text: "text-blue-600",
     cardHover:
@@ -49,6 +66,7 @@ const projectStyles = [
     btnHover: "hover:bg-blue-600 hover:border-blue-600 hover:text-white",
   },
   {
+    icon: Puzzle,
     bg: "bg-orange-50",
     text: "text-orange-600",
     cardHover:
@@ -56,6 +74,7 @@ const projectStyles = [
     btnHover: "hover:bg-orange-500 hover:border-orange-500 hover:text-white",
   },
   {
+    icon: Gamepad2,
     bg: "bg-violet-50",
     text: "text-violet-600",
     cardHover:
@@ -63,6 +82,7 @@ const projectStyles = [
     btnHover: "hover:bg-violet-600 hover:border-violet-600 hover:text-white",
   },
   {
+    icon: Store,
     bg: "bg-purple-50",
     text: "text-purple-600",
     cardHover:
@@ -70,6 +90,7 @@ const projectStyles = [
     btnHover: "hover:bg-purple-600 hover:border-purple-600 hover:text-white",
   },
   {
+    icon: Gift,
     bg: "bg-rose-50",
     text: "text-rose-600",
     cardHover:
@@ -77,6 +98,7 @@ const projectStyles = [
     btnHover: "hover:bg-rose-600 hover:border-rose-600 hover:text-white",
   },
   {
+    icon: Webhook,
     bg: "bg-cyan-50",
     text: "text-cyan-600",
     cardHover:
@@ -84,6 +106,7 @@ const projectStyles = [
     btnHover: "hover:bg-cyan-600 hover:border-cyan-600 hover:text-white",
   },
   {
+    icon: Music,
     bg: "bg-indigo-50",
     text: "text-indigo-600",
     cardHover:
@@ -123,6 +146,7 @@ type ProjectCardProps = {
 
 function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
   const style = projectStyles[index];
+  const Icon = style.icon;
   const isFeatured = Boolean(project.featured);
 
   return (
@@ -140,7 +164,7 @@ function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
             <div
               className={`p-3 rounded-xl ${style.bg} ${style.text} group-hover:scale-110 transition-transform duration-300`}
             >
-              <ExternalLink size={22} />
+              <Icon size={22} strokeWidth={1.75} />
             </div>
             {isFeatured && <FeaturedStar />}
           </div>
