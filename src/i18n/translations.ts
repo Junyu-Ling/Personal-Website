@@ -221,7 +221,7 @@ const en = {
         title: "AI Camp × WeChat Mini Program Innovation Challenge",
         organization: "AI Camp × WeChat Mini Program",
         description:
-          "Campus club AI Camp partnered with the WeChat Mini Program team for an on-campus competition. Our team WishRelay — Ling Junyu, Zuo Yingxin, and Hu Kexin — won Second Prize.",
+          "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay (Ling Junyu, Zuo Yingxin, Hu Kexin) received Second Prize.",
         award: "Second Prize — Team WishRelay",
         certificateAlt:
           "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
@@ -230,7 +230,7 @@ const en = {
         title: "AP Calculus Star of the Subject",
         organization: "Shanghai Soong Ching Ling School",
         description:
-          "Named AP Calculus Star of the Subject for outstanding performance and contribution in AP Calculus during the 2025–2026 academic year.",
+          "Named AP Calculus Star of the Subject for the 2025–2026 academic year at Shanghai Soong Ching Ling School.",
         award: "AP Calculus Star — 2025–2026 Academic Year",
         certificateAlt:
           "Certificate of Honor — AP Calculus Star, Shanghai Soong Ching Ling School",
@@ -241,7 +241,7 @@ const en = {
         title: "IMMC — International Mathematical Modeling Challenge",
         organization: "IMMC International",
         description:
-          "The crown jewel of my profile. The International Outstanding Award (O Award) is granted to only a handful of teams worldwide—evidence of near-graduate-level modeling, algorithm implementation, and academic paper collaboration.",
+          "Received the Outstanding Award (O Award) in the 2026 IMMC International Greater China contest.",
         award: "Outstanding Award (O Award) — International Greater China",
         certificateAlt:
           "IMMC 2026 International Greater China Outstanding (O Award) certificate",
@@ -250,14 +250,14 @@ const en = {
         title: "Physics Bowl — Asian Camp Qualification",
         organization: "American Association of Physics Teachers",
         description:
-          "A hardcore physics credential. Scoring ≥ 25 under extreme time pressure places you ahead of the vast majority of peers across Asia.",
+          "Scored ≥ 25 in the 2026 Physics Bowl, qualifying for the Asian training camp.",
         award: "Asian Training Camp Qualification (Score ≥ 25)",
       },
       {
         title: "WeChat Mini-Program Global Innovation Challenge",
         organization: "WeChat",
         description:
-          "Led a team of three to ship a carbon-footprint calculator mini-program with real user value—proving leadership, full-stack delivery, and product thinking.",
+          "Three-person team developed a carbon-footprint calculator mini-program and received Global Third Prize.",
         award: "Global Third Prize",
         certificateAlt:
           "WeChat Mini-Program Global Innovation Challenge — Carbon Footprint Tracker award list",
@@ -266,7 +266,7 @@ const en = {
         title: "IMMC — Greater China Regional Contest",
         organization: "IMMC Greater China",
         description:
-          "The launchpad toward the international O Award—Meritorious (First Prize) in the Greater China regional contest.",
+          "Received the Meritorious Award (M Award) in the 2026 IMMC Greater China regional contest.",
         award: "Meritorious Award (M Award) — Greater China Regional",
         certificateAlt:
           "IMMC 2026 Greater China Regional Meritorious (M Award) certificate",
@@ -275,7 +275,7 @@ const en = {
         title: "AMC 12 — American Mathematics Competition",
         organization: "Mathematical Association of America",
         description:
-          "Top 25% globally on a standard international math contest—strong fundamentals beyond project-based modeling alone.",
+          "Placed in the global top 25% on the 2025 AMC 12.",
         award: "Global Top 25%",
         certificateAlt: "AMC 12 2025 Top 25% certificate",
       },
@@ -283,7 +283,7 @@ const en = {
         title: "When AI Meets Intangible Cultural Heritage",
         organization: "Shanghai Municipal Student Program",
         description:
-          "Second Prize for an AI-driven sugar-painting narrative—fast adoption of frontier AIGC tools.",
+          "Team project on AI and sugar-painting narrative; received Second Prize in Shanghai.",
         award: "Team Second Prize — Shanghai",
         certificateAlt:
           "When AI Meets Intangible Cultural Heritage — The Chinese Soul in Sugar Silk award list",
@@ -292,7 +292,7 @@ const en = {
         title: "Youth AI Innovation Competition (AIGC)",
         organization: "China–Shanghai AIGC Program",
         description:
-          "Third Prize for an independent AIGC short film on future cities.",
+          "Submitted an independent AIGC short film on future cities and received Third Prize.",
         award: "Individual Third Prize",
         certificateAlt:
           "Youth AI Innovation Competition (AIGC) — High School Third Prize award list",
@@ -301,7 +301,7 @@ const en = {
         title: "HiMCM — High School Mathematical Contest in Modeling",
         organization: "COMAP",
         description:
-          "Honorable Mention in a rigorous international modeling contest.",
+          "Received Honorable Mention (H Award) in the 2025 HiMCM contest.",
         award: "Honorable Mention (H Award)",
         certificateAlt: "HiMCM 2025 Honorable Mention certificate",
       },
@@ -309,7 +309,7 @@ const en = {
         title: "Duke Math Meet China",
         organization: "Duke University",
         description:
-          "Qualified in the top 40% of the local selection and served as a presenter for our team's \"Fourier: Math & Music\" poster. Our school also received Best Visual Design for the poster; my role was presentation, not poster design.",
+          "Placed in the top 40% of the local selection. Presented the team poster \"Fourier: Math & Music\"; the school received Best Visual Design for the poster design.",
         award: "Certificate of Participation (Top 40%) & Team Presentation",
         certificateAlt: "Duke Math Meet China 2025 Certificate of Participation",
       },
@@ -601,7 +601,7 @@ const zh: typeof en = {
         title: "AI Camp × 微信小程序创新大赛",
         organization: "校内社团 AI Camp × 微信小程序",
         description:
-          "校内社团 AI Camp 与微信小程序团队合作举办的校内比赛。我们团队心愿接力——灵俊宇、左盈欣、胡可昕——荣获二等奖。",
+          "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队（灵俊宇、左盈欣、胡可昕）获二等奖。",
         award: "二等奖 — 心愿接力团队",
         certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
       },
@@ -609,7 +609,7 @@ const zh: typeof en = {
         title: "AP 微积分学科之星",
         organization: "上海宋庆龄学校",
         description:
-          "在 2025–2026 学年中因 AP 微积分学科的突出表现与贡献，被评为「AP 微积分」学科之星。",
+          "2025–2026 学年获上海宋庆龄学校「AP 微积分」学科之星。",
         award: "AP 微积分学科之星 — 2025–2026 学年",
         certificateAlt: "荣誉证书 — AP 微积分学科之星，上海宋庆龄学校",
       },
@@ -619,7 +619,7 @@ const zh: typeof en = {
         title: "IMMC 国际数学建模挑战赛",
         organization: "IMMC 国际赛",
         description:
-          "国际特等奖（O 奖）全球仅少数队伍获得，体现接近研究生水平的建模、算法实现与学术论文协作能力。",
+          "2026 年 IMMC 国际赛（中华区）获国际特等奖（O 奖）。",
         award: "国际特等奖 (O 奖) — 国际赛（中华区）",
         certificateAlt: "IMMC 2026 国际赛（中华区）特等奖证书",
       },
@@ -627,49 +627,50 @@ const zh: typeof en = {
         title: "Physics Bowl 物理碗",
         organization: "美国物理教师协会",
         description:
-          "硬核物理竞赛成绩。高压限时环境下得分 ≥ 25，位列亚洲同龄人前列。",
+          "2026 年 Physics Bowl 得分 ≥ 25，获亚洲训练营晋级资格。",
         award: "亚洲训练营晋级资格（得分 ≥ 25）",
       },
       {
         title: "微信小程序全球创新挑战赛",
         organization: "微信",
         description:
-          "带领三人团队开发碳足迹计算器小程序，具备真实用户价值，展现领导力、全栈交付与产品思维。",
+          "三人团队开发碳足迹计算器微信小程序，获全球三等奖。",
         award: "全球三等奖",
         certificateAlt: "微信小程序全球创新挑战赛 — 碳足迹追踪器获奖公示",
       },
       {
         title: "IMMC 中华区区域赛",
         organization: "IMMC 大中华赛区",
-        description: "冲击国际 O 奖的重要台阶，中华区一等奖（Meritorious）。",
+        description:
+          "2026 年 IMMC 中华区区域赛获一等奖（Meritorious / M 奖）。",
         award: "一等奖 (M 奖) — 大中华赛区",
         certificateAlt: "IMMC 2026 中华区一等奖证书",
       },
       {
         title: "AMC 12 美国数学竞赛",
         organization: "美国数学协会",
-        description: "国际标准数学竞赛全球前 25%，夯实数理基础。",
+        description: "2025 年 AMC 12 成绩位列全球前 25%。",
         award: "全球前 25%",
         certificateAlt: "AMC 12 2025 全球前 25% 证书",
       },
       {
         title: "当 AI 遇见非遗",
         organization: "上海市学生活动",
-        description: "AI 糖画叙事项目获二等奖，快速上手 AIGC 工作流。",
+        description: "团队以 AI 糖画为主题参赛，获上海市二等奖。",
         award: "团队二等奖 — 上海",
         certificateAlt: "当 AI 遇见非遗 —「糖丝里的中国魂」获奖公示",
       },
       {
         title: "青年 AI 创新大赛 (AIGC)",
         organization: "中国—上海 AIGC 项目",
-        description: "独立制作未来城市 AIGC 短片，获三等奖。",
+        description: "提交独立制作的未来城市 AIGC 短片，获个人三等奖。",
         award: "个人三等奖",
         certificateAlt: "青年 AI 创新大赛 (AIGC) — 高中组三等奖获奖公示",
       },
       {
         title: "HiMCM 高中数学建模竞赛",
         organization: "COMAP",
-        description: "国际建模竞赛荣誉奖 (H 奖)。",
+        description: "2025 年 HiMCM 获荣誉奖（H 奖）。",
         award: "荣誉奖 (H 奖)",
         certificateAlt: "HiMCM 2025 荣誉奖证书",
       },
@@ -677,7 +678,7 @@ const zh: typeof en = {
         title: "Duke Math Meet 杜克数学大会",
         organization: "杜克大学",
         description:
-          "本地区选拔前 40%，担任团队「Fourier: Math & Music」海报答辩人；学校获最佳视觉设计，本人负责 presentation，非海报设计。",
+          "本地区选拔前 40%；担任团队「Fourier: Math & Music」答辩人。学校获海报最佳视觉设计。",
         award: "参与证书（前 40%）与团队答辩",
         certificateAlt: "Duke Math Meet China 2025 参与证书",
       },
