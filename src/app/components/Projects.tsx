@@ -20,16 +20,16 @@ import { SectionHeader } from "@/app/components/SectionHeader";
 import type { ProjectItem } from "@/i18n/translations";
 
 const projectLinks = [
-  "https://ai-desmos.figma.site",
+  "https://ai-desmos.online",
   "https://toefl-6666.vercel.app/",
   "https://gpa-calculator.figma.site/",
-  "https://2048pro.figma.site",
+  "https://2048pro.online",
   "https://dragon.figma.site",
   "https://pony.figma.site",
   "https://scs.figma.site",
   "https://wishrelay.figma.site",
   "https://api-check.figma.site",
-  "https://echo-chamber-delta.vercel.app/",
+  "https://echo-chamber.band",
 ];
 
 const projectStyles = [
