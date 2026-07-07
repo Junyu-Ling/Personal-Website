@@ -1,7 +1,6 @@
 import { Hero } from "@/app/components/Hero";
 import { About } from "@/app/components/About";
 import { CodingJourney } from "@/app/components/CodingJourney";
-import { AcademicAchievements } from "@/app/components/AcademicAchievements";
 import { StudyMaterials } from "@/app/components/StudyMaterials";
 import { Awards } from "@/app/components/Awards";
 import { Projects } from "@/app/components/Projects";
@@ -17,7 +16,6 @@ export default function App() {
         <Hero />
         <About />
         <CodingJourney />
-        <AcademicAchievements />
         <StudyMaterials />
         <Awards />
         <Projects />

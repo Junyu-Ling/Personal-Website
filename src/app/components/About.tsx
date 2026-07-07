@@ -47,7 +47,7 @@ export function About() {
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
       <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -112,7 +112,7 @@ export function About() {
         </motion.div>
 
         <motion.div
-          className="space-y-8 max-w-3xl mx-auto px-2 sm:px-4 md:px-6"
+          className="space-y-8 max-w-4xl mx-auto px-1 sm:px-2 md:px-0"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.25 })}

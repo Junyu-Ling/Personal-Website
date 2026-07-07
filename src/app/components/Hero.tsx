@@ -8,7 +8,6 @@ const statValues = ["9+", "9+", "17"];
 const quickLinkHrefs = [
   "#about",
   "#journey",
-  "#achievements",
   "#awards",
   "#projects",
 ];
@@ -28,7 +27,6 @@ export function Hero() {
   const navLabels = [
     t.nav.about,
     t.nav.journey,
-    t.nav.achievements,
     t.nav.awards,
     t.nav.projects,
   ];

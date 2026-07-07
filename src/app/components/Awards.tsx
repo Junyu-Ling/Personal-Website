@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import {
   Award,
@@ -12,6 +13,10 @@ import {
   Calculator,
   Sparkles,
   Rocket,
+  AppWindow,
+  GraduationCap,
+  ChevronDown,
+  type LucideIcon,
 } from "lucide-react";
 import immcOAwardCertificate from "@/assets/immc-o-award-certificate.png";
 import immcMAwardCertificate from "@/assets/immc-m-award-certificate.png";
@@ -21,9 +26,33 @@ import dukeParticipationCertificate from "@/assets/duke-participation-certificat
 import dukeBestVisualDesign from "@/assets/duke-best-visual-design.png";
 import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.png";
 import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
+import aiCampWishrelayAward from "@/assets/ai-camp-wishrelay-award.png";
+import apCalculusStarCertificate from "@/assets/ap-calculus-star-certificate.png";
 import { useLanguage } from "@/i18n/LanguageContext";
+import type { AwardTranslation } from "@/i18n/translations";
 
-const awardMeta = [
+type AwardMeta = {
+  icon: LucideIcon;
+  year: string;
+  featured?: boolean;
+  certificate?: string;
+  certificates?: { src: string }[];
+};
+
+const schoolMeta: AwardMeta[] = [
+  {
+    icon: AppWindow,
+    year: "2025",
+    certificate: aiCampWishrelayAward,
+  },
+  {
+    icon: GraduationCap,
+    year: "2026",
+    certificate: apCalculusStarCertificate,
+  },
+];
+
+const offCampusMeta: AwardMeta[] = [
   {
     icon: Globe,
     year: "2026",
@@ -61,29 +90,224 @@ const awardMeta = [
   },
 ];
 
+type ResolvedAward = AwardTranslation &
+  AwardMeta & {
+    certificates?: { src: string; alt: string }[];
+    certificate?: string;
+    certificateAlt?: string;
+  };
+
+function resolveAwards(
+  items: AwardTranslation[],
+  metaList: AwardMeta[],
+  dukeCerts?: string[]
+): ResolvedAward[] {
+  return items.map((item, index) => {
+    const meta = metaList[index];
+    const copy = { ...item, ...meta };
+    if (meta.certificates && dukeCerts) {
+      return {
+        ...copy,
+        certificates: meta.certificates.map((cert, i) => ({
+          src: cert.src,
+          alt: dukeCerts[i],
+        })),
+      };
+    }
+    return copy;
+  });
+}
+
+type AwardCardProps = {
+  award: ResolvedAward;
+  index: number;
+  sectionKey: string;
+  isVisible: boolean;
+  transition: (base: object) => object;
+  viewImagesLabel: string;
+  hideImagesLabel: string;
+};
+
+function AwardCard({
+  award,
+  index,
+  sectionKey,
+  isVisible,
+  transition,
+  viewImagesLabel,
+  hideImagesLabel,
+}: AwardCardProps) {
+  const [expanded, setExpanded] = useState(false);
+  const Icon = award.icon;
+
+  const images =
+    award.certificates ??
+    (award.certificate
+      ? [{ src: award.certificate, alt: award.certificateAlt ?? "Award certificate" }]
+      : []);
+
+  return (
+    <motion.div
+      className="relative"
+      initial={{ opacity: 0, y: 32 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      transition={transition({
+        duration: 0.6,
+        delay: index * 0.08,
+      })}
+    >
+      <motion.div
+        className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden"
+        whileHover={{ y: -4 }}
+      >
+        <div className="flex items-start gap-4 sm:gap-6 relative z-10 min-w-0">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={
+              isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }
+            }
+            transition={transition({
+              duration: 0.5,
+              delay: index * 0.08 + 0.15,
+            })}
+          >
+            <motion.div
+              className="p-4 bg-gray-900 text-white rounded-xl"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+              <Icon size={28} />
+            </motion.div>
+          </motion.div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between mb-3 gap-3">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <h3 className="text-xl md:text-2xl">{award.title}</h3>
+                  {award.featured && (
+                    <Star
+                      size={20}
+                      className="fill-yellow-400 text-yellow-400 shrink-0"
+                    />
+                  )}
+                </div>
+                <p className="text-gray-600 text-base md:text-lg mb-2">
+                  {award.organization}
+                </p>
+                <p className="text-sm text-gray-500 italic">{award.award}</p>
+              </div>
+              <span className="shrink-0 px-3 py-1 rounded-full bg-gray-100 border border-gray-200/60 text-sm font-medium text-gray-500">
+                {award.year}
+              </span>
+            </div>
+
+            <p className="text-gray-500 leading-relaxed">{award.description}</p>
+
+            {images.length > 0 && (
+              <div className="mt-5">
+                <button
+                  type="button"
+                  onClick={() => setExpanded((open) => !open)}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  aria-expanded={expanded}
+                  aria-controls={`${sectionKey}-images-${index}`}
+                >
+                  {expanded ? hideImagesLabel : viewImagesLabel}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {expanded && (
+                    <motion.div
+                      id={`${sectionKey}-images-${index}`}
+                      className="mt-4 space-y-3 w-full max-w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl overflow-hidden"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      {images.map((image, imageIndex) => (
+                        <div
+                          key={imageIndex}
+                          className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
+                        >
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="block w-full h-auto max-w-full object-contain"
+                          />
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+type AwardSectionProps = {
+  title: string;
+  awards: ResolvedAward[];
+  sectionKey: string;
+  isVisible: boolean;
+  transition: (base: object) => object;
+  viewImagesLabel: string;
+  hideImagesLabel: string;
+};
+
+function AwardSection({
+  title,
+  awards,
+  sectionKey,
+  isVisible,
+  transition,
+  viewImagesLabel,
+  hideImagesLabel,
+}: AwardSectionProps) {
+  return (
+    <div className="mb-16 last:mb-0">
+      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 tracking-tight">
+        {title}
+      </h3>
+      <div className="space-y-6">
+        {awards.map((award, index) => (
+          <AwardCard
+            key={`${sectionKey}-${index}`}
+            award={award}
+            index={index}
+            sectionKey={sectionKey}
+            isVisible={isVisible}
+            transition={transition}
+            viewImagesLabel={viewImagesLabel}
+            hideImagesLabel={hideImagesLabel}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Awards() {
   const { t, locale } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
 
-  const awards = t.awards.items.map((item, index) => {
-    const meta = awardMeta[index];
-    const copy = { ...item, ...meta };
-    if (meta.certificates) {
-      return {
-        ...copy,
-        certificates: meta.certificates.map((cert, i) => ({
-          src: cert.src,
-          alt: t.awards.dukeCerts[i],
-        })),
-      };
-    }
-    if (item.certificateAlt) {
-      return { ...copy, certificateAlt: item.certificateAlt };
-    }
-    return copy;
-  });
+  const schoolAwards = resolveAwards(t.awards.schoolItems, schoolMeta);
+  const offCampusAwards = resolveAwards(
+    t.awards.offCampusItems,
+    offCampusMeta,
+    t.awards.dukeCerts
+  );
 
   const zhenfundLead =
     locale === "zh" ? (
@@ -131,215 +355,25 @@ export function Awards() {
           </div>
         </motion.div>
 
-        <div className="space-y-8">
-          {awards.map((award, index) => (
-            <motion.div
-              key={index}
-              className="relative"
-              initial={{ opacity: 0, y: 32 }}
-              animate={
-                isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }
-              }
-              transition={transition({
-                duration: 0.6,
-                delay: index * 0.1,
-              })}
-            >
-              <motion.div
-                className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden"
-                whileHover={{ y: -4 }}
-              >
-                <div className="flex items-start gap-4 sm:gap-6 relative z-10 min-w-0">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={
-                      isVisible
-                        ? { opacity: 1, scale: 1 }
-                        : { opacity: 0, scale: 0.85 }
-                    }
-                    transition={transition({
-                      duration: 0.5,
-                      delay: index * 0.1 + 0.2,
-                    })}
-                  >
-                    <motion.div
-                      className="p-4 bg-gray-900 text-white rounded-xl cursor-pointer"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                    >
-                      <award.icon size={28} />
-                    </motion.div>
-                  </motion.div>
+        <AwardSection
+          title={t.awards.schoolSection}
+          awards={schoolAwards}
+          sectionKey="school"
+          isVisible={isVisible}
+          transition={transition}
+          viewImagesLabel={t.awards.viewImages}
+          hideImagesLabel={t.awards.hideImages}
+        />
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <motion.div
-                          className="flex items-center gap-2 mb-2"
-                          initial={{ opacity: 0, y: -20 }}
-                          animate={
-                            isVisible
-                              ? { opacity: 1, y: 0 }
-                              : { opacity: 0, y: -20 }
-                          }
-                          transition={transition({
-                            duration: 0.5,
-                            delay: index * 0.15 + 0.4,
-                          })}
-                        >
-                          <h3 className="text-2xl">{award.title}</h3>
-                          {award.featured && (
-                            <motion.div
-                              initial={{
-                                opacity: 0,
-                                scale: 0,
-                                rotate: -180,
-                              }}
-                              animate={
-                                isVisible
-                                  ? {
-                                      opacity: 1,
-                                      scale: 1,
-                                      rotate: 0,
-                                    }
-                                  : {
-                                      opacity: 0,
-                                      scale: 0,
-                                      rotate: -180,
-                                    }
-                              }
-                              transition={transition({
-                                delay: index * 0.15 + 0.6,
-                                type: "spring",
-                                bounce: 0.6,
-                              })}
-                            >
-                              <Star
-                                size={20}
-                                className="fill-yellow-400 text-yellow-400"
-                              />
-                            </motion.div>
-                          )}
-                        </motion.div>
-                        <motion.p
-                          className="text-gray-600 text-lg mb-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={
-                            isVisible
-                              ? { opacity: 1, x: 0 }
-                              : { opacity: 0, x: -20 }
-                          }
-                          transition={transition({
-                            duration: 0.5,
-                            delay: index * 0.15 + 0.5,
-                          })}
-                        >
-                          {award.organization}
-                        </motion.p>
-                        <motion.p
-                          className="text-sm text-gray-500 italic"
-                          initial={{ opacity: 0 }}
-                          animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-                          transition={transition({
-                            duration: 0.5,
-                            delay: index * 0.15 + 0.6,
-                          })}
-                        >
-                          {award.award}
-                        </motion.p>
-                      </div>
-                      <motion.span
-                        className="shrink-0 px-3 py-1 rounded-full bg-gray-100 border border-gray-200/60 text-sm font-medium text-gray-500"
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={
-                          isVisible
-                            ? { opacity: 1, scale: 1 }
-                            : { opacity: 0, scale: 0.85 }
-                        }
-                        transition={transition({
-                          duration: 0.5,
-                          delay: index * 0.15 + 0.4,
-                        })}
-                      >
-                        {award.year}
-                      </motion.span>
-                    </div>
-                    <motion.p
-                      className="text-gray-500"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={
-                        isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                      }
-                      transition={transition({
-                        duration: 0.6,
-                        delay: index * 0.15 + 0.7,
-                      })}
-                    >
-                      {award.description}
-                    </motion.p>
-                    {(() => {
-                      const images =
-                        "certificates" in award && award.certificates
-                          ? award.certificates
-                          : "certificate" in award && award.certificate
-                            ? [
-                                {
-                                  src: award.certificate,
-                                  alt: award.certificateAlt ?? "Award certificate",
-                                },
-                              ]
-                            : [];
-
-                      if (images.length === 0) return null;
-
-                      return (
-                        <div className="mt-6 space-y-3 w-full max-w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
-                          {images.map((image, imageIndex) => (
-                            <motion.div
-                              key={`${index}-${imageIndex}`}
-                              className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
-                              initial={{ opacity: 0, y: 16 }}
-                              animate={
-                                isVisible
-                                  ? { opacity: 1, y: 0 }
-                                  : { opacity: 0, y: 16 }
-                              }
-                              transition={transition({
-                                duration: 0.6,
-                                delay: index * 0.15 + 0.85 + imageIndex * 0.08,
-                              })}
-                            >
-                              <img
-                                src={image.src}
-                                alt={image.alt}
-                                className="block w-full h-auto max-w-full object-contain"
-                              />
-                            </motion.div>
-                          ))}
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </motion.div>
-
-              {index < awards.length - 1 && (
-                <motion.div
-                  className="absolute left-10 top-full h-8 w-0.5 bg-gradient-to-b from-gray-300 to-gray-200"
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={
-                    isVisible ? { scaleY: 1, opacity: 1 } : { scaleY: 0, opacity: 0 }
-                  }
-                  transition={transition({
-                    duration: 0.4,
-                    delay: index * 0.15 + 0.8,
-                  })}
-                  style={{ transformOrigin: "top" }}
-                />
-              )}
-            </motion.div>
-          ))}
-        </div>
+        <AwardSection
+          title={t.awards.offCampusSection}
+          awards={offCampusAwards}
+          sectionKey="off-campus"
+          isVisible={isVisible}
+          transition={transition}
+          viewImagesLabel={t.awards.viewImages}
+          hideImagesLabel={t.awards.hideImages}
+        />
       </div>
     </section>
   );

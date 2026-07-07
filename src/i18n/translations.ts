@@ -193,11 +193,35 @@ const en = {
   },
   awards: {
     title: "Awards & Honors",
+    schoolSection: "On Campus",
+    offCampusSection: "Off Campus",
+    viewImages: "View photos & certificates",
+    hideImages: "Hide photos & certificates",
     zhenfundTitle: "ZhenFund — AI Desmos",
     zhenfundBody:
       "is currently under application to ZhenFund. The project extends my AI-native build velocity—pairing intelligent graphing with the same product instincts recognized in my WeChat Global Innovation award and AIGC competition work.",
     zhenfundStatus: "Application in progress",
-    items: [
+    schoolItems: [
+      {
+        title: "AI Camp × WeChat Mini Program Innovation Challenge",
+        organization: "AI Camp × WeChat Mini Program",
+        description:
+          "Campus club AI Camp partnered with the WeChat Mini Program team for an on-campus competition. Our team WishRelay (心愿接力) — Ling Junyu, Zuo Yingxin, and Hu Kexin — won Second Prize.",
+        award: "Second Prize — Team WishRelay",
+        certificateAlt:
+          "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
+      },
+      {
+        title: "AP Calculus Star of the Subject",
+        organization: "Shanghai Soong Ching Ling School",
+        description:
+          "Named AP Calculus Star of the Subject for outstanding performance and contribution in AP Calculus during the 2025–2026 academic year.",
+        award: "AP Calculus Star — 2025–2026 Academic Year",
+        certificateAlt:
+          "Certificate of Honor — AP Calculus Star, Shanghai Soong Ching Ling School",
+      },
+    ] as AwardTranslation[],
+    offCampusItems: [
       {
         title: "IMMC — International Mathematical Modeling Challenge",
         organization: "IMMC International",
@@ -504,11 +528,33 @@ const zh: typeof en = {
   },
   awards: {
     title: "奖项与荣誉",
+    schoolSection: "校内",
+    offCampusSection: "校外",
+    viewImages: "查看照片与证书",
+    hideImages: "收起照片与证书",
     zhenfundTitle: "真格基金 — AI Desmos",
     zhenfundBody:
       "正在申请真格基金。该项目延续了我的 AI 原生开发节奏——智能绘图能力与微信全球创新挑战赛、AIGC 竞赛中展现的产品思维一脉相承。",
     zhenfundStatus: "申请进行中",
-    items: [
+    schoolItems: [
+      {
+        title: "AI Camp × 微信小程序创新大赛",
+        organization: "校内社团 AI Camp × 微信小程序",
+        description:
+          "校内社团 AI Camp 与微信小程序团队合作举办的校内比赛。我们团队 WishRelay（心愿接力）——灵俊宇、左盈欣、胡可昕——荣获二等奖。",
+        award: "二等奖 — WishRelay 团队",
+        certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
+      },
+      {
+        title: "AP 微积分学科之星",
+        organization: "上海宋庆龄学校",
+        description:
+          "在 2025–2026 学年中因 AP 微积分学科的突出表现与贡献，被评为「AP 微积分」学科之星。",
+        award: "AP 微积分学科之星 — 2025–2026 学年",
+        certificateAlt: "荣誉证书 — AP 微积分学科之星，上海宋庆龄学校",
+      },
+    ],
+    offCampusItems: [
       {
         title: "IMMC 国际数学建模挑战赛",
         organization: "IMMC 国际赛",
