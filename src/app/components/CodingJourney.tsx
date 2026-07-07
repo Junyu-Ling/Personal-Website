@@ -178,7 +178,7 @@ export function CodingJourney() {
       <div className="absolute top-32 left-8 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
       <div className="absolute top-32 right-8 w-14 h-14 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="w-full max-w-6xl mr-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -191,15 +191,15 @@ export function CodingJourney() {
               {t.journey.badge}
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl mb-4 text-gray-900 tracking-tight">
+          <h2 className="text-5xl md:text-7xl mb-4 text-gray-900 tracking-tight text-left">
             {t.journey.title}
           </h2>
-          <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl text-left">
             {t.journey.subtitle}
           </p>
         </motion.div>
 
-        <div className="relative">
+        <div className="relative w-full">
           <div className="absolute left-[1.65rem] md:left-[1.9rem] top-3 bottom-3 w-px bg-gradient-to-b from-gray-200 via-gray-300/70 to-gray-200 pointer-events-none" />
 
           <div>
