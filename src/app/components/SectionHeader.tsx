@@ -28,7 +28,7 @@ export function SectionHeader({
         <span>{badge}</span>
       </div>
       <h2 className="heading-display mb-4 overflow-visible text-center">{title}</h2>
-      <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl self-center text-center">
+      <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl self-center text-left">
         {subtitle}
       </p>
     </motion.div>

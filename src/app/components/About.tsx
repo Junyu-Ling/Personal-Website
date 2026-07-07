@@ -101,7 +101,7 @@ export function About() {
         </motion.div>
 
         <motion.div
-          className="space-y-8 max-w-4xl mx-auto text-center"
+          className="space-y-8 max-w-4xl mx-auto text-left"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.25 })}
