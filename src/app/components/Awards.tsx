@@ -357,7 +357,7 @@ function AwardSection({
 }
 
 export function Awards() {
-  const { t, locale } = useLanguage();
+  const { t } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
@@ -369,18 +369,6 @@ export function Awards() {
     t.awards.dukeCerts
   );
 
-  const zhenfundLead =
-    locale === "zh" ? (
-      <>
-        <strong className="text-white">AI Desmos</strong>
-        {t.awards.zhenfundBody}
-      </>
-    ) : (
-      <>
-        <strong className="text-white">AI Desmos</strong> {t.awards.zhenfundBody}
-      </>
-    );
-
   return (
     <section id="awards" className="section-shell bg-background section-divide" ref={ref}>
       <div className="container-site">
@@ -391,28 +379,6 @@ export function Awards() {
           icon={Sparkles}
           isVisible={isVisible}
         />
-
-        <motion.div
-          className="mb-12 p-6 md:p-8 bg-gray-900 text-white rounded-2xl border border-gray-800"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8, delay: 0.1 })}
-        >
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-white/10 rounded-xl shrink-0">
-              <Sparkles size={28} />
-            </div>
-            <div>
-              <h3 className="text-xl md:text-2xl mb-2">
-                {t.awards.zhenfundTitle}
-              </h3>
-              <p className="text-gray-300 leading-relaxed">{zhenfundLead}</p>
-              <p className="text-sm text-gray-400 mt-3 italic">
-                {t.awards.zhenfundStatus}
-              </p>
-            </div>
-          </div>
-        </motion.div>
 
         <AwardSection
           title={t.awards.schoolSection}

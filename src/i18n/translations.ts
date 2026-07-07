@@ -66,7 +66,7 @@ const en = {
     awardsHonors: "Awards & Honors",
     taglines: [
       "IMMC International Outstanding Award (O Award)",
-      "Building AI Desmos — applying to ZhenFund",
+      "Building AI Desmos",
       "WeChat Global Innovation Challenge — Third Prize",
       "ABRSM Piano Grade 7 · Collaborative accompanist",
     ],
@@ -80,7 +80,7 @@ const en = {
       "Desmos",
       "Physics",
       "Music",
-      "ZhenFund — AI Desmos",
+      "AI Desmos",
     ],
   },
   about: {
@@ -212,10 +212,6 @@ const en = {
     offCampusSection: "Off Campus",
     viewImages: "View photos & certificates",
     hideImages: "Hide photos & certificates",
-    zhenfundTitle: "ZhenFund — AI Desmos",
-    zhenfundBody:
-      "is currently under application to ZhenFund. The project extends my AI-native build velocity—pairing intelligent graphing with the same product instincts recognized in my WeChat Global Innovation award and AIGC competition work.",
-    zhenfundStatus: "Application in progress",
     schoolItems: [
       {
         title: "AI Camp × WeChat Mini Program Innovation Challenge",
@@ -337,8 +333,8 @@ const en = {
       {
         title: "AI-Powered Desmos",
         description:
-          "An intelligent graphing calculator powered by AI for advanced mathematical visualization. Currently applying to ZhenFund.",
-        tags: ["AI", "Mathematics", "ZhenFund"],
+          "An intelligent graphing calculator powered by AI for advanced mathematical visualization.",
+        tags: ["AI", "Mathematics", "Visualization"],
         category: "aiLearning",
         featured: true,
       },
@@ -455,7 +451,7 @@ const zh: typeof en = {
     awardsHonors: "奖项与荣誉",
     taglines: [
       "IMMC 国际特等奖 (O 奖)",
-      "正在构建 AI Desmos — 申请真格基金",
+      "正在构建 AI Desmos",
       "微信小程序全球创新挑战赛 — 全球三等奖",
       "英皇钢琴七级 · 常担任钢琴伴奏",
     ],
@@ -469,7 +465,7 @@ const zh: typeof en = {
       "Desmos",
       "物理",
       "音乐",
-      "真格基金 — AI Desmos",
+      "AI Desmos",
     ],
   },
   about: {
@@ -592,10 +588,6 @@ const zh: typeof en = {
     offCampusSection: "校外",
     viewImages: "查看照片与证书",
     hideImages: "收起照片与证书",
-    zhenfundTitle: "真格基金 — AI Desmos",
-    zhenfundBody:
-      "正在申请真格基金。该项目延续了我的 AI 原生开发节奏——智能绘图能力与微信全球创新挑战赛、AIGC 竞赛中展现的产品思维一脉相承。",
-    zhenfundStatus: "申请进行中",
     schoolItems: [
       {
         title: "AI Camp × 微信小程序创新大赛",
@@ -705,8 +697,8 @@ const zh: typeof en = {
       {
         title: "AI-Powered Desmos",
         description:
-          "AI 驱动的智能绘图计算器，支持高阶数学可视化。正在申请真格基金。",
-        tags: ["AI", "数学", "真格基金"],
+          "AI 驱动的智能绘图计算器，支持高阶数学可视化。",
+        tags: ["AI", "数学", "可视化"],
         category: "aiLearning",
         featured: true,
       },
