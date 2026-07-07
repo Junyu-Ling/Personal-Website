@@ -322,13 +322,6 @@ const en = {
         category: "featured",
       },
       {
-        title: "Store Management System",
-        description:
-          "A comprehensive website maintenance and management system for small businesses",
-        tags: ["React", "Admin Panel", "CMS"],
-        category: "featured",
-      },
-      {
         title: "AI-Powered Desmos",
         description:
           "An intelligent graphing calculator powered by AI for advanced mathematical visualization. Currently applying to ZhenFund.",
@@ -340,7 +333,7 @@ const en = {
         description:
           "A flashcard app I built while preparing for the TOEFL. Word cards help deepen my memory of each term, with built-in AI for smarter review and practice.",
         tags: ["TOEFL", "AI", "Flashcards", "Education"],
-        category: "aiLearning",
+        category: "featured",
       },
       {
         title: "GPA Calculator",
@@ -362,6 +355,13 @@ const en = {
           "A fast-paced endless runner inspired by the Chrome dinosaur game with fun power-ups",
         tags: ["Game Dev", "JavaScript", "Canvas"],
         category: "games",
+      },
+      {
+        title: "Store Management System",
+        description:
+          "A comprehensive website maintenance and management system for small businesses",
+        tags: ["React", "Admin Panel", "CMS"],
+        category: "webApps",
       },
       {
         title: "WishRelay",
@@ -668,12 +668,6 @@ const zh: typeof en = {
         category: "featured",
       },
       {
-        title: "店铺管理系统",
-        description: "面向小商家的网站维护与管理系统。",
-        tags: ["React", "管理后台", "CMS"],
-        category: "featured",
-      },
-      {
         title: "AI-Powered Desmos",
         description:
           "AI 驱动的智能绘图计算器，支持高阶数学可视化。正在申请真格基金。",
@@ -685,7 +679,7 @@ const zh: typeof en = {
         description:
           "备考托福时做的单词软件。通过单词卡片加深对每个词的印象，并接入内置 AI，让复习与练习更智能。",
         tags: ["托福", "AI", "单词卡片", "教育"],
-        category: "aiLearning",
+        category: "featured",
       },
       {
         title: "GPA 计算器",
@@ -705,6 +699,12 @@ const zh: typeof en = {
           "快节奏无尽跑酷，灵感来自 Chrome 小恐龙，含加速、护盾等道具。",
         tags: ["游戏开发", "JavaScript", "Canvas"],
         category: "games",
+      },
+      {
+        title: "店铺管理系统",
+        description: "面向小商家的网站维护与管理系统。",
+        tags: ["React", "管理后台", "CMS"],
+        category: "webApps",
       },
       {
         title: "WishRelay",

@@ -7,12 +7,12 @@ import type { ProjectItem } from "@/i18n/translations";
 
 const projectLinks = [
   "https://2048pro.figma.site",
-  "https://scs.figma.site",
   "https://ai-desmos.figma.site",
   "https://toefl-6666.vercel.app/",
   "https://gpa-calculator.figma.site/",
   "https://dragon.figma.site",
   "https://pony.figma.site",
+  "https://scs.figma.site",
   "https://wishrelay.figma.site",
   "https://api-check.figma.site",
   "https://echo-chamber-delta.vercel.app/",
@@ -20,12 +20,12 @@ const projectLinks = [
 
 const projectStyles = [
   { bg: "bg-blue-50", text: "text-blue-600" },
-  { bg: "bg-purple-50", text: "text-purple-600" },
   { bg: "bg-emerald-50", text: "text-emerald-600" },
   { bg: "bg-amber-50", text: "text-amber-600" },
   { bg: "bg-teal-50", text: "text-teal-600" },
   { bg: "bg-orange-50", text: "text-orange-600" },
   { bg: "bg-violet-50", text: "text-violet-600" },
+  { bg: "bg-purple-50", text: "text-purple-600" },
   { bg: "bg-rose-50", text: "text-rose-600" },
   { bg: "bg-cyan-50", text: "text-cyan-600" },
   { bg: "bg-indigo-50", text: "text-indigo-600" },
