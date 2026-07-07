@@ -3,18 +3,17 @@ import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-do
 import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { HeroTypewriterName } from "@/app/components/HeroTypewriterName";
+import { RotatingTagline } from "@/app/components/RotatingTagline";
+import { AnimatedCounter } from "@/app/components/AnimatedCounter";
 
-const statValues = ["10+", "10+", "17"];
-
-const quickLinkHrefs = [
-  "#about",
-  "#journey",
-  "#awards",
-  "#projects",
+const statValues = [
+  { value: 10, suffix: "+" },
+  { value: 10, suffix: "+" },
+  { value: 17, suffix: "" },
 ];
 
 export function Hero() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
@@ -24,17 +23,11 @@ export function Hero() {
   };
 
   const statLabels = [t.hero.stats.awards, t.hero.stats.projects, t.hero.stats.age];
-  const navLabels = [
-    t.nav.about,
-    t.nav.journey,
-    t.nav.awards,
-    t.nav.projects,
-  ];
 
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col justify-center relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center relative overflow-hidden pt-20"
       ref={ref}
     >
       {/* background */}
@@ -140,11 +133,16 @@ export function Hero() {
         </motion.div>
 
         {/* name */}
-        <HeroTypewriterName
-          text={t.hero.name}
-          active={isVisible}
-          className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[1.05] pb-[0.08em] mb-6"
-        />
+        <div className="w-full overflow-visible mb-2">
+          <HeroTypewriterName
+            key={locale}
+            text={t.hero.name}
+            active={isVisible}
+            className="text-[clamp(4rem,14vw,10rem)]"
+          />
+        </div>
+
+        <RotatingTagline lines={t.hero.taglines} active={isVisible} />
 
         <motion.div
           className="flex items-center gap-3 mb-10"
@@ -190,7 +188,7 @@ export function Hero() {
         >
           <motion.a
             href="#projects"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-gray-950 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/15"
+            className="btn-primary"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -199,7 +197,7 @@ export function Hero() {
           </motion.a>
           <motion.a
             href="#awards"
-            className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-gray-700 rounded-full border border-gray-300 bg-white/80 hover:border-gray-900 hover:text-gray-900 transition-colors backdrop-blur-sm"
+            className="btn-ghost"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -209,50 +207,33 @@ export function Hero() {
 
         {/* stats strip */}
         <motion.div
-          className="relative flex items-center gap-0 rounded-2xl border border-gray-200/80 bg-white/75 backdrop-blur-md overflow-hidden shadow-sm"
+          className="relative flex items-center gap-0 rounded-2xl border border-border bg-card/80 backdrop-blur-md overflow-hidden shadow-sm"
           initial={{ opacity: 0, y: 16 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ delay: 1.2, duration: 0.6 })}
         >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-200/80 via-sky-200/80 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-300/80 to-transparent dark:via-violet-500/40" />
           {statLabels.map((label, i) => (
             <div key={i} className="flex items-center">
               <div className="px-8 py-5 text-center">
-                <p className="text-2xl md:text-3xl font-semibold text-gray-950 leading-none">
-                  {statValues[i]}
+                <p className="text-2xl md:text-3xl font-semibold text-foreground leading-none">
+                  <AnimatedCounter
+                    value={statValues[i].value}
+                    suffix={statValues[i].suffix}
+                    active={isVisible}
+                  />
                 </p>
-                <p className="text-xs text-gray-500 mt-1.5 uppercase tracking-wider font-medium">
+                <p className="text-xs text-muted-foreground mt-1.5 uppercase tracking-wider font-medium">
                   {label}
                 </p>
               </div>
               {i < statLabels.length - 1 && (
-                <div className="w-px h-10 bg-gray-200 shrink-0" />
+                <div className="w-px h-10 bg-border shrink-0" />
               )}
             </div>
           ))}
         </motion.div>
       </div>
-
-      {/* nav quick links */}
-      <motion.nav
-        className="relative z-10 flex justify-center pb-10"
-        initial={{ opacity: 0 }}
-        animate={isVisible ? { opacity: 1 } : {}}
-        transition={transition({ delay: 1.35, duration: 0.6 })}
-        aria-label={t.nav.sections}
-      >
-        <div className="flex items-center gap-1 px-2 py-1.5 rounded-full border border-gray-200/80 bg-white/70 backdrop-blur-md shadow-sm">
-          {navLabels.map((label, i) => (
-            <a
-              key={quickLinkHrefs[i]}
-              href={quickLinkHrefs[i]}
-              className="text-xs px-4 py-2 rounded-full text-gray-500 hover:bg-gray-950 hover:text-white transition-all duration-200 font-medium"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </motion.nav>
 
       {/* skills ticker */}
       <motion.div

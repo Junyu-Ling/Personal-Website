@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SectionHeader } from "@/app/components/SectionHeader";
 import {
   apStudyFolders,
   filterStudyFolders,
@@ -292,34 +293,26 @@ export function StudyMaterials() {
   return (
     <section
       id="study-materials"
-      className="py-32 px-6 section-divide section-surface-alt"
+      className="section-shell section-divide section-surface-alt"
       ref={ref}
     >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8 })}
-          className="mb-10"
-        >
-          <p className="text-sm font-medium text-emerald-700 mb-2">
-            {t.studyMaterials.badge}
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-3">
-            {t.studyMaterials.title}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            {t.studyMaterials.subtitle}
-          </p>
-        </motion.div>
+      <div className="container-site max-w-7xl">
+        <SectionHeader
+          badge={t.studyMaterials.badge}
+          title={t.studyMaterials.title}
+          subtitle={t.studyMaterials.subtitle}
+          icon={FolderOpen}
+          isVisible={isVisible}
+          align="left"
+        />
 
         <motion.div
-          className="rounded-xl border border-gray-200/80 shadow-lg overflow-hidden bg-white"
+          className="rounded-2xl border border-border shadow-lg overflow-hidden bg-card"
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.15 })}
         >
-          <div className="flex items-center gap-2 px-4 py-2.5 bg-[#ececec] border-b border-gray-300/80">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-accent border-b border-border">
             <div className="flex gap-2">
               <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
               <span className="w-3 h-3 rounded-full bg-[#febc2e]" />

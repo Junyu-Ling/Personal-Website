@@ -1,11 +1,15 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 
-export function LanguageToggle() {
+type LanguageToggleProps = {
+  className?: string;
+};
+
+export function LanguageToggle({ className = "" }: LanguageToggleProps) {
   const { locale, setLocale, t } = useLanguage();
 
   return (
     <div
-      className="fixed top-5 right-5 z-[100] flex rounded-full border border-gray-200 bg-white/95 shadow-lg backdrop-blur-sm p-1"
+      className={`flex rounded-full border border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm p-1 shrink-0 ${className}`}
       role="group"
       aria-label={locale === "en" ? "Language" : "语言"}
     >

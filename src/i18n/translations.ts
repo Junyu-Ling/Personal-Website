@@ -32,6 +32,7 @@ export type ProjectItem = {
 const en = {
   lang: { en: "EN", zh: "中文", switchTo: "Switch to Chinese" },
   nav: {
+    brand: "Junyu Ling",
     home: "Home",
     about: "About",
     journey: "Journey",
@@ -41,6 +42,10 @@ const en = {
     projects: "Projects",
     sections: "Site navigation",
     scrollAbout: "Scroll to about section",
+  },
+  theme: {
+    light: "Switch to light mode",
+    dark: "Switch to dark mode",
   },
   hero: {
     name: "Junyu Ling",
@@ -59,6 +64,12 @@ const en = {
     },
     viewProjects: "View Projects",
     awardsHonors: "Awards & Honors",
+    taglines: [
+      "IMMC International Outstanding Award (O Award)",
+      "Building AI Desmos — applying to ZhenFund",
+      "WeChat Global Innovation Challenge — Third Prize",
+      "ABRSM Piano Grade 7 · Collaborative accompanist",
+    ],
     skills: [
       "React",
       "TypeScript",
@@ -194,7 +205,9 @@ const en = {
     previewError: "Preview failed. Please download the file instead.",
   },
   awards: {
+    badge: "Recognition",
     title: "Awards & Honors",
+    subtitle: "Competition results, certificates, and milestones across campus and beyond.",
     schoolSection: "On Campus",
     offCampusSection: "Off Campus",
     viewImages: "View photos & certificates",
@@ -315,6 +328,7 @@ const en = {
       "A collection of projects showcasing my journey in web development and design.",
     viewProject: "View Project",
     categories: {
+      all: "All",
       aiLearning: "AI & Learning",
       games: "Games",
       webApps: "Web Apps",
@@ -407,6 +421,7 @@ const en = {
 const zh: typeof en = {
   lang: { en: "EN", zh: "中文", switchTo: "切换到英文" },
   nav: {
+    brand: "灵俊宇",
     home: "首页",
     about: "关于",
     journey: "编程历程",
@@ -416,6 +431,10 @@ const zh: typeof en = {
     projects: "项目作品",
     sections: "站点导航",
     scrollAbout: "滚动到关于部分",
+  },
+  theme: {
+    light: "切换到浅色模式",
+    dark: "切换到深色模式",
   },
   hero: {
     name: "灵俊宇",
@@ -434,6 +453,12 @@ const zh: typeof en = {
     },
     viewProjects: "查看项目",
     awardsHonors: "奖项与荣誉",
+    taglines: [
+      "IMMC 国际特等奖 (O 奖)",
+      "正在构建 AI Desmos — 申请真格基金",
+      "微信小程序全球创新挑战赛 — 全球三等奖",
+      "英皇钢琴七级 · 常担任钢琴伴奏",
+    ],
     skills: [
       "React",
       "TypeScript",
@@ -560,7 +585,9 @@ const zh: typeof en = {
     previewError: "预览失败，请直接下载文件。",
   },
   awards: {
+    badge: "荣誉认可",
     title: "奖项与荣誉",
+    subtitle: "涵盖校内与校外的竞赛成绩、证书与重要里程碑。",
     schoolSection: "校内",
     offCampusSection: "校外",
     viewImages: "查看照片与证书",
@@ -668,6 +695,7 @@ const zh: typeof en = {
     subtitle: "记录我在 Web 开发与产品设计上的探索与实践。",
     viewProject: "查看项目",
     categories: {
+      all: "全部",
       aiLearning: "AI 与学习",
       games: "游戏",
       webApps: "Web 应用",

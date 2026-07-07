@@ -32,6 +32,8 @@ import wechatMiniprogramCarbonFootprintAward from "@/assets/wechat-miniprogram-c
 import aigcShortVideoThirdPrize from "@/assets/aigc-short-video-third-prize.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
+import { ImageLightbox } from "@/app/components/ImageLightbox";
+import { SectionHeader } from "@/app/components/SectionHeader";
 import type { AwardTranslation } from "@/i18n/translations";
 
 type AwardMeta = {
@@ -40,6 +42,8 @@ type AwardMeta = {
   featured?: boolean;
   certificate?: string;
   certificates?: { src: string }[];
+  iconClass: string;
+  yearClass: string;
 };
 
 const schoolMeta: AwardMeta[] = [
@@ -47,11 +51,15 @@ const schoolMeta: AwardMeta[] = [
     icon: AppWindow,
     year: "2025",
     certificate: aiCampWishrelayAward,
+    iconClass: "bg-sky-50 text-sky-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: GraduationCap,
     year: "2026",
     certificate: apCalculusStarCertificate,
+    iconClass: "bg-emerald-50 text-emerald-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
 ];
 
@@ -61,25 +69,58 @@ const offCampusMeta: AwardMeta[] = [
     year: "2026",
     featured: true,
     certificate: immcOAwardCertificate,
+    iconClass: "bg-violet-50 text-violet-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
-  { icon: Zap, year: "2026", featured: true },
-  { icon: Trophy, year: "2025", featured: true, certificate: wechatMiniprogramCarbonFootprintAward },
+  {
+    icon: Zap,
+    year: "2026",
+    featured: true,
+    iconClass: "bg-amber-50 text-amber-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+  },
+  {
+    icon: Trophy,
+    year: "2025",
+    featured: true,
+    certificate: wechatMiniprogramCarbonFootprintAward,
+    iconClass: "bg-emerald-50 text-emerald-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+  },
   {
     icon: Calculator,
     year: "2026",
     certificate: immcMAwardCertificate,
+    iconClass: "bg-indigo-50 text-indigo-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Award,
     year: "2025",
     certificate: amc12Certificate,
+    iconClass: "bg-blue-50 text-blue-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
-  { icon: Palette, year: "2025", certificate: aiMeetsHeritageSugarSilkAward },
-  { icon: Video, year: "2025", certificate: aigcShortVideoThirdPrize },
+  {
+    icon: Palette,
+    year: "2025",
+    certificate: aiMeetsHeritageSugarSilkAward,
+    iconClass: "bg-rose-50 text-rose-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+  },
+  {
+    icon: Video,
+    year: "2025",
+    certificate: aigcShortVideoThirdPrize,
+    iconClass: "bg-cyan-50 text-cyan-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+  },
   {
     icon: Rocket,
     year: "2025",
     certificate: himcmHonorableMentionCertificate,
+    iconClass: "bg-orange-50 text-orange-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Presentation,
@@ -90,6 +131,8 @@ const offCampusMeta: AwardMeta[] = [
       { src: dukeBestVisualDesignSchools },
       { src: dukeFourierPoster },
     ],
+    iconClass: "bg-purple-50 text-purple-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
 ];
 
@@ -141,6 +184,7 @@ function AwardCard({
   hideImagesLabel,
 }: AwardCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const Icon = award.icon;
 
   const images =
@@ -160,7 +204,9 @@ function AwardCard({
       })}
     >
       <motion.div
-        className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden"
+        className={`bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden ${
+          award.featured ? "ring-1 ring-amber-200/70" : ""
+        }`}
         whileHover={{ y: -4 }}
       >
         <div className="flex items-start gap-4 sm:gap-6 relative z-10 min-w-0">
@@ -175,8 +221,8 @@ function AwardCard({
             })}
           >
             <motion.div
-              className="p-4 bg-gray-900 text-white rounded-xl"
-              whileHover={{ rotate: 360 }}
+              className={`p-3 rounded-xl ${award.iconClass}`}
+              whileHover={{ rotate: 360, scale: 1.05 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               <Icon size={28} />
@@ -195,7 +241,9 @@ function AwardCard({
                 </p>
                 <p className="text-sm text-gray-500 italic">{award.award}</p>
               </div>
-              <span className="shrink-0 px-3 py-1 rounded-full bg-gray-100 border border-gray-200/60 text-sm font-medium text-gray-500">
+              <span
+                className={`shrink-0 px-3 py-1 rounded-full border text-sm font-medium ${award.yearClass}`}
+              >
                 {award.year}
               </span>
             </div>
@@ -229,20 +277,29 @@ function AwardCard({
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       {images.map((image, imageIndex) => (
-                        <div
+                        <button
                           key={imageIndex}
-                          className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
+                          type="button"
+                          onClick={() => setLightboxIndex(imageIndex)}
+                          className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm hover:ring-2 hover:ring-violet-300/50 transition-all text-left"
                         >
                           <img
                             src={image.src}
                             alt={image.alt}
                             className="block w-full h-auto max-w-full object-contain"
                           />
-                        </div>
+                        </button>
                       ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                <ImageLightbox
+                  images={images}
+                  index={lightboxIndex}
+                  onClose={() => setLightboxIndex(null)}
+                  onChange={setLightboxIndex}
+                />
               </div>
             )}
           </div>
@@ -270,10 +327,15 @@ function AwardSection({
   transition,
   viewImagesLabel,
   hideImagesLabel,
-}: AwardSectionProps) {
+  variant,
+}: AwardSectionProps & { variant: "school" | "off-campus" }) {
   return (
-    <div className="mb-16 last:mb-0">
-      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 tracking-tight">
+    <div
+      className={`mb-16 last:mb-0 ${
+        variant === "school" ? "award-section-school" : "award-section-offcampus"
+      }`}
+    >
+      <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-8 tracking-tight">
         {title}
       </h3>
       <div className="space-y-6">
@@ -320,16 +382,16 @@ export function Awards() {
     );
 
   return (
-    <section id="awards" className="min-h-screen py-32 px-6 bg-white section-divide" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          className="text-5xl md:text-7xl mb-20 tracking-tight"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8 })}
-        >
-          {t.awards.title}
-        </motion.h2>
+    <section id="awards" className="section-shell bg-background section-divide" ref={ref}>
+      <div className="container-site">
+        <SectionHeader
+          badge={t.awards.badge}
+          title={t.awards.title}
+          subtitle={t.awards.subtitle}
+          icon={Sparkles}
+          isVisible={isVisible}
+          align="left"
+        />
 
         <motion.div
           className="mb-12 p-6 md:p-8 bg-gray-900 text-white rounded-2xl border border-gray-800"
@@ -361,6 +423,7 @@ export function Awards() {
           transition={transition}
           viewImagesLabel={t.awards.viewImages}
           hideImagesLabel={t.awards.hideImages}
+          variant="school"
         />
 
         <AwardSection
@@ -371,6 +434,7 @@ export function Awards() {
           transition={transition}
           viewImagesLabel={t.awards.viewImages}
           hideImagesLabel={t.awards.hideImages}
+          variant="off-campus"
         />
       </div>
     </section>

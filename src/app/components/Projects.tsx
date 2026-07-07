@@ -19,16 +19,76 @@ const projectLinks = [
 ];
 
 const projectStyles = [
-  { bg: "bg-emerald-50", text: "text-emerald-600" },
-  { bg: "bg-amber-50", text: "text-amber-600" },
-  { bg: "bg-teal-50", text: "text-teal-600" },
-  { bg: "bg-blue-50", text: "text-blue-600" },
-  { bg: "bg-orange-50", text: "text-orange-600" },
-  { bg: "bg-violet-50", text: "text-violet-600" },
-  { bg: "bg-purple-50", text: "text-purple-600" },
-  { bg: "bg-rose-50", text: "text-rose-600" },
-  { bg: "bg-cyan-50", text: "text-cyan-600" },
-  { bg: "bg-indigo-50", text: "text-indigo-600" },
+  {
+    bg: "bg-emerald-50",
+    text: "text-emerald-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-emerald-50 has-[.project-cta:hover]:border-emerald-200/80",
+    btnHover: "hover:bg-emerald-600 hover:border-emerald-600 hover:text-white",
+  },
+  {
+    bg: "bg-amber-50",
+    text: "text-amber-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-amber-50 has-[.project-cta:hover]:border-amber-200/80",
+    btnHover: "hover:bg-amber-500 hover:border-amber-500 hover:text-white",
+  },
+  {
+    bg: "bg-teal-50",
+    text: "text-teal-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-teal-50 has-[.project-cta:hover]:border-teal-200/80",
+    btnHover: "hover:bg-teal-600 hover:border-teal-600 hover:text-white",
+  },
+  {
+    bg: "bg-blue-50",
+    text: "text-blue-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-blue-50 has-[.project-cta:hover]:border-blue-200/80",
+    btnHover: "hover:bg-blue-600 hover:border-blue-600 hover:text-white",
+  },
+  {
+    bg: "bg-orange-50",
+    text: "text-orange-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-orange-50 has-[.project-cta:hover]:border-orange-200/80",
+    btnHover: "hover:bg-orange-500 hover:border-orange-500 hover:text-white",
+  },
+  {
+    bg: "bg-violet-50",
+    text: "text-violet-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-violet-50 has-[.project-cta:hover]:border-violet-200/80",
+    btnHover: "hover:bg-violet-600 hover:border-violet-600 hover:text-white",
+  },
+  {
+    bg: "bg-purple-50",
+    text: "text-purple-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-purple-50 has-[.project-cta:hover]:border-purple-200/80",
+    btnHover: "hover:bg-purple-600 hover:border-purple-600 hover:text-white",
+  },
+  {
+    bg: "bg-rose-50",
+    text: "text-rose-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-rose-50 has-[.project-cta:hover]:border-rose-200/80",
+    btnHover: "hover:bg-rose-600 hover:border-rose-600 hover:text-white",
+  },
+  {
+    bg: "bg-cyan-50",
+    text: "text-cyan-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-cyan-50 has-[.project-cta:hover]:border-cyan-200/80",
+    btnHover: "hover:bg-cyan-600 hover:border-cyan-600 hover:text-white",
+  },
+  {
+    bg: "bg-indigo-50",
+    text: "text-indigo-600",
+    cardHover:
+      "has-[.project-cta:hover]:bg-indigo-50 has-[.project-cta:hover]:border-indigo-200/80",
+    btnHover: "hover:bg-indigo-600 hover:border-indigo-600 hover:text-white",
+  },
 ];
 
 const categoryOrder: ProjectItem["category"][] = [
@@ -67,11 +127,11 @@ function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
   return (
     <motion.div variants={cardVariants} className="group relative h-full">
       <motion.div
-        className={`relative h-full bg-white rounded-2xl p-8 border shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col ${
+        className={`relative h-full bg-white rounded-2xl p-8 border shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col ${
           isFeatured
             ? "border-amber-200/70 ring-1 ring-amber-100/50"
             : "border-gray-200/70"
-        }`}
+        } ${style.cardHover}`}
         whileHover={{ y: -6 }}
       >
         <div className="relative z-10 flex flex-col h-full">
@@ -108,7 +168,7 @@ function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
               href={projectLinks[index]}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between w-full px-5 py-3 bg-gray-100 hover:bg-gray-900 text-gray-800 hover:text-white rounded-full border border-gray-200/60 transition-all duration-300 group/btn"
+              className={`project-cta flex items-center justify-between w-full px-5 py-3 bg-gray-100 text-gray-800 rounded-full border border-gray-200/60 transition-all duration-300 group/btn ${style.btnHover}`}
               whileTap={{ scale: 0.98 }}
             >
               <span className="font-medium text-sm">{viewProjectLabel}</span>
@@ -152,7 +212,7 @@ export function Projects() {
             </span>
           </div>
 
-          <h2 className="text-5xl md:text-7xl mb-6 text-gray-900 tracking-tight pb-2">
+          <h2 className="text-5xl md:text-7xl mb-6 text-gray-900 tracking-tight leading-[1.08] pb-[0.06em]">
             {t.projects.title}
           </h2>
           <p className="text-xl text-gray-500 max-w-2xl">

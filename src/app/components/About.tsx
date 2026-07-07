@@ -3,6 +3,7 @@ import { Mail, MapPin, Briefcase, Music, Sparkles } from "lucide-react";
 import profileImage from "@/assets/profile.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SectionHeader } from "@/app/components/SectionHeader";
 
 const contactMeta = [
   { icon: Mail, color: "text-violet-600" },
@@ -27,7 +28,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="min-h-screen py-32 px-6 relative overflow-hidden bg-white section-divide"
+      className="section-shell relative overflow-hidden bg-background section-divide"
       ref={ref}
     >
       {/* background */}
@@ -47,29 +48,18 @@ export function About() {
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
       <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8 })}
-          className="mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-gray-200/70 shadow-sm backdrop-blur-sm mb-6">
-            <Sparkles className="text-violet-500 w-4 h-4" />
-            <span className="text-sm font-medium text-gray-600">
-              {t.about.badge}
-            </span>
-          </div>
-          <h2 className="text-5xl md:text-7xl mb-4 tracking-tight">
-            {t.about.title}
-          </h2>
-          <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl">
-            {t.about.subtitle}
-          </p>
-        </motion.div>
+      <div className="container-site relative z-10">
+        <SectionHeader
+          badge={t.about.badge}
+          title={t.about.title}
+          subtitle={t.about.subtitle}
+          icon={Sparkles}
+          isVisible={isVisible}
+          align="left"
+        />
 
         <motion.div
-          className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-gray-200/60"
+          className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-border"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.1 })}
@@ -79,7 +69,7 @@ export function About() {
             <motion.img
               src={profileImage}
               alt={t.about.profileAlt}
-              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-lg shadow-gray-200/60"
+              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
             />
@@ -87,7 +77,7 @@ export function About() {
 
           <div className="min-w-0 flex-1 text-center sm:text-left">
             <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
-            <p className="text-gray-400 mb-8">{t.hero.role}</p>
+            <p className="text-muted-foreground mb-8">{t.hero.role}</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
               {contactItems.map((item, index) => {
@@ -97,9 +87,9 @@ export function About() {
                   <div key={item.label} className="flex items-start gap-3 min-w-0">
                     <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
                     <div className="min-w-0">
-                      <p className="text-sm text-gray-400 mb-0.5">{item.label}</p>
+                      <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
                       <p
-                        className={`text-gray-700 ${item.breakAll ? "break-all" : ""}`}
+                        className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
                       >
                         {item.value}
                       </p>
@@ -112,14 +102,14 @@ export function About() {
         </motion.div>
 
         <motion.div
-          className="space-y-8 max-w-4xl mx-auto px-1 sm:px-2 md:px-0"
+          className="space-y-8 max-w-4xl"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.25 })}
         >
-          <p className="text-xl text-gray-600 leading-relaxed">{t.about.p1}</p>
-          <p className="text-xl text-gray-600 leading-relaxed">{t.about.p2}</p>
-          <p className="text-xl text-gray-600 leading-relaxed">{t.about.p3}</p>
+          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p1}</p>
+          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p2}</p>
+          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p3}</p>
         </motion.div>
       </div>
     </section>

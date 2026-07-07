@@ -42,9 +42,9 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.13 0.01 280);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
+  --card: oklch(0.17 0.012 280);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -137,28 +137,35 @@
     font-size: var(--font-size);
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    overflow: visible;
+  }
+
   h1 {
     font-size: var(--text-2xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.08;
   }
 
   h2 {
     font-size: var(--text-xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.08;
   }
 
   h3 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   h4 {
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   label {
@@ -225,6 +232,68 @@
 
 .section-surface-alt {
   background-color: rgb(248 250 252 / 0.85);
+}
+
+.dark .section-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.dark .section-divide {
+  border-top-color: rgb(255 255 255 / 0.08);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.dark .section-surface-alt {
+  background-color: oklch(0.11 0.012 280 / 0.95);
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.heading-display {
+  @apply text-5xl md:text-7xl tracking-tight text-foreground font-semibold leading-[1.08] pb-[0.06em];
+}
+
+.section-shell {
+  @apply py-36 md:py-40 px-6;
+}
+
+.container-site {
+  @apply w-full max-w-6xl mx-auto;
+}
+
+.badge-pill {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/90 border border-border shadow-sm backdrop-blur-sm text-sm font-medium text-muted-foreground;
+}
+
+.card-surface {
+  @apply rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground text-sm font-medium rounded-full hover:opacity-90 transition-opacity shadow-lg;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-full border border-border bg-card/80 text-foreground hover:bg-accent transition-colors backdrop-blur-sm;
+}
+
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.award-section-school {
+  @apply rounded-3xl border border-sky-200/60 bg-sky-50/40 dark:bg-sky-950/20 dark:border-sky-900/40 p-6 md:p-8;
+}
+
+.award-section-offcampus {
+  @apply rounded-3xl border border-violet-200/60 bg-violet-50/35 dark:bg-violet-950/15 dark:border-violet-900/40 p-6 md:p-8;
 }
 
 .scrollbar-none {

@@ -191,7 +191,7 @@ export function CodingJourney() {
               {t.journey.badge}
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl mb-4 text-gray-900 tracking-tight text-left">
+          <h2 className="text-5xl md:text-7xl mb-4 text-gray-900 tracking-tight text-left leading-[1.08] pb-[0.06em]">
             {t.journey.title}
           </h2>
           <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl text-left">

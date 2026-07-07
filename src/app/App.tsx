@@ -5,13 +5,14 @@ import { StudyMaterials } from "@/app/components/StudyMaterials";
 import { Awards } from "@/app/components/Awards";
 import { Projects } from "@/app/components/Projects";
 import { Footer } from "@/app/components/Footer";
-import { LanguageToggle } from "@/app/components/LanguageToggle";
+import { SiteNav } from "@/app/components/SiteNav";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
 export default function App() {
   return (
     <LanguageProvider>
-      <LanguageToggle />
+      <SiteNav />
+      <div className="grain-overlay" aria-hidden="true" />
       <div className="min-h-screen bg-white text-gray-900">
         <Hero />
         <About />
