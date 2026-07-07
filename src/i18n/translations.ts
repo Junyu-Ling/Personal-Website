@@ -221,7 +221,7 @@ const en = {
         title: "AI Camp × WeChat Mini Program Innovation Challenge",
         organization: "AI Camp × WeChat Mini Program",
         description:
-          "Campus club AI Camp partnered with the WeChat Mini Program team for an on-campus competition. Our team WishRelay (心愿接力) — Ling Junyu, Zuo Yingxin, and Hu Kexin — won Second Prize.",
+          "Campus club AI Camp partnered with the WeChat Mini Program team for an on-campus competition. Our team WishRelay — Ling Junyu, Zuo Yingxin, and Hu Kexin — won Second Prize.",
         award: "Second Prize — Team WishRelay",
         certificateAlt:
           "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
@@ -601,8 +601,8 @@ const zh: typeof en = {
         title: "AI Camp × 微信小程序创新大赛",
         organization: "校内社团 AI Camp × 微信小程序",
         description:
-          "校内社团 AI Camp 与微信小程序团队合作举办的校内比赛。我们团队 WishRelay（心愿接力）——灵俊宇、左盈欣、胡可昕——荣获二等奖。",
-        award: "二等奖 — WishRelay 团队",
+          "校内社团 AI Camp 与微信小程序团队合作举办的校内比赛。我们团队心愿接力——灵俊宇、左盈欣、胡可昕——荣获二等奖。",
+        award: "二等奖 — 心愿接力团队",
         certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
       },
       {
@@ -750,8 +750,8 @@ const zh: typeof en = {
         category: "webApps",
       },
       {
-        title: "WishRelay",
-        description: "微信心愿传递小程序，现已提供 Web 版本。",
+        title: "心愿接力",
+        description: "微信心愿接力小程序，现已提供 Web 版本。",
         tags: ["小程序", "社交", "Web"],
         category: "webApps",
       },

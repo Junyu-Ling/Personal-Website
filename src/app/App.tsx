@@ -13,7 +13,7 @@ export default function App() {
     <LanguageProvider>
       <SiteNav />
       <div className="grain-overlay" aria-hidden="true" />
-      <div className="min-h-screen bg-white text-gray-900">
+      <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
         <Hero />
         <About />
         <CodingJourney />
