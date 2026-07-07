@@ -296,7 +296,7 @@ export function StudyMaterials() {
       className="section-shell section-divide section-surface-alt"
       ref={ref}
     >
-      <div className="container-site max-w-7xl">
+      <div className="container-site">
         <SectionHeader
           badge={t.studyMaterials.badge}
           title={t.studyMaterials.title}
