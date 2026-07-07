@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
-const sectionIds = [
-  "home",
+const railSectionIds = [
   "about",
   "journey",
   "study-materials",
@@ -12,41 +11,16 @@ const sectionIds = [
   "projects",
 ] as const;
 
-type SectionId = (typeof sectionIds)[number];
+type RailSectionId = (typeof railSectionIds)[number];
 
-function getMaxScroll() {
-  return Math.max(
-    0,
-    document.documentElement.scrollHeight - window.innerHeight
-  );
-}
-
-function getSectionAnchor(id: SectionId) {
-  const element = document.getElementById(id);
-  const maxScroll = getMaxScroll();
-  if (!element || maxScroll <= 0) return 0;
-
-  const top = element.getBoundingClientRect().top + window.scrollY;
-  return Math.min(1, Math.max(0, top / maxScroll));
-}
-
-function buildEvenAnchors() {
-  return Object.fromEntries(
-    sectionIds.map((id, index) => [
-      id,
-      sectionIds.length === 1 ? 0 : index / (sectionIds.length - 1),
-    ])
-  ) as Record<SectionId, number>;
-}
+const scrollSpyIds = ["home", ...railSectionIds];
 
 export function PageProgressRail() {
-  const { t, locale } = useLanguage();
-  const activeId = useScrollSpy([...sectionIds]);
+  const { t } = useLanguage();
+  const activeId = useScrollSpy(scrollSpyIds);
   const [progress, setProgress] = useState(0);
-  const [anchors, setAnchors] = useState<Record<SectionId, number>>(buildEvenAnchors);
 
-  const labels: Record<SectionId, string> = {
-    home: t.nav.home,
+  const labels: Record<RailSectionId, string> = {
     about: t.nav.about,
     journey: t.nav.journey,
     "study-materials": t.nav.studyMaterials,
@@ -54,91 +28,72 @@ export function PageProgressRail() {
     projects: t.nav.projects,
   };
 
-  const measure = useCallback(() => {
-    const maxScroll = getMaxScroll();
-    setProgress(maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 0);
-    setAnchors(
-      Object.fromEntries(
-        sectionIds.map((id) => [id, getSectionAnchor(id)])
-      ) as Record<SectionId, number>
-    );
-  }, []);
-
   useEffect(() => {
-    measure();
-
-    const onScroll = () => {
-      const maxScroll = getMaxScroll();
+    const updateProgress = () => {
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
       setProgress(maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 0);
     };
 
-    const delayedMeasure = window.setTimeout(measure, 300);
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", measure);
-    window.addEventListener("load", measure);
-
-    const resizeObserver = new ResizeObserver(measure);
-    resizeObserver.observe(document.documentElement);
-
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
     return () => {
-      window.clearTimeout(delayedMeasure);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", measure);
-      window.removeEventListener("load", measure);
-      resizeObserver.disconnect();
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
     };
-  }, [locale, measure]);
+  }, []);
 
   return (
     <nav
-      className="fixed right-6 xl:right-10 top-1/2 z-[85] hidden -translate-y-1/2 lg:block"
+      className="fixed right-5 xl:right-8 top-1/2 z-[85] hidden -translate-y-1/2 lg:block"
       aria-label={t.nav.sections}
     >
-      <div className="relative h-[min(58vh,26rem)] w-[7.5rem]">
+      <div className="relative h-64 w-4">
         <div
-          className="absolute right-0 top-0 bottom-0 w-px rounded-full bg-gray-200/70"
+          className="absolute inset-y-0 right-0 w-px rounded-full bg-gray-200/80"
           aria-hidden="true"
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-px overflow-hidden rounded-full"
+          className="absolute inset-y-0 right-0 w-px overflow-hidden rounded-full"
           aria-hidden="true"
         >
           <motion.div
-            className="h-full w-full origin-top rounded-full bg-gray-900/75"
+            className="h-full w-full origin-top rounded-full bg-gray-900/80"
             style={{ scaleY: progress }}
+            transition={{ duration: 0.12, ease: "easeOut" }}
           />
         </div>
 
-        {sectionIds.map((id) => {
+        {railSectionIds.map((id, index) => {
           const isActive = activeId === id;
-          const anchor = anchors[id] ?? 0;
+          const topPercent =
+            railSectionIds.length === 1
+              ? 0
+              : (index / (railSectionIds.length - 1)) * 100;
 
           return (
             <a
               key={id}
               href={`#${id}`}
-              className="group absolute right-0 flex -translate-y-1/2 items-center justify-end gap-2.5"
-              style={{ top: `${anchor * 100}%` }}
+              className="absolute right-0 flex h-4 w-4 -translate-y-1/2 translate-x-1/2 items-center justify-center"
+              style={{ top: `${topPercent}%` }}
               aria-label={labels[id]}
               aria-current={isActive ? "true" : undefined}
+              title={labels[id]}
             >
-              <span
-                className={`max-w-[5.25rem] truncate text-right text-[11px] font-medium tracking-wide transition-all duration-200 ${
+              <motion.span
+                className={`block rounded-full transition-colors ${
                   isActive
-                    ? "translate-x-0 text-gray-900 opacity-100"
-                    : "translate-x-1 text-gray-500 opacity-0 group-hover:translate-x-0 group-hover:opacity-75 group-focus-visible:translate-x-0 group-focus-visible:opacity-75"
+                    ? "bg-gray-900"
+                    : "border border-gray-300/90 bg-white/90"
                 }`}
-              >
-                {labels[id]}
-              </span>
-
-              <span
-                className={`shrink-0 rounded-full transition-all duration-200 ${
-                  isActive
-                    ? "h-2 w-2 bg-gray-900 shadow-[0_0_0_2px_rgba(255,255,255,1)]"
-                    : "h-1.5 w-1.5 bg-gray-300 group-hover:bg-gray-500"
-                }`}
+                animate={{
+                  width: isActive ? 10 : 6,
+                  height: isActive ? 10 : 6,
+                }}
+                whileHover={!isActive ? { scale: 1.12 } : undefined}
+                transition={{ type: "spring", stiffness: 420, damping: 30 }}
               />
             </a>
           );
