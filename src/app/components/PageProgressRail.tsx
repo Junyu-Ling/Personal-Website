@@ -92,48 +92,57 @@ export function PageProgressRail() {
 
   return (
     <nav
-      className="fixed right-5 xl:right-8 top-1/2 z-[85] hidden -translate-y-1/2 lg:block"
+      className="fixed right-6 xl:right-10 top-1/2 z-[85] hidden -translate-y-1/2 lg:block"
       aria-label={t.nav.sections}
     >
-      <div className="rounded-full border border-gray-200/80 bg-white/90 px-2 py-3 shadow-sm backdrop-blur-md">
-        <div className="relative h-[min(56vh,24rem)] w-5">
-          <div
-            className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 overflow-hidden rounded-full bg-gray-200/90"
-            aria-hidden="true"
-          >
-            <motion.div
-              className="h-full w-full origin-top bg-gray-800"
-              style={{ scaleY: progress }}
-            />
-          </div>
-
-          {sectionIds.map((id) => {
-            const isActive = activeId === id;
-            const anchor = anchors[id] ?? 0;
-
-            return (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="absolute left-1/2 z-10 flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-                style={{ top: `${anchor * 100}%` }}
-                aria-label={labels[id]}
-                aria-current={isActive ? "true" : undefined}
-                title={labels[id]}
-              >
-                {isActive ? (
-                  <motion.span
-                    layoutId="page-progress-indicator"
-                    className="block h-5 w-1.5 rounded-full bg-gray-900 ring-2 ring-white"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                ) : (
-                  <span className="block h-1.5 w-1.5 rounded-full bg-white ring-1 ring-gray-300 transition-colors hover:ring-gray-500" />
-                )}
-              </a>
-            );
-          })}
+      <div className="relative h-[min(58vh,26rem)] w-[7.5rem]">
+        <div
+          className="absolute right-0 top-0 bottom-0 w-px rounded-full bg-gray-200/70"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute right-0 top-0 bottom-0 w-px overflow-hidden rounded-full"
+          aria-hidden="true"
+        >
+          <motion.div
+            className="h-full w-full origin-top rounded-full bg-gray-900/75"
+            style={{ scaleY: progress }}
+          />
         </div>
+
+        {sectionIds.map((id) => {
+          const isActive = activeId === id;
+          const anchor = anchors[id] ?? 0;
+
+          return (
+            <a
+              key={id}
+              href={`#${id}`}
+              className="group absolute right-0 flex -translate-y-1/2 items-center justify-end gap-2.5"
+              style={{ top: `${anchor * 100}%` }}
+              aria-label={labels[id]}
+              aria-current={isActive ? "true" : undefined}
+            >
+              <span
+                className={`max-w-[5.25rem] truncate text-right text-[11px] font-medium tracking-wide transition-all duration-200 ${
+                  isActive
+                    ? "translate-x-0 text-gray-900 opacity-100"
+                    : "translate-x-1 text-gray-500 opacity-0 group-hover:translate-x-0 group-hover:opacity-75 group-focus-visible:translate-x-0 group-focus-visible:opacity-75"
+                }`}
+              >
+                {labels[id]}
+              </span>
+
+              <span
+                className={`shrink-0 rounded-full transition-all duration-200 ${
+                  isActive
+                    ? "h-2 w-2 bg-gray-900 shadow-[0_0_0_2px_rgba(255,255,255,1)]"
+                    : "h-1.5 w-1.5 bg-gray-300 group-hover:bg-gray-500"
+                }`}
+              />
+            </a>
+          );
+        })}
       </div>
     </nav>
   );
