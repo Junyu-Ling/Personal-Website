@@ -3,7 +3,7 @@ import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-do
 import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const statValues = ["9+", "9+", "17"];
+const statValues = ["9+", "10+", "17"];
 
 const quickLinkHrefs = [
   "#about",
