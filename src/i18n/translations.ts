@@ -25,6 +25,7 @@ export type ProjectItem = {
   title: string;
   description: string;
   tags: string[];
+  category: "featured" | "aiLearning" | "games" | "webApps";
 };
 
 const en = {
@@ -306,60 +307,82 @@ const en = {
     subtitle:
       "A collection of projects showcasing my journey in web development and design.",
     viewProject: "View Project",
+    categories: {
+      featured: "Featured",
+      aiLearning: "AI & Learning",
+      games: "Games",
+      webApps: "Web Apps",
+    },
     items: [
       {
         title: "2048 Pro",
         description:
           "An enhanced version of the classic 2048 puzzle game with smooth animations and advanced features",
         tags: ["JavaScript", "Game Dev", "UI/UX"],
+        category: "featured",
       },
       {
         title: "Store Management System",
         description:
           "A comprehensive website maintenance and management system for small businesses",
         tags: ["React", "Admin Panel", "CMS"],
+        category: "featured",
       },
       {
         title: "AI-Powered Desmos",
         description:
           "An intelligent graphing calculator powered by AI for advanced mathematical visualization. Currently applying to ZhenFund.",
         tags: ["AI", "Mathematics", "ZhenFund"],
+        category: "featured",
       },
       {
-        title: "WishRelay",
+        title: "TOEFL Vocabulary Cards",
         description:
-          "A WeChat mini-program for wish relay and fulfillment, now available in web format",
-        tags: ["Mini Program", "Social", "Web App"],
-      },
-      {
-        title: "Dragon Match-3 Game",
-        description:
-          "A fun match-3 puzzle game featuring dragons with engaging gameplay mechanics",
-        tags: ["Game Dev", "Animation", "Canvas"],
-      },
-      {
-        title: "API Testing Tool",
-        description:
-          "A developer-friendly tool for testing and monitoring API endpoints with real-time results",
-        tags: ["Developer Tools", "API", "Testing"],
+          "A flashcard app I built while preparing for the TOEFL. Word cards help deepen my memory of each term, with built-in AI for smarter review and practice.",
+        tags: ["TOEFL", "AI", "Flashcards", "Education"],
+        category: "aiLearning",
       },
       {
         title: "GPA Calculator",
         description:
           "A clean GPA calculator designed to help students track academic performance",
         tags: ["Utility", "Education", "Calculator"],
+        category: "aiLearning",
+      },
+      {
+        title: "Dragon Match-3 Game",
+        description:
+          "A fun match-3 puzzle game featuring dragons with engaging gameplay mechanics",
+        tags: ["Game Dev", "Animation", "Canvas"],
+        category: "games",
       },
       {
         title: "Pony Run",
         description:
           "A fast-paced endless runner inspired by the Chrome dinosaur game with fun power-ups",
         tags: ["Game Dev", "JavaScript", "Canvas"],
+        category: "games",
+      },
+      {
+        title: "WishRelay",
+        description:
+          "A WeChat mini-program for wish relay and fulfillment, now available in web format",
+        tags: ["Mini Program", "Social", "Web App"],
+        category: "webApps",
+      },
+      {
+        title: "API Testing Tool",
+        description:
+          "A developer-friendly tool for testing and monitoring API endpoints with real-time results",
+        tags: ["Developer Tools", "API", "Testing"],
+        category: "webApps",
       },
       {
         title: "Echo Chamber",
         description:
           "A showcase website for our school band with member profiles and an interactive song request system",
         tags: ["React", "Web App", "Music"],
+        category: "webApps",
       },
     ] as ProjectItem[],
   },
@@ -631,54 +654,76 @@ const zh: typeof en = {
     title: "精选项目",
     subtitle: "记录我在 Web 开发与产品设计上的探索与实践。",
     viewProject: "查看项目",
+    categories: {
+      featured: "精选推荐",
+      aiLearning: "AI 与学习",
+      games: "游戏",
+      webApps: "Web 应用",
+    },
     items: [
       {
         title: "2048 Pro",
         description: "经典 2048 的增强版，流畅动画与更多玩法。",
         tags: ["JavaScript", "游戏开发", "UI/UX"],
+        category: "featured",
       },
       {
         title: "店铺管理系统",
         description: "面向小商家的网站维护与管理系统。",
         tags: ["React", "管理后台", "CMS"],
+        category: "featured",
       },
       {
         title: "AI-Powered Desmos",
         description:
           "AI 驱动的智能绘图计算器，支持高阶数学可视化。正在申请真格基金。",
         tags: ["AI", "数学", "真格基金"],
+        category: "featured",
       },
       {
-        title: "WishRelay",
-        description: "微信心愿传递小程序，现已提供 Web 版本。",
-        tags: ["小程序", "社交", "Web"],
-      },
-      {
-        title: "龙之消除",
-        description: "以龙为主题的三消益智游戏，玩法轻松上瘾。",
-        tags: ["游戏开发", "动画", "Canvas"],
-      },
-      {
-        title: "API 测试工具",
-        description: "面向开发者的 API 测试与监控工具，实时返回结果。",
-        tags: ["开发工具", "API", "测试"],
+        title: "TOEFL 背单词",
+        description:
+          "备考托福时做的单词软件。通过单词卡片加深对每个词的印象，并接入内置 AI，让复习与练习更智能。",
+        tags: ["托福", "AI", "单词卡片", "教育"],
+        category: "aiLearning",
       },
       {
         title: "GPA 计算器",
         description: "简洁高效的 GPA 计算工具，帮助学生管理学业成绩。",
         tags: ["工具", "教育", "计算器"],
+        category: "aiLearning",
+      },
+      {
+        title: "龙之消除",
+        description: "以龙为主题的三消益智游戏，玩法轻松上瘾。",
+        tags: ["游戏开发", "动画", "Canvas"],
+        category: "games",
       },
       {
         title: "Pony Run",
         description:
           "快节奏无尽跑酷，灵感来自 Chrome 小恐龙，含加速、护盾等道具。",
         tags: ["游戏开发", "JavaScript", "Canvas"],
+        category: "games",
+      },
+      {
+        title: "WishRelay",
+        description: "微信心愿传递小程序，现已提供 Web 版本。",
+        tags: ["小程序", "社交", "Web"],
+        category: "webApps",
+      },
+      {
+        title: "API 测试工具",
+        description: "面向开发者的 API 测试与监控工具，实时返回结果。",
+        tags: ["开发工具", "API", "测试"],
+        category: "webApps",
       },
       {
         title: "Echo Chamber",
         description:
           "为学校乐队打造的展示网站，包含成员介绍与点歌系统。",
         tags: ["React", "Web 应用", "音乐"],
+        category: "webApps",
       },
     ],
   },
