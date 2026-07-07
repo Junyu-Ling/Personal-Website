@@ -11,8 +11,11 @@ export function Footer() {
   });
 
   return (
-    <footer ref={ref} className="py-20 px-6 bg-gray-900 text-white border-t border-gray-800">
-      <div className="max-w-6xl mx-auto">
+    <footer
+      ref={ref}
+      className="section-shell bg-gray-900 text-white border-t border-gray-800"
+    >
+      <div className="container-site">
         <div className="flex flex-col items-center text-center mb-12">
           <motion.h3
             className="text-4xl mb-8"

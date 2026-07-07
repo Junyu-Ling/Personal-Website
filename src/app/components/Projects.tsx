@@ -195,10 +195,10 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen py-32 px-6 section-divide section-surface-alt overflow-hidden"
+      className="section-shell min-h-screen section-divide section-surface-alt overflow-hidden"
       ref={ref}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="container-site">
         <motion.div
           className="mb-20 flex flex-col items-center text-center"
           initial={{ opacity: 0, y: 30 }}
