@@ -25,7 +25,8 @@ export type ProjectItem = {
   title: string;
   description: string;
   tags: string[];
-  category: "featured" | "aiLearning" | "games" | "webApps";
+  category: "aiLearning" | "games" | "webApps";
+  featured?: boolean;
 };
 
 const en = {
@@ -308,32 +309,26 @@ const en = {
       "A collection of projects showcasing my journey in web development and design.",
     viewProject: "View Project",
     categories: {
-      featured: "Featured",
       aiLearning: "AI & Learning",
       games: "Games",
       webApps: "Web Apps",
     },
     items: [
       {
-        title: "2048 Pro",
-        description:
-          "An enhanced version of the classic 2048 puzzle game with smooth animations and advanced features",
-        tags: ["JavaScript", "Game Dev", "UI/UX"],
-        category: "featured",
-      },
-      {
         title: "AI-Powered Desmos",
         description:
           "An intelligent graphing calculator powered by AI for advanced mathematical visualization. Currently applying to ZhenFund.",
         tags: ["AI", "Mathematics", "ZhenFund"],
-        category: "featured",
+        category: "aiLearning",
+        featured: true,
       },
       {
         title: "TOEFL Vocabulary Cards",
         description:
           "A flashcard app I built while preparing for the TOEFL. Word cards help deepen my memory of each term, with built-in AI for smarter review and practice.",
         tags: ["TOEFL", "AI", "Flashcards", "Education"],
-        category: "featured",
+        category: "aiLearning",
+        featured: true,
       },
       {
         title: "GPA Calculator",
@@ -341,6 +336,14 @@ const en = {
           "A clean GPA calculator designed to help students track academic performance",
         tags: ["Utility", "Education", "Calculator"],
         category: "aiLearning",
+      },
+      {
+        title: "2048 Pro",
+        description:
+          "An enhanced version of the classic 2048 puzzle game with smooth animations and advanced features",
+        tags: ["JavaScript", "Game Dev", "UI/UX"],
+        category: "games",
+        featured: true,
       },
       {
         title: "Dragon Match-3 Game",
@@ -655,37 +658,39 @@ const zh: typeof en = {
     subtitle: "记录我在 Web 开发与产品设计上的探索与实践。",
     viewProject: "查看项目",
     categories: {
-      featured: "精选推荐",
       aiLearning: "AI 与学习",
       games: "游戏",
       webApps: "Web 应用",
     },
     items: [
       {
-        title: "2048 Pro",
-        description: "经典 2048 的增强版，流畅动画与更多玩法。",
-        tags: ["JavaScript", "游戏开发", "UI/UX"],
-        category: "featured",
-      },
-      {
         title: "AI-Powered Desmos",
         description:
           "AI 驱动的智能绘图计算器，支持高阶数学可视化。正在申请真格基金。",
         tags: ["AI", "数学", "真格基金"],
-        category: "featured",
+        category: "aiLearning",
+        featured: true,
       },
       {
         title: "TOEFL 背单词",
         description:
           "备考托福时做的单词软件。通过单词卡片加深对每个词的印象，并接入内置 AI，让复习与练习更智能。",
         tags: ["托福", "AI", "单词卡片", "教育"],
-        category: "featured",
+        category: "aiLearning",
+        featured: true,
       },
       {
         title: "GPA 计算器",
         description: "简洁高效的 GPA 计算工具，帮助学生管理学业成绩。",
         tags: ["工具", "教育", "计算器"],
         category: "aiLearning",
+      },
+      {
+        title: "2048 Pro",
+        description: "经典 2048 的增强版，流畅动画与更多玩法。",
+        tags: ["JavaScript", "游戏开发", "UI/UX"],
+        category: "games",
+        featured: true,
       },
       {
         title: "龙之消除",

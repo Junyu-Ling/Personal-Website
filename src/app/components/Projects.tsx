@@ -1,15 +1,14 @@
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
-import { ExternalLink, ArrowUpRight, FolderGit2 } from "lucide-react";
+import { ExternalLink, ArrowUpRight, FolderGit2, Star } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { FeaturedStars } from "@/app/components/FeaturedStars";
 import type { ProjectItem } from "@/i18n/translations";
 
 const projectLinks = [
-  "https://2048pro.figma.site",
   "https://ai-desmos.figma.site",
   "https://toefl-6666.vercel.app/",
   "https://gpa-calculator.figma.site/",
+  "https://2048pro.figma.site",
   "https://dragon.figma.site",
   "https://pony.figma.site",
   "https://scs.figma.site",
@@ -19,10 +18,10 @@ const projectLinks = [
 ];
 
 const projectStyles = [
-  { bg: "bg-blue-50", text: "text-blue-600" },
   { bg: "bg-emerald-50", text: "text-emerald-600" },
   { bg: "bg-amber-50", text: "text-amber-600" },
   { bg: "bg-teal-50", text: "text-teal-600" },
+  { bg: "bg-blue-50", text: "text-blue-600" },
   { bg: "bg-orange-50", text: "text-orange-600" },
   { bg: "bg-violet-50", text: "text-violet-600" },
   { bg: "bg-purple-50", text: "text-purple-600" },
@@ -32,7 +31,6 @@ const projectStyles = [
 ];
 
 const categoryOrder: ProjectItem["category"][] = [
-  "featured",
   "aiLearning",
   "games",
   "webApps",
@@ -58,24 +56,19 @@ const cardVariants = {
 type ProjectCardProps = {
   project: ProjectItem;
   index: number;
-  isFeatured: boolean;
   viewProjectLabel: string;
 };
 
-function ProjectCard({
-  project,
-  index,
-  isFeatured,
-  viewProjectLabel,
-}: ProjectCardProps) {
+function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
   const style = projectStyles[index];
+  const isFeatured = Boolean(project.featured);
 
   return (
     <motion.div variants={cardVariants} className="group relative h-full">
       <motion.div
         className={`relative h-full bg-white rounded-2xl p-8 border shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col ${
           isFeatured
-            ? "border-amber-200/80 ring-1 ring-amber-100/60"
+            ? "border-amber-200/70 ring-1 ring-amber-100/50"
             : "border-gray-200/70"
         }`}
         whileHover={{ y: -6 }}
@@ -87,7 +80,25 @@ function ProjectCard({
             >
               <ExternalLink size={22} />
             </div>
-            {isFeatured && <FeaturedStars />}
+            {isFeatured && (
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 18 }}
+              >
+                <motion.span
+                  className="absolute inset-0 rounded-full bg-amber-300/30 blur-md"
+                  animate={{ opacity: [0.35, 0.7, 0.35], scale: [0.9, 1.15, 0.9] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <Star
+                  size={20}
+                  className="relative fill-amber-400 text-amber-500 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+                  strokeWidth={1.5}
+                />
+              </motion.div>
+            )}
           </div>
 
           <h3 className="text-2xl font-semibold mb-3 text-gray-900">
@@ -168,9 +179,14 @@ export function Projects() {
 
         <div className="space-y-16">
           {categoryOrder.map((category) => {
-            const categoryProjects = projectsWithIndex.filter(
-              ({ project }) => project.category === category
-            );
+            const categoryProjects = projectsWithIndex
+              .filter(({ project }) => project.category === category)
+              .sort(
+                (a, b) =>
+                  Number(Boolean(b.project.featured)) -
+                  Number(Boolean(a.project.featured))
+              );
+
             if (categoryProjects.length === 0) return null;
 
             return (
@@ -195,7 +211,6 @@ export function Projects() {
                       key={index}
                       project={project}
                       index={index}
-                      isFeatured={category === "featured"}
                       viewProjectLabel={t.projects.viewProject}
                     />
                   ))}
