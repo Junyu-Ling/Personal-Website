@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { HeroTypewriterName } from "@/app/components/HeroTypewriterName";
 
 const statValues = ["10+", "10+", "17"];
 
@@ -14,7 +15,7 @@ const quickLinkHrefs = [
 
 export function Hero() {
   const { t } = useLanguage();
-  const { ref, isVisible, transition, shouldAnimate } = useInViewOnScrollDown({
+  const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
 
@@ -22,7 +23,6 @@ export function Hero() {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const nameChars = t.hero.name.split("");
   const statLabels = [t.hero.stats.awards, t.hero.stats.projects, t.hero.stats.age];
   const navLabels = [
     t.nav.about,
@@ -140,19 +140,11 @@ export function Hero() {
         </motion.div>
 
         {/* name */}
-        <h1 className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[1.05] pb-[0.08em] overflow-visible mb-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
-          {nameChars.map((char, i) => (
-            <motion.span
-              key={i}
-              className="inline-block overflow-visible pb-[0.06em]"
-              initial={shouldAnimate ? { opacity: 0, y: 40 } : false}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={transition({ duration: 0.5, delay: 0.25 + i * 0.035 })}
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          ))}
-        </h1>
+        <HeroTypewriterName
+          text={t.hero.name}
+          active={isVisible}
+          className="text-[clamp(4rem,14vw,10rem)] font-semibold tracking-[-0.03em] leading-[1.05] pb-[0.08em] mb-6"
+        />
 
         <motion.div
           className="flex items-center gap-3 mb-10"
