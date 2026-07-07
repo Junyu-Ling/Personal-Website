@@ -41,24 +41,24 @@ export function PageProgressRail() {
     >
       <div className="relative h-72 w-5">
         <div
-          className="absolute inset-y-0 right-0 w-0.5 rounded-full bg-gray-300/90"
+          className="absolute inset-y-0 right-0 w-0.5 rounded-full bg-gray-300"
           aria-hidden="true"
         />
 
         {railSectionIds.map((id, index) => {
           const state = getDotState(index, activeIndex);
           const isActive = state === "active";
+          const isPassed = state === "passed";
           const topPercent =
             railSectionIds.length === 1
               ? 0
               : (index / (railSectionIds.length - 1)) * 100;
 
-          const dotClass =
-            state === "active"
-              ? "bg-gray-900 border border-gray-900 shadow-sm"
-              : state === "passed"
-                ? "bg-white border border-gray-300 shadow-sm"
-                : "bg-gray-200/80 border border-gray-300/70";
+          const dotClass = isActive
+            ? "bg-gray-900 border-2 border-gray-900"
+            : isPassed
+              ? "bg-white border-2 border-gray-500 shadow-[0_0_0_1px_rgba(0,0,0,0.06)]"
+              : "bg-gray-100 border-2 border-gray-300";
 
           return (
             <a
@@ -71,12 +71,12 @@ export function PageProgressRail() {
               title={labels[id]}
             >
               <motion.span
-                className={`block rounded-full transition-colors ${dotClass}`}
+                className={`block rounded-full ${dotClass}`}
                 animate={{
-                  width: isActive ? 12 : 8,
-                  height: isActive ? 12 : 8,
+                  width: isActive ? 14 : isPassed ? 10 : 8,
+                  height: isActive ? 14 : isPassed ? 10 : 8,
                 }}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.08 }}
                 transition={{ type: "spring", stiffness: 420, damping: 30 }}
               />
             </a>

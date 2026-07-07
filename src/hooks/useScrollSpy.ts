@@ -2,30 +2,36 @@ import { useEffect, useState } from "react";
 
 export function useScrollSpy(sectionIds: string[]) {
   const [activeId, setActiveId] = useState(sectionIds[0] ?? "");
+  const sectionKey = sectionIds.join("|");
 
   useEffect(() => {
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((element): element is HTMLElement => Boolean(element));
+    const update = () => {
+      const probeLine = window.scrollY + window.innerHeight * 0.32;
+      let current = sectionIds[0] ?? "";
 
-    if (elements.length === 0) return;
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (!element) continue;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const sectionTop =
+          element.getBoundingClientRect().top + window.scrollY;
 
-        if (visible[0]?.target.id) {
-          setActiveId(visible[0].target.id);
+        if (probeLine >= sectionTop) {
+          current = id;
         }
-      },
-      { rootMargin: "-42% 0px -48% 0px", threshold: [0.1, 0.25, 0.5] }
-    );
+      }
 
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, [sectionIds]);
+      setActiveId(current);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [sectionKey, sectionIds]);
 
   return activeId;
 }
