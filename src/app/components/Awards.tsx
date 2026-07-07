@@ -27,6 +27,9 @@ import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-school
 import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 import aiCampWishrelayAward from "@/assets/ai-camp-wishrelay-award.png";
 import apCalculusStarCertificate from "@/assets/ap-calculus-star-certificate.png";
+import aiMeetsHeritageSugarSilkAward from "@/assets/ai-meets-heritage-sugar-silk-award.png";
+import wechatMiniprogramCarbonFootprintAward from "@/assets/wechat-miniprogram-carbon-footprint-award.png";
+import aigcShortVideoThirdPrize from "@/assets/aigc-short-video-third-prize.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
 import type { AwardTranslation } from "@/i18n/translations";
@@ -60,7 +63,7 @@ const offCampusMeta: AwardMeta[] = [
     certificate: immcOAwardCertificate,
   },
   { icon: Zap, year: "2026", featured: true },
-  { icon: Trophy, year: "2025", featured: true },
+  { icon: Trophy, year: "2025", featured: true, certificate: wechatMiniprogramCarbonFootprintAward },
   {
     icon: Calculator,
     year: "2026",
@@ -71,8 +74,8 @@ const offCampusMeta: AwardMeta[] = [
     year: "2025",
     certificate: amc12Certificate,
   },
-  { icon: Palette, year: "2025" },
-  { icon: Video, year: "2025" },
+  { icon: Palette, year: "2025", certificate: aiMeetsHeritageSugarSilkAward },
+  { icon: Video, year: "2025", certificate: aigcShortVideoThirdPrize },
   {
     icon: Rocket,
     year: "2025",

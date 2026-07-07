@@ -246,6 +246,8 @@ const en = {
         description:
           "Led a team of three to ship a carbon-footprint calculator mini-program with real user value—proving leadership, full-stack delivery, and product thinking.",
         award: "Global Third Prize",
+        certificateAlt:
+          "WeChat Mini-Program Global Innovation Challenge — Carbon Footprint Tracker award list",
       },
       {
         title: "IMMC — Greater China Regional Contest",
@@ -270,6 +272,8 @@ const en = {
         description:
           "Second Prize for an AI-driven sugar-painting narrative—fast adoption of frontier AIGC tools.",
         award: "Team Second Prize — Shanghai",
+        certificateAlt:
+          "When AI Meets Intangible Cultural Heritage — The Chinese Soul in Sugar Silk award list",
       },
       {
         title: "Youth AI Innovation Competition (AIGC)",
@@ -277,6 +281,8 @@ const en = {
         description:
           "Third Prize for an independent AIGC short film on future cities.",
         award: "Individual Third Prize",
+        certificateAlt:
+          "Youth AI Innovation Competition (AIGC) — High School Third Prize award list",
       },
       {
         title: "HiMCM — High School Mathematical Contest in Modeling",
@@ -392,6 +398,7 @@ const en = {
   footer: {
     contact: "Contact with Me",
     emailAria: "Email",
+    githubAria: "GitHub profile",
     rights: "All rights reserved.",
     copyrightName: "Junyu Ling",
   },
@@ -602,6 +609,7 @@ const zh: typeof en = {
         description:
           "带领三人团队开发碳足迹计算器小程序，具备真实用户价值，展现领导力、全栈交付与产品思维。",
         award: "全球三等奖",
+        certificateAlt: "微信小程序全球创新挑战赛 — 碳足迹追踪器获奖公示",
       },
       {
         title: "IMMC 中华区区域赛",
@@ -622,12 +630,14 @@ const zh: typeof en = {
         organization: "上海市学生活动",
         description: "AI 糖画叙事项目获二等奖，快速上手 AIGC 工作流。",
         award: "团队二等奖 — 上海",
+        certificateAlt: "当 AI 遇见非遗 —「糖丝里的中国魂」获奖公示",
       },
       {
         title: "青年 AI 创新大赛 (AIGC)",
         organization: "中国—上海 AIGC 项目",
         description: "独立制作未来城市 AIGC 短片，获三等奖。",
         award: "个人三等奖",
+        certificateAlt: "青年 AI 创新大赛 (AIGC) — 高中组三等奖获奖公示",
       },
       {
         title: "HiMCM 高中数学建模竞赛",
@@ -735,6 +745,7 @@ const zh: typeof en = {
   footer: {
     contact: "联系我",
     emailAria: "发送邮件",
+    githubAria: "GitHub 主页",
     rights: "版权所有。",
     copyrightName: "灵俊宇",
   },
