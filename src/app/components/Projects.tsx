@@ -1,7 +1,8 @@
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
-import { ExternalLink, ArrowUpRight, FolderGit2, Star } from "lucide-react";
+import { ExternalLink, ArrowUpRight, FolderGit2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { FeaturedStar } from "@/app/components/FeaturedStar";
 import type { ProjectItem } from "@/i18n/translations";
 
 const projectLinks = [
@@ -80,25 +81,7 @@ function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
             >
               <ExternalLink size={22} />
             </div>
-            {isFeatured && (
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: "spring", stiffness: 300, damping: 18 }}
-              >
-                <motion.span
-                  className="absolute inset-0 rounded-full bg-amber-300/30 blur-md"
-                  animate={{ opacity: [0.35, 0.7, 0.35], scale: [0.9, 1.15, 0.9] }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <Star
-                  size={20}
-                  className="relative fill-amber-400 text-amber-500 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
-                  strokeWidth={1.5}
-                />
-              </motion.div>
-            )}
+            {isFeatured && <FeaturedStar />}
           </div>
 
           <h3 className="text-2xl font-semibold mb-3 text-gray-900">

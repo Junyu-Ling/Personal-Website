@@ -4,7 +4,6 @@ import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-do
 import {
   Award,
   Trophy,
-  Star,
   Presentation,
   Video,
   Palette,
@@ -29,6 +28,7 @@ import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 import aiCampWishrelayAward from "@/assets/ai-camp-wishrelay-award.png";
 import apCalculusStarCertificate from "@/assets/ap-calculus-star-certificate.png";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { FeaturedStar } from "@/app/components/FeaturedStar";
 import type { AwardTranslation } from "@/i18n/translations";
 
 type AwardMeta = {
@@ -185,12 +185,7 @@ function AwardCard({
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <h3 className="text-xl md:text-2xl">{award.title}</h3>
-                  {award.featured && (
-                    <Star
-                      size={20}
-                      className="fill-yellow-400 text-yellow-400 shrink-0"
-                    />
-                  )}
+                  {award.featured && <FeaturedStar />}
                 </div>
                 <p className="text-gray-600 text-base md:text-lg mb-2">
                   {award.organization}
