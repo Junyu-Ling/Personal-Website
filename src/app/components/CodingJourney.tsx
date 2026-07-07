@@ -168,17 +168,17 @@ export function CodingJourney() {
   return (
     <section
       id="journey"
-      className="py-32 px-6 relative overflow-hidden section-divide section-surface-alt"
+      className="section-shell relative overflow-hidden section-divide section-surface-alt"
       ref={ref}
     >
       <div className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots" />
       <div className="absolute top-28 -right-24 w-72 h-72 rounded-full bg-violet-100/30 blur-3xl pointer-events-none" />
       <div className="absolute bottom-20 -left-20 w-64 h-64 rounded-full bg-sky-100/25 blur-3xl pointer-events-none" />
 
-      <div className="absolute top-32 left-8 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
-      <div className="absolute top-32 right-8 w-14 h-14 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute top-32 left-6 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
+      <div className="absolute top-32 right-6 w-14 h-14 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
-      <div className="w-full max-w-6xl mr-auto relative z-10">
+      <div className="container-site relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
