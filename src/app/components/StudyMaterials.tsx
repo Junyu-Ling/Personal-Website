@@ -303,7 +303,6 @@ export function StudyMaterials() {
           subtitle={t.studyMaterials.subtitle}
           icon={FolderOpen}
           isVisible={isVisible}
-          align="left"
         />
 
         <motion.div

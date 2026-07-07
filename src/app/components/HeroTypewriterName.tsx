@@ -9,7 +9,7 @@ type HeroTypewriterNameProps = {
 const CHAR_DELAY_MS = 90;
 
 const textTypography =
-  "font-semibold tracking-[-0.03em] leading-[1.12] whitespace-pre";
+  "font-semibold tracking-[-0.03em] leading-[1.05] whitespace-pre";
 
 export function HeroTypewriterName({
   text,
@@ -57,32 +57,28 @@ export function HeroTypewriterName({
   const showCursor = isTyping && displayed.length < text.length;
 
   return (
-    <div
-      className={`relative inline-block max-w-full overflow-visible pb-3 ${className}`}
+    <h1
+      className={`relative inline-block max-w-full overflow-visible ${className}`}
       aria-label={text}
     >
-      <h1 className="sr-only">{text}</h1>
+      <span
+        className={`invisible block ${textTypography} pb-[0.08em]`}
+        aria-hidden="true"
+      >
+        {text}
+      </span>
 
-      <div className="relative inline-block overflow-visible">
-        <span
-          className={`invisible block ${textTypography} pb-[0.12em]`}
-          aria-hidden="true"
-        >
-          {text}
+      <span
+        className={`absolute inset-0 block overflow-visible ${textTypography} pb-[0.08em]`}
+        aria-hidden="true"
+      >
+        <span className="bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
+          {displayed}
         </span>
-
-        <span
-          className={`absolute inset-0 block overflow-visible ${textTypography} pb-[0.12em]`}
-          aria-hidden="true"
-        >
-          <span className="bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
-            {displayed}
-          </span>
-          {showCursor && (
-            <span className="inline-block w-[3px] md:w-1 h-[0.72em] ml-1 md:ml-1.5 rounded-full bg-gray-800 align-middle opacity-90" />
-          )}
-        </span>
-      </div>
-    </div>
+        {showCursor && (
+          <span className="inline-block w-[3px] md:w-1 h-[0.72em] ml-1 md:ml-1.5 rounded-full bg-gray-800 align-middle opacity-90" />
+        )}
+      </span>
+    </h1>
   );
 }

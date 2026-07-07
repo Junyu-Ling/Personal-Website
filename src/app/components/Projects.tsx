@@ -3,6 +3,7 @@ import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-do
 import { ExternalLink, ArrowUpRight, FolderGit2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
+import { SectionHeader } from "@/app/components/SectionHeader";
 import type { ProjectItem } from "@/i18n/translations";
 
 const projectLinks = [
@@ -199,26 +200,13 @@ export function Projects() {
       ref={ref}
     >
       <div className="container-site">
-        <motion.div
-          className="mb-20 flex flex-col items-center text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8 })}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200/70 shadow-sm mb-6">
-            <FolderGit2 className="text-gray-600 w-4 h-4" />
-            <span className="text-sm font-medium text-gray-600">
-              {t.projects.badge}
-            </span>
-          </div>
-
-          <h2 className="text-5xl md:text-7xl mb-6 text-gray-900 tracking-tight leading-[1.08] pb-[0.06em]">
-            {t.projects.title}
-          </h2>
-          <p className="text-xl text-gray-500 max-w-2xl">
-            {t.projects.subtitle}
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge={t.projects.badge}
+          title={t.projects.title}
+          subtitle={t.projects.subtitle}
+          icon={FolderGit2}
+          isVisible={isVisible}
+        />
 
         <div className="space-y-16">
           {categoryOrder.map((category) => {

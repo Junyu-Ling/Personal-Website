@@ -138,7 +138,7 @@ export function Hero() {
             key={locale}
             text={t.hero.name}
             active={isVisible}
-            className="text-[clamp(4rem,14vw,10rem)]"
+            className="!text-[clamp(4rem,14vw,10rem)] pb-[0.08em] mb-6"
           />
         </div>
 

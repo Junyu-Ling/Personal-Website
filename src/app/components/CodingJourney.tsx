@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SectionHeader } from "@/app/components/SectionHeader";
 
 const journeyMeta = [
   {
@@ -161,7 +162,7 @@ function JourneyTimelineItem({
 
 export function CodingJourney() {
   const { t } = useLanguage();
-  const { ref, isVisible, transition } = useInViewOnScrollDown({
+  const { ref, isVisible } = useInViewOnScrollDown({
     margin: "-100px",
   });
 
@@ -179,25 +180,13 @@ export function CodingJourney() {
       <div className="absolute top-32 right-6 w-14 h-14 border-t border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
       <div className="container-site relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8 })}
-          className="mb-16 md:mb-20 text-left"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-gray-200/70 shadow-sm backdrop-blur-sm mb-6">
-            <Sparkles className="text-amber-500 w-4 h-4" />
-            <span className="text-sm font-medium text-gray-600">
-              {t.journey.badge}
-            </span>
-          </div>
-          <h2 className="text-5xl md:text-7xl mb-4 text-gray-900 tracking-tight text-left leading-[1.08] pb-[0.06em]">
-            {t.journey.title}
-          </h2>
-          <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl text-left">
-            {t.journey.subtitle}
-          </p>
-        </motion.div>
+        <SectionHeader
+          badge={t.journey.badge}
+          title={t.journey.title}
+          subtitle={t.journey.subtitle}
+          icon={Sparkles}
+          isVisible={isVisible}
+        />
 
         <div className="relative w-full">
           <div className="absolute left-[1.65rem] md:left-[1.9rem] top-3 bottom-3 w-px bg-gradient-to-b from-gray-200 via-gray-300/70 to-gray-200 pointer-events-none" />

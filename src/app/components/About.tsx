@@ -55,11 +55,10 @@ export function About() {
           subtitle={t.about.subtitle}
           icon={Sparkles}
           isVisible={isVisible}
-          align="left"
         />
 
         <motion.div
-          className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-border"
+          className="flex flex-col sm:flex-row items-start gap-8 sm:gap-10 mb-16 pb-16 border-b border-border"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.1 })}
@@ -75,7 +74,7 @@ export function About() {
             />
           </div>
 
-          <div className="min-w-0 flex-1 text-center sm:text-left">
+          <div className="min-w-0 flex-1 text-left">
             <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
             <p className="text-muted-foreground mb-8">{t.hero.role}</p>
 
@@ -102,7 +101,7 @@ export function About() {
         </motion.div>
 
         <motion.div
-          className="space-y-8 max-w-4xl mx-auto"
+          className="space-y-8 max-w-4xl mx-auto text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.25 })}

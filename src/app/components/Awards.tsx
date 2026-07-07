@@ -390,7 +390,6 @@ export function Awards() {
           subtitle={t.awards.subtitle}
           icon={Sparkles}
           isVisible={isVisible}
-          align="left"
         />
 
         <motion.div
