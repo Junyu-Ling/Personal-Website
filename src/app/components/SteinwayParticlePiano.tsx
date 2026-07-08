@@ -1,89 +1,197 @@
 import { useEffect, useRef } from "react";
-import steinwayReference from "@/assets/steinway-grand-reference.png";
 
-type Segment = {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  strength: number;
+type Point = { x: number; y: number };
+
+type WireCurve = {
+  samples: Point[];
   phase: number;
+  weight?: number;
 };
 
-function buildWireSegments(image: HTMLImageElement): Segment[] {
-  const canvas = document.createElement("canvas");
-  const width = image.naturalWidth;
-  const height = image.naturalHeight;
-  canvas.width = width;
-  canvas.height = height;
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return [];
+function sampleLine(a: Point, b: Point, count: number): Point[] {
+  const points: Point[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0 : i / (count - 1);
+    points.push({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) });
+  }
+  return points;
+}
 
-  ctx.drawImage(image, 0, 0, width, height);
-  const { data } = ctx.getImageData(0, 0, width, height);
-  const edge = new Float32Array(width * height);
+function sampleQuadratic(p0: Point, p1: Point, p2: Point, count: number): Point[] {
+  const points: Point[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0 : i / (count - 1);
+    const u = 1 - t;
+    points.push({
+      x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x,
+      y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y,
+    });
+  }
+  return points;
+}
 
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      const index = y * width + x;
-      const offset = index * 4;
-      const lum =
-        (0.299 * data[offset] + 0.587 * data[offset + 1] + 0.114 * data[offset + 2]) /
-        255;
-      const alpha = data[offset + 3] / 255;
-      const dark = alpha > 0.2 ? 1 - lum : 0;
+function sampleCubic(
+  p0: Point,
+  p1: Point,
+  p2: Point,
+  p3: Point,
+  count: number
+): Point[] {
+  const points: Point[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0 : i / (count - 1);
+    const u = 1 - t;
+    points.push({
+      x:
+        u * u * u * p0.x +
+        3 * u * u * t * p1.x +
+        3 * u * t * t * p2.x +
+        t * t * t * p3.x,
+      y:
+        u * u * u * p0.y +
+        3 * u * u * t * p1.y +
+        3 * u * t * t * p2.y +
+        t * t * t * p3.y,
+    });
+  }
+  return points;
+}
 
-      const left = x > 0 ? 1 - (0.299 * data[(index - 1) * 4] + 0.587 * data[(index - 1) * 4 + 1] + 0.114 * data[(index - 1) * 4 + 2]) / 255 : dark;
-      const up =
-        y > 0
-          ? 1 -
-            (0.299 * data[(index - width) * 4] +
-              0.587 * data[(index - width) * 4 + 1] +
-              0.114 * data[(index - width) * 4 + 2]) /
-              255
-          : dark;
+function sampleArc(cx: number, cy: number, rx: number, ry: number, count: number): Point[] {
+  const points: Point[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0 : i / (count - 1);
+    const angle = t * Math.PI * 2;
+    points.push({
+      x: cx + Math.cos(angle) * rx,
+      y: cy + Math.sin(angle) * ry,
+    });
+  }
+  return points;
+}
 
-      edge[index] = Math.abs(dark - left) + Math.abs(dark - up);
-    }
+function addCurve(curves: WireCurve[], samples: Point[], weight = 1) {
+  curves.push({ samples, phase: Math.random() * Math.PI * 2, weight });
+}
+
+function buildPianoWireframe(): WireCurve[] {
+  const curves: WireCurve[] = [];
+
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 16, y: 54 },
+      { x: 10, y: 58 },
+      { x: 22, y: 63 },
+      { x: 36, y: 61 },
+      28
+    ),
+    1.15
+  );
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 36, y: 61 },
+      { x: 58, y: 64 },
+      { x: 82, y: 58 },
+      { x: 94, y: 46 },
+      34
+    ),
+    1.15
+  );
+  addCurve(
+    curves,
+    sampleQuadratic({ x: 94, y: 46 }, { x: 98, y: 32 }, { x: 86, y: 22 }, 22),
+    1.15
+  );
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 86, y: 22 },
+      { x: 66, y: 17 },
+      { x: 40, y: 22 },
+      { x: 24, y: 34 },
+      30
+    ),
+    1.15
+  );
+  addCurve(curves, sampleLine({ x: 24, y: 34 }, { x: 16, y: 54 }, 16), 1.15);
+
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 28, y: 38 },
+      { x: 48, y: 30 },
+      { x: 72, y: 32 },
+      { x: 84, y: 42 },
+      26
+    ),
+    0.9
+  );
+
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 30, y: 36 },
+      { x: 52, y: 17 },
+      { x: 78, y: 13 },
+      { x: 92, y: 21 },
+      30
+    ),
+    1.1
+  );
+  addCurve(
+    curves,
+    sampleCubic(
+      { x: 30, y: 36 },
+      { x: 36, y: 30 },
+      { x: 58, y: 24 },
+      { x: 88, y: 25 },
+      24
+    ),
+    0.85
+  );
+  addCurve(curves, sampleLine({ x: 54, y: 27 }, { x: 58, y: 41 }, 10), 0.8);
+
+  for (const y of [40, 45, 50, 55]) {
+    const startX = y < 45 ? 26 : 18;
+    addCurve(
+      curves,
+      sampleCubic(
+        { x: startX, y },
+        { x: 38 + (y - 40) * 0.4, y: y - 1.5 },
+        { x: 62 + (y - 40) * 0.8, y: y + 0.5 },
+        { x: 84 - (y - 40) * 0.6, y: y - 0.5 },
+        22
+      ),
+      0.75
+    );
   }
 
-  const segments: Segment[] = [];
-  const step = 2;
-  const threshold = 0.11;
+  for (let x = 20; x <= 34; x += 2.2) {
+    addCurve(curves, sampleLine({ x, y: 49.5 }, { x, y: 53.8 }, 6), 0.7);
+  }
+  addCurve(curves, sampleLine({ x: 14, y: 51 }, { x: 36, y: 51 }, 14), 0.95);
+  addCurve(curves, sampleLine({ x: 14, y: 53 }, { x: 36, y: 53 }, 14), 0.95);
 
-  const toNorm = (x: number, y: number) => ({
-    x: (x / width) * 100,
-    y: (y / height) * 100,
-  });
+  addCurve(curves, sampleLine({ x: 16, y: 47 }, { x: 16, y: 41 }, 8), 0.8);
+  addCurve(curves, sampleLine({ x: 16, y: 41 }, { x: 24, y: 40 }, 8), 0.8);
 
-  for (let y = 0; y < height - step; y += step) {
-    for (let x = 0; x < width - step; x += step) {
-      const index = y * width + x;
-      const strength = edge[index];
-      if (strength < threshold) continue;
-
-      const a = toNorm(x, y);
-      const phase = Math.random() * Math.PI * 2;
-
-      if (edge[index + step] >= threshold * 0.85) {
-        const b = toNorm(x + step, y);
-        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength, phase });
-      }
-
-      if (edge[index + width * step] >= threshold * 0.85) {
-        const b = toNorm(x, y + step);
-        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength, phase });
-      }
-
-      if (edge[index + width * step + step] >= threshold * 0.9) {
-        const b = toNorm(x + step, y + step);
-        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength: strength * 0.9, phase });
-      }
-    }
+  for (const x of [23, 49, 75]) {
+    addCurve(curves, sampleLine({ x, y: 61 }, { x, y: 70.5 }, 12), 0.95);
+    addCurve(curves, sampleArc(x, 71.2, 1.4, 0.55, 14), 0.75);
   }
 
-  return segments;
+  addCurve(curves, sampleLine({ x: 24, y: 61 }, { x: 22, y: 68 }, 8), 0.8);
+  addCurve(curves, sampleLine({ x: 28, y: 61 }, { x: 30, y: 68 }, 8), 0.8);
+  addCurve(curves, sampleLine({ x: 22, y: 68 }, { x: 30, y: 68 }, 10), 0.8);
+  addCurve(curves, sampleLine({ x: 25, y: 68 }, { x: 25, y: 71 }, 5), 0.7);
+
+  return curves;
 }
 
 type SteinwayParticlePianoProps = {
@@ -92,8 +200,8 @@ type SteinwayParticlePianoProps = {
 
 export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const segmentsRef = useRef<Segment[]>([]);
   const frameRef = useRef(0);
+  const frameworkRef = useRef(buildPianoWireframe());
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -102,13 +210,11 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let disposed = false;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const media = window.matchMedia("(min-width: 768px)");
     let width = 0;
     let height = 0;
     let dpr = 1;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const media = window.matchMedia("(min-width: 768px)");
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -121,58 +227,53 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
     };
 
     const draw = (time: number) => {
-      if (disposed) return;
-
-      if (width < 2 || height < 2 || segmentsRef.current.length === 0) {
+      if (width < 2 || height < 2) {
         frameRef.current = requestAnimationFrame(draw);
         return;
       }
 
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width / 100, height / 100) * 1.12;
+      const scale = Math.min(width / 100, height / 74) * 1.14;
       const offsetX = width * 0.56 - 50 * scale;
-      const offsetY = height * 0.5 - 50 * scale;
+      const offsetY = height * 0.52 - 37 * scale;
 
-      for (const segment of segmentsRef.current) {
-        const pulse = reducedMotion
-          ? 1
-          : 0.9 + Math.sin(time * 0.0012 + segment.phase) * 0.1;
-        const alpha = (0.14 + segment.strength * 0.42) * pulse;
+      for (const curve of frameworkRef.current) {
+        const weight = curve.weight ?? 1;
 
-        ctx.beginPath();
-        ctx.moveTo(offsetX + segment.x1 * scale, offsetY + segment.y1 * scale);
-        ctx.lineTo(offsetX + segment.x2 * scale, offsetY + segment.y2 * scale);
-        ctx.strokeStyle = `rgba(55, 55, 55, ${alpha})`;
-        ctx.lineWidth = 1.25 + segment.strength * 1.1;
-        ctx.stroke();
+        for (let i = 0; i < curve.samples.length - 1; i++) {
+          const from = curve.samples[i];
+          const to = curve.samples[i + 1];
+          const pulse = reducedMotion
+            ? 1
+            : 0.88 + Math.sin(time * 0.0014 + curve.phase + i * 0.28) * 0.12;
+          const alpha = (0.12 + weight * 0.1) * pulse;
+
+          ctx.beginPath();
+          ctx.moveTo(offsetX + from.x * scale, offsetY + from.y * scale);
+          ctx.lineTo(offsetX + to.x * scale, offsetY + to.y * scale);
+          ctx.strokeStyle = `rgba(55, 55, 55, ${alpha})`;
+          ctx.lineWidth = 0.85 + weight * 0.35;
+          ctx.stroke();
+        }
       }
 
       frameRef.current = requestAnimationFrame(draw);
     };
 
-    const handleResize = () => resize();
+    resize();
+    frameRef.current = requestAnimationFrame(draw);
 
-    const image = new Image();
-    image.src = steinwayReference;
-    image.onload = () => {
-      if (disposed) return;
-      segmentsRef.current = buildWireSegments(image);
-      resize();
-      frameRef.current = requestAnimationFrame(draw);
-    };
-
-    const observer = new ResizeObserver(handleResize);
+    const observer = new ResizeObserver(resize);
     observer.observe(canvas);
-    media.addEventListener("change", handleResize);
-    window.addEventListener("resize", handleResize);
+    media.addEventListener("change", resize);
+    window.addEventListener("resize", resize);
 
     return () => {
-      disposed = true;
       cancelAnimationFrame(frameRef.current);
       observer.disconnect();
-      media.removeEventListener("change", handleResize);
-      window.removeEventListener("resize", handleResize);
+      media.removeEventListener("change", resize);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
