@@ -112,12 +112,15 @@ export function About() {
           </div>
         </motion.div>
 
-        <AboutTypewriterBody
-          paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
-          layoutParagraphs={aboutIntroLayoutParagraphs}
-          active={isVisible}
-          className="space-y-8 max-w-4xl text-left"
-        />
+        <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
+          <div className="hidden w-36 shrink-0 sm:block sm:w-40" aria-hidden />
+          <AboutTypewriterBody
+            paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
+            layoutParagraphs={aboutIntroLayoutParagraphs}
+            active={isVisible}
+            className="min-w-0 flex-1 space-y-8 text-left"
+          />
+        </div>
       </div>
     </section>
   );
