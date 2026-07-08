@@ -37,80 +37,70 @@ const projectStyles = [
     icon: LineChart,
     bg: "bg-emerald-50",
     text: "text-emerald-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-emerald-50 has-[.project-cta:hover]:border-emerald-200/80",
+    cardHover: "group-hover:bg-emerald-50 group-hover:border-emerald-200/80",
     btnHover: "hover:bg-emerald-600 hover:border-emerald-600 hover:text-white",
   },
   {
     icon: BookOpen,
     bg: "bg-amber-50",
     text: "text-amber-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-amber-50 has-[.project-cta:hover]:border-amber-200/80",
+    cardHover: "group-hover:bg-amber-50 group-hover:border-amber-200/80",
     btnHover: "hover:bg-amber-500 hover:border-amber-500 hover:text-white",
   },
   {
     icon: Calculator,
     bg: "bg-teal-50",
     text: "text-teal-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-teal-50 has-[.project-cta:hover]:border-teal-200/80",
+    cardHover: "group-hover:bg-teal-50 group-hover:border-teal-200/80",
     btnHover: "hover:bg-teal-600 hover:border-teal-600 hover:text-white",
   },
   {
     icon: Grid3x3,
     bg: "bg-blue-50",
     text: "text-blue-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-blue-50 has-[.project-cta:hover]:border-blue-200/80",
+    cardHover: "group-hover:bg-blue-50 group-hover:border-blue-200/80",
     btnHover: "hover:bg-blue-600 hover:border-blue-600 hover:text-white",
   },
   {
     icon: Puzzle,
     bg: "bg-orange-50",
     text: "text-orange-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-orange-50 has-[.project-cta:hover]:border-orange-200/80",
+    cardHover: "group-hover:bg-orange-50 group-hover:border-orange-200/80",
     btnHover: "hover:bg-orange-500 hover:border-orange-500 hover:text-white",
   },
   {
     icon: Gamepad2,
     bg: "bg-violet-50",
     text: "text-violet-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-violet-50 has-[.project-cta:hover]:border-violet-200/80",
+    cardHover: "group-hover:bg-violet-50 group-hover:border-violet-200/80",
     btnHover: "hover:bg-violet-600 hover:border-violet-600 hover:text-white",
   },
   {
     icon: Store,
     bg: "bg-purple-50",
     text: "text-purple-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-purple-50 has-[.project-cta:hover]:border-purple-200/80",
+    cardHover: "group-hover:bg-purple-50 group-hover:border-purple-200/80",
     btnHover: "hover:bg-purple-600 hover:border-purple-600 hover:text-white",
   },
   {
     icon: Gift,
     bg: "bg-rose-50",
     text: "text-rose-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-rose-50 has-[.project-cta:hover]:border-rose-200/80",
+    cardHover: "group-hover:bg-rose-50 group-hover:border-rose-200/80",
     btnHover: "hover:bg-rose-600 hover:border-rose-600 hover:text-white",
   },
   {
     icon: Webhook,
     bg: "bg-cyan-50",
     text: "text-cyan-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-cyan-50 has-[.project-cta:hover]:border-cyan-200/80",
+    cardHover: "group-hover:bg-cyan-50 group-hover:border-cyan-200/80",
     btnHover: "hover:bg-cyan-600 hover:border-cyan-600 hover:text-white",
   },
   {
     icon: Music,
     bg: "bg-indigo-50",
     text: "text-indigo-600",
-    cardHover:
-      "has-[.project-cta:hover]:bg-indigo-50 has-[.project-cta:hover]:border-indigo-200/80",
+    cardHover: "group-hover:bg-indigo-50 group-hover:border-indigo-200/80",
     btnHover: "hover:bg-indigo-600 hover:border-indigo-600 hover:text-white",
   },
 ];
