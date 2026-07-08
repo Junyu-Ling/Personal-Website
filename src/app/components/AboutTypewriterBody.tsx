@@ -166,7 +166,7 @@ export function AboutTypewriterBody({
         return (
           <p
             key={`${index}-${paragraph.slice(0, 12)}`}
-            className="relative text-xl text-muted-foreground leading-relaxed"
+            className="relative text-xl text-foreground leading-relaxed"
           >
             <span className="invisible block" aria-hidden="true">
               {paragraph}
@@ -174,7 +174,7 @@ export function AboutTypewriterBody({
             <span className="absolute inset-0 block">
               {displayed}
               {isTyping ? (
-                <span className="inline-block w-[2px] h-[1em] ml-0.5 align-[-0.12em] rounded-full bg-muted-foreground/80 opacity-90" />
+                <span className="inline-block w-[2px] h-[1em] ml-0.5 align-[-0.12em] rounded-full bg-foreground/80 opacity-90" />
               ) : null}
             </span>
           </p>
