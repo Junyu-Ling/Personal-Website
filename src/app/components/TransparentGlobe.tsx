@@ -4,14 +4,6 @@ type Vec3 = { x: number; y: number; z: number };
 
 type Projected = { x: number; y: number; z: number; scale: number };
 
-type GridParticle = {
-  base: Vec3;
-  phase: number;
-  speed: number;
-  curveId: number;
-  index: number;
-};
-
 type GridCurve = {
   id: number;
   samples: Vec3[];
@@ -52,23 +44,12 @@ function depthAlpha(z: number, front = 0.34, back = 0.07): number {
   return back + t * (front - back);
 }
 
-function buildGlobeFramework(): { curves: GridCurve[]; particles: GridParticle[] } {
+function buildGlobeFramework(): GridCurve[] {
   const curves: GridCurve[] = [];
-  const particles: GridParticle[] = [];
   let curveId = 0;
 
   const addCurve = (samples: Vec3[]) => {
-    const id = curveId++;
-    curves.push({ id, samples });
-    samples.forEach((base, index) => {
-      particles.push({
-        base,
-        phase: Math.random() * Math.PI * 2,
-        speed: 0.35 + Math.random() * 0.75,
-        curveId: id,
-        index,
-      });
-    });
+    curves.push({ id: curveId++, samples });
   };
 
   for (let lon = -180; lon < 180; lon += 15) {
@@ -87,7 +68,7 @@ function buildGlobeFramework(): { curves: GridCurve[]; particles: GridParticle[]
     addCurve(samples);
   }
 
-  return { curves, particles };
+  return curves;
 }
 
 type TransparentGlobeProps = {
@@ -153,7 +134,7 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
       const radius = Math.min(width, height) * 0.42;
       const rotY = reducedMotion ? 0.55 : time * 0.00018;
       const tiltX = -0.28;
-      const { curves, particles } = frameworkRef.current;
+      const curves = frameworkRef.current;
 
       const projectedByCurve = curves.map((curve) =>
         curve.samples.map((sample) => project(sample, cx, cy, radius, rotY, tiltX))
@@ -164,8 +145,11 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
           const from = projected[i];
           const to = projected[i + 1];
           const depth = (from.z + to.z) / 2;
-          const alpha = depthAlpha(depth, 0.28, 0.06);
-          const lineWidth = (depth > 0 ? 0.9 : 0.65) * ((from.scale + to.scale) / 2);
+          const pulse = reducedMotion
+            ? 1
+            : 0.86 + Math.sin(time * 0.0014 + i * 0.35) * 0.14;
+          const alpha = depthAlpha(depth, 0.3, 0.06) * pulse;
+          const lineWidth = (depth > 0 ? 0.95 : 0.7) * ((from.scale + to.scale) / 2);
 
           ctx.beginPath();
           ctx.moveTo(from.x, from.y);
@@ -174,39 +158,6 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
           ctx.lineWidth = lineWidth;
           ctx.stroke();
         }
-      }
-
-      for (const particle of particles) {
-        const drift = reducedMotion
-          ? 0
-          : Math.sin(time * 0.001 * particle.speed + particle.phase) * 0.012;
-        const lift = reducedMotion
-          ? 0
-          : Math.cos(time * 0.00085 * particle.speed + particle.phase) * 0.01;
-
-        const point = project(
-          {
-            x: particle.base.x + drift,
-            y: particle.base.y + lift,
-            z: particle.base.z,
-          },
-          cx,
-          cy,
-          radius,
-          rotY,
-          tiltX
-        );
-
-        const alpha = depthAlpha(point.z, 0.42, 0.1);
-        const pulse = reducedMotion
-          ? 1
-          : 0.82 + Math.sin(time * 0.0016 * particle.speed + particle.phase) * 0.18;
-        const size = Math.max(1.1, 1.35 * point.scale * (point.z > 0 ? 1 : 0.85));
-
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(40, 40, 40, ${alpha * pulse})`;
-        ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
-        ctx.fill();
       }
 
       frameRef.current = requestAnimationFrame(draw);
