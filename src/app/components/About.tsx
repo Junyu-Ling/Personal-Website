@@ -35,9 +35,6 @@ export function About() {
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
-        <div className="about-piano-backdrop hidden md:block" aria-hidden>
-          <img src={steinwayPianoLineart} alt="" />
-        </div>
       </div>
 
       {/* corner accents */}
@@ -104,12 +101,18 @@ export function About() {
           </div>
         </motion.div>
 
-        <AboutTypewriterBody
-          key={locale}
-          paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
-          active={isVisible}
-          className="space-y-8 max-w-4xl mx-auto text-left"
-        />
+        <div className="about-text-flow max-w-5xl mx-auto text-left">
+          <figure className="about-piano-embed hidden md:block" aria-hidden>
+            <img src={steinwayPianoLineart} alt="" />
+          </figure>
+
+          <AboutTypewriterBody
+            key={locale}
+            paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
+            active={isVisible}
+            className="space-y-8"
+          />
+        </div>
       </div>
     </section>
   );
