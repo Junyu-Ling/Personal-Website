@@ -772,6 +772,12 @@ const zh: typeof en = {
   },
 };
 
+export const aboutIntroLayoutParagraphs = [
+  en.about.p1,
+  en.about.p2,
+  en.about.p3,
+] as const;
+
 export const translations = { en, zh } as const;
 
 export type Translation = (typeof translations)["en"];

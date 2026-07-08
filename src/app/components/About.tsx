@@ -4,6 +4,7 @@ import profileImage from "@/assets/profile.png";
 import steinwayPianoLineart from "@/assets/steinway-piano-lineart.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { aboutIntroLayoutParagraphs } from "@/i18n/translations";
 import { SectionHeader } from "@/app/components/SectionHeader";
 import { AboutTypewriterBody } from "@/app/components/AboutTypewriterBody";
 
@@ -15,7 +16,7 @@ const contactMeta = [
 ];
 
 export function About() {
-  const { t, locale } = useLanguage();
+  const { t } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
@@ -112,8 +113,8 @@ export function About() {
         </motion.div>
 
         <AboutTypewriterBody
-          key={locale}
           paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
+          layoutParagraphs={aboutIntroLayoutParagraphs}
           active={isVisible}
           className="space-y-8 max-w-4xl mx-auto text-left"
         />

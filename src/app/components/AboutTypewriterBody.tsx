@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type AboutTypewriterBodyProps = {
   paragraphs: string[];
+  layoutParagraphs: readonly string[];
   active: boolean;
   className?: string;
 };
@@ -91,6 +92,7 @@ async function typeParagraph(
 
 export function AboutTypewriterBody({
   paragraphs,
+  layoutParagraphs,
   active,
   className = "",
 }: AboutTypewriterBodyProps) {
@@ -161,15 +163,16 @@ export function AboutTypewriterBody({
     <div className={className} aria-live="polite">
       {paragraphs.map((paragraph, index) => {
         const displayed = lines[index] ?? "";
+        const layoutText = layoutParagraphs[index] ?? paragraph;
         const isTyping = typingIndex === index && displayed.length < paragraph.length;
 
         return (
           <p
-            key={`${index}-${paragraph.slice(0, 12)}`}
+            key={index}
             className="relative text-xl text-foreground leading-relaxed"
           >
             <span className="invisible block" aria-hidden="true">
-              {paragraph}
+              {layoutText}
             </span>
             <span className="absolute inset-0 block">
               {displayed}
