@@ -33,18 +33,16 @@ export function About() {
       className="section-shell relative overflow-hidden section-divide section-surface-alt"
       ref={ref}
     >
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
-        <div className="about-piano-backdrop absolute inset-y-[-6%] right-[-12%] hidden w-[min(105vw,1080px)] md:block lg:right-[-5%]">
+        <div className="about-piano-backdrop absolute inset-0 hidden items-center justify-center p-6 sm:p-10 md:flex">
           <img
             src={steinwayPianoLineart}
             alt=""
             aria-hidden
-            className="h-full w-full object-contain object-right"
+            className="h-full w-full max-h-[min(88vh,820px)] max-w-[min(96vw,1180px)] object-contain"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(248,250,252)] via-[rgb(248,250,252)]/90 to-[rgb(248,250,252)]/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[rgb(248,250,252)] via-transparent to-[rgb(248,250,252)]/50" />
       </div>
 
       {/* corner accents */}
