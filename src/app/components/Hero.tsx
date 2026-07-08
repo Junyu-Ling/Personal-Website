@@ -5,6 +5,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { HeroTypewriterName } from "@/app/components/HeroTypewriterName";
 import { RotatingTagline } from "@/app/components/RotatingTagline";
 import { AnimatedCounter } from "@/app/components/AnimatedCounter";
+import { TransparentGlobe } from "@/app/components/TransparentGlobe";
 
 const statValues = [
   { value: 10, suffix: "+" },
@@ -47,6 +48,10 @@ export function Hero() {
           backgroundSize: "72px 72px",
         }}
       />
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-70">
+        <TransparentGlobe className="h-[min(96vmin,920px)] w-[min(96vmin,920px)]" />
+      </div>
 
       {/* ambient orbs */}
       <motion.div
