@@ -4,6 +4,7 @@ import profileImage from "@/assets/profile.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SectionHeader } from "@/app/components/SectionHeader";
+import { SteinwayParticlePiano } from "@/app/components/SteinwayParticlePiano";
 
 const contactMeta = [
   { icon: Mail, color: "text-violet-600" },
@@ -47,6 +48,13 @@ export function About() {
       <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-gray-200/45 pointer-events-none hidden lg:block" />
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
       <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
+
+      <div
+        className="pointer-events-none absolute right-[2%] top-28 bottom-16 z-[1] hidden w-[min(38vw,460px)] opacity-80 lg:block xl:right-[4%]"
+        aria-hidden="true"
+      >
+        <SteinwayParticlePiano className="h-full w-full" />
+      </div>
 
       <div className="container-site relative z-10">
         <SectionHeader
