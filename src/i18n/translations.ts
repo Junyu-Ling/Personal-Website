@@ -226,7 +226,7 @@ const en = {
         title: "AI Camp × WeChat Mini Program Innovation Challenge",
         organization: "AI Camp × WeChat Mini Program",
         description:
-          "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay (Ling Junyu, Zuo Yingxin, Hu Kexin) received Second Prize.",
+          "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay received Second Prize.",
         award: "Second Prize — Team WishRelay",
         certificateAlt:
           "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
@@ -601,7 +601,7 @@ const zh: typeof en = {
         title: "AI Camp × 微信小程序创新大赛",
         organization: "校内社团 AI Camp × 微信小程序",
         description:
-          "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队（灵俊宇、左盈欣、胡可昕）获二等奖。",
+          "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队获二等奖。",
         award: "二等奖 — 心愿接力团队",
         certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
       },
