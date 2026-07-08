@@ -241,7 +241,7 @@
 
 .about-piano-backdrop {
   position: absolute;
-  right: -8%;
+  right: -4%;
   bottom: 0;
   width: min(68vw, 1040px);
   height: min(92vh, 980px);
@@ -251,7 +251,7 @@
 
 @media (min-width: 1024px) {
   .about-piano-backdrop {
-    right: -10%;
+    right: -6%;
     width: min(72vw, 1180px);
     height: min(94vh, 1060px);
   }
@@ -259,7 +259,7 @@
 
 @media (min-width: 1280px) {
   .about-piano-backdrop {
-    right: -12%;
+    right: -8%;
     width: min(74vw, 1280px);
     height: min(96vh, 1120px);
   }
