@@ -2,6 +2,15 @@ import { useEffect, useRef } from "react";
 
 type Vec3 = { x: number; y: number; z: number };
 
+function normalize(point: Vec3): Vec3 {
+  const length = Math.hypot(point.x, point.y, point.z) || 1;
+  return { x: point.x / length, y: point.y / length, z: point.z / length };
+}
+
+function midpoint(a: Vec3, b: Vec3): Vec3 {
+  return normalize({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, z: (a.z + b.z) / 2 });
+}
+
 function rotateY(point: Vec3, angle: number): Vec3 {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -22,35 +31,87 @@ function rotateX(point: Vec3, angle: number): Vec3 {
   };
 }
 
-function spherePoint(lat: number, lon: number, radius: number): Vec3 {
-  const phi = ((90 - lat) * Math.PI) / 180;
-  const theta = ((lon + 180) * Math.PI) / 180;
-  return {
-    x: -radius * Math.sin(phi) * Math.cos(theta),
-    y: radius * Math.cos(phi),
-    z: radius * Math.sin(phi) * Math.sin(theta),
-  };
-}
+function buildIcoSphere(subdivisions: number): { vertices: Vec3[]; edges: Array<[number, number]> } {
+  const phi = (1 + Math.sqrt(5)) / 2;
+  let vertices: Vec3[] = [
+    { x: -1, y: phi, z: 0 },
+    { x: 1, y: phi, z: 0 },
+    { x: -1, y: -phi, z: 0 },
+    { x: 1, y: -phi, z: 0 },
+    { x: 0, y: -1, z: phi },
+    { x: 0, y: 1, z: phi },
+    { x: 0, y: -1, z: -phi },
+    { x: 0, y: 1, z: -phi },
+    { x: phi, y: 0, z: -1 },
+    { x: phi, y: 0, z: 1 },
+    { x: -phi, y: 0, z: -1 },
+    { x: -phi, y: 0, z: 1 },
+  ].map(normalize);
 
-function isLandMass(lat: number, lon: number): boolean {
-  const regions = [
-    { lat: [15, 72], lon: [-168, -52] },
-    { lat: [-56, 13], lon: [-82, -34] },
-    { lat: [36, 71], lon: [-25, 45] },
-    { lat: [-35, 37], lon: [-18, 52] },
-    { lat: [-44, -10], lon: [112, 154] },
-    { lat: [5, 55], lon: [68, 140] },
-    { lat: [-48, -5], lon: [95, 180] },
-    { lat: [60, 84], lon: [-45, 65] },
+  let faces: Array<[number, number, number]> = [
+    [0, 11, 5],
+    [0, 5, 1],
+    [0, 1, 7],
+    [0, 7, 10],
+    [0, 10, 11],
+    [1, 5, 9],
+    [5, 11, 4],
+    [11, 10, 2],
+    [10, 7, 6],
+    [7, 1, 8],
+    [3, 9, 4],
+    [3, 4, 2],
+    [3, 2, 6],
+    [3, 6, 8],
+    [3, 8, 9],
+    [4, 9, 5],
+    [2, 4, 11],
+    [6, 2, 10],
+    [8, 6, 7],
+    [9, 8, 1],
   ];
 
-  return regions.some(
-    (region) =>
-      lat >= region.lat[0] &&
-      lat <= region.lat[1] &&
-      lon >= region.lon[0] &&
-      lon <= region.lon[1]
-  );
+  const midpointCache = new Map<string, number>();
+
+  const getMidpointIndex = (i0: number, i1: number): number => {
+    const key = i0 < i1 ? `${i0}_${i1}` : `${i1}_${i0}`;
+    const cached = midpointCache.get(key);
+    if (cached !== undefined) return cached;
+
+    const index = vertices.length;
+    vertices.push(midpoint(vertices[i0], vertices[i1]));
+    midpointCache.set(key, index);
+    return index;
+  };
+
+  for (let level = 0; level < subdivisions; level++) {
+    const nextFaces: Array<[number, number, number]> = [];
+    for (const [a, b, c] of faces) {
+      const ab = getMidpointIndex(a, b);
+      const bc = getMidpointIndex(b, c);
+      const ca = getMidpointIndex(c, a);
+      nextFaces.push([a, ab, ca], [b, bc, ab], [c, ca, bc], [ab, bc, ca]);
+    }
+    faces = nextFaces;
+  }
+
+  const edgeSet = new Set<string>();
+  const edges: Array<[number, number]> = [];
+
+  const addEdge = (a: number, b: number) => {
+    const key = a < b ? `${a}_${b}` : `${b}_${a}`;
+    if (edgeSet.has(key)) return;
+    edgeSet.add(key);
+    edges.push([a, b]);
+  };
+
+  for (const [a, b, c] of faces) {
+    addEdge(a, b);
+    addEdge(b, c);
+    addEdge(c, a);
+  }
+
+  return { vertices, edges };
 }
 
 type TransparentGlobeProps = {
@@ -60,6 +121,7 @@ type TransparentGlobeProps = {
 export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(0);
+  const meshRef = useRef(buildIcoSphere(3));
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -72,15 +134,6 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
     let width = 0;
     let height = 0;
     let dpr = 1;
-
-    const landDots: Vec3[] = [];
-    for (let lat = -78; lat <= 78; lat += 3.2) {
-      for (let lon = -180; lon < 180; lon += 3.2) {
-        if (!isLandMass(lat, lon)) continue;
-        if (Math.random() > 0.62) continue;
-        landDots.push(spherePoint(lat, lon + (Math.random() - 0.5) * 1.2, 1));
-      }
-    }
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -102,7 +155,7 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
     ) => {
       let rotated = rotateY(point, rotY);
       rotated = rotateX(rotated, tiltX);
-      const perspective = 1.15 / (1.15 - rotated.z * 0.35);
+      const perspective = 1.12 / (1.12 - rotated.z * 0.28);
       return {
         x: cx + rotated.x * radius * perspective,
         y: cy + rotated.y * radius * perspective,
@@ -119,133 +172,39 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
 
       ctx.clearRect(0, 0, width, height);
 
-      const cx = width * 0.5;
-      const cy = height * 0.5;
-      const radius = Math.min(width, height) * 0.38;
-      const rotY = reducedMotion ? 0.55 : time * 0.00018;
-      const tiltX = -0.28;
+      const cx = width / 2;
+      const cy = height / 2;
+      const radius = Math.min(width, height) * 0.42;
+      const rotY = reducedMotion ? 0.45 : time * 0.00016;
+      const tiltX = -0.18;
 
-      const atmosphere = ctx.createRadialGradient(
-        cx,
-        cy,
-        radius * 0.72,
-        cx,
-        cy,
-        radius * 1.08
+      const { vertices, edges } = meshRef.current;
+      const projected = vertices.map((vertex) =>
+        project(vertex, cx, cy, radius, rotY, tiltX)
       );
-      atmosphere.addColorStop(0, "rgba(56, 189, 248, 0)");
-      atmosphere.addColorStop(0.55, "rgba(56, 189, 248, 0.05)");
-      atmosphere.addColorStop(1, "rgba(99, 102, 241, 0.08)");
-      ctx.fillStyle = atmosphere;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius * 1.08, 0, Math.PI * 2);
-      ctx.fill();
 
-      const drawArc = (
-        latStart: number,
-        latEnd: number,
-        lon: number,
-        steps: number,
-        stroke: string,
-        widthPx: number
-      ) => {
-        let started = false;
-        for (let i = 0; i <= steps; i++) {
-          const lat = latStart + ((latEnd - latStart) * i) / steps;
-          const point = project(spherePoint(lat, lon, 1), cx, cy, radius, rotY, tiltX);
-          if (point.z < -0.08) {
-            started = false;
-            continue;
-          }
-          const alpha = 0.12 + ((point.z + 1) / 2) * 0.28;
-          ctx.strokeStyle = stroke.replace("ALPHA", alpha.toFixed(3));
-          ctx.lineWidth = widthPx * point.scale;
-          if (!started) {
-            ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-            started = true;
-          } else {
-            ctx.lineTo(point.x, point.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-          }
-        }
-        if (started) ctx.stroke();
-      };
+      const sortedEdges = [...edges].sort((edgeA, edgeB) => {
+        const depthA = (projected[edgeA[0]].z + projected[edgeA[1]].z) / 2;
+        const depthB = (projected[edgeB[0]].z + projected[edgeB[1]].z) / 2;
+        return depthA - depthB;
+      });
 
-      const drawParallel = (
-        lat: number,
-        lonStart: number,
-        lonEnd: number,
-        steps: number,
-        stroke: string,
-        widthPx: number
-      ) => {
-        let started = false;
-        for (let i = 0; i <= steps; i++) {
-          const lon = lonStart + ((lonEnd - lonStart) * i) / steps;
-          const point = project(spherePoint(lat, lon, 1), cx, cy, radius, rotY, tiltX);
-          if (point.z < -0.08) {
-            started = false;
-            continue;
-          }
-          const alpha = 0.1 + ((point.z + 1) / 2) * 0.24;
-          ctx.strokeStyle = stroke.replace("ALPHA", alpha.toFixed(3));
-          ctx.lineWidth = widthPx * point.scale;
-          if (!started) {
-            ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-            started = true;
-          } else {
-            ctx.lineTo(point.x, point.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-          }
-        }
-        if (started) ctx.stroke();
-      };
+      for (const [start, end] of sortedEdges) {
+        const from = projected[start];
+        const to = projected[end];
+        const depth = (from.z + to.z) / 2;
+        const frontness = (depth + 1) / 2;
+        const alpha = 0.08 + frontness * 0.34;
 
-      for (let lon = -180; lon < 180; lon += 18) {
-        drawArc(-82, 82, lon, 48, "rgba(56, 189, 248, ALPHA)", 0.75);
-      }
-
-      for (let lat = -60; lat <= 60; lat += 15) {
-        if (lat === 0) continue;
-        drawParallel(lat, -180, 180, 72, "rgba(99, 102, 241, ALPHA)", 0.65);
-      }
-
-      drawParallel(0, -180, 180, 72, "rgba(56, 189, 248, ALPHA)", 0.95);
-
-      for (const dot of landDots) {
-        const point = project(dot, cx, cy, radius * 0.995, rotY, tiltX);
-        if (point.z < 0.02) continue;
-        const alpha = 0.08 + ((point.z + 1) / 2) * 0.34;
-        const size = (0.8 + point.scale * 0.45) * (width / 420);
         ctx.beginPath();
-        ctx.fillStyle = `rgba(16, 185, 129, ${alpha})`;
-        ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      const shellSteps = 120;
-      for (let i = 0; i < shellSteps; i++) {
-        const angle = (i / shellSteps) * Math.PI * 2;
-        const point = project(
-          { x: Math.cos(angle), y: Math.sin(angle) * 0.12, z: Math.sin(angle) * 0.08 },
-          cx,
-          cy,
-          radius * 1.01,
-          rotY,
-          tiltX
-        );
-        if (point.z < -0.2) continue;
-        const alpha = 0.04 + ((point.z + 1) / 2) * 0.1;
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(99, 102, 241, ${alpha})`;
-        ctx.arc(point.x, point.y, 1.1 * point.scale, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+        ctx.strokeStyle =
+          depth > 0
+            ? `rgba(37, 99, 235, ${alpha})`
+            : `rgba(96, 165, 250, ${alpha * 0.45})`;
+        ctx.lineWidth = (depth > 0 ? 1.05 : 0.75) * ((from.scale + to.scale) / 2);
+        ctx.stroke();
       }
 
       frameRef.current = requestAnimationFrame(draw);

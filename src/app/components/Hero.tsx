@@ -49,8 +49,8 @@ export function Hero() {
         }}
       />
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-70">
-        <TransparentGlobe className="h-[min(96vmin,920px)] w-[min(96vmin,920px)]" />
+      <div className="absolute inset-0 pointer-events-none">
+        <TransparentGlobe className="h-full w-full" />
       </div>
 
       {/* ambient orbs */}
