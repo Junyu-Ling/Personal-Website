@@ -7,6 +7,7 @@ type Projected = { x: number; y: number; z: number; scale: number };
 type GridCurve = {
   id: number;
   samples: Vec3[];
+  kind: "meridian" | "parallel" | "equator";
 };
 
 function rotateY(point: Vec3, angle: number): Vec3 {
@@ -44,12 +45,23 @@ function depthAlpha(z: number, front = 0.34, back = 0.07): number {
   return back + t * (front - back);
 }
 
+const globePalette = {
+  meridian: { r: 139, g: 92, b: 246 },
+  parallel: { r: 56, g: 189, b: 248 },
+  equator: { r: 52, g: 211, b: 153 },
+} as const;
+
+function strokeColor(kind: GridCurve["kind"], alpha: number): string {
+  const color = globePalette[kind];
+  return `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+}
+
 function buildGlobeFramework(): GridCurve[] {
   const curves: GridCurve[] = [];
   let curveId = 0;
 
-  const addCurve = (samples: Vec3[]) => {
-    curves.push({ id: curveId++, samples });
+  const addCurve = (samples: Vec3[], kind: GridCurve["kind"]) => {
+    curves.push({ id: curveId++, samples, kind });
   };
 
   for (let lon = -180; lon < 180; lon += 15) {
@@ -57,7 +69,7 @@ function buildGlobeFramework(): GridCurve[] {
     for (let lat = -88; lat <= 88; lat += 2.2) {
       samples.push(spherePoint(lat, lon));
     }
-    addCurve(samples);
+    addCurve(samples, "meridian");
   }
 
   for (let lat = -75; lat <= 75; lat += 15) {
@@ -65,7 +77,7 @@ function buildGlobeFramework(): GridCurve[] {
     for (let lon = -180; lon <= 180; lon += 2.4) {
       samples.push(spherePoint(lat, lon));
     }
-    addCurve(samples);
+    addCurve(samples, lat === 0 ? "equator" : "parallel");
   }
 
   return curves;
@@ -136,11 +148,14 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
       const tiltX = -0.28;
       const curves = frameworkRef.current;
 
-      const projectedByCurve = curves.map((curve) =>
-        curve.samples.map((sample) => project(sample, cx, cy, radius, rotY, tiltX))
-      );
+      const projectedByCurve = curves.map((curve) => ({
+        kind: curve.kind,
+        points: curve.samples.map((sample) =>
+          project(sample, cx, cy, radius, rotY, tiltX)
+        ),
+      }));
 
-      for (const projected of projectedByCurve) {
+      for (const { kind, points: projected } of projectedByCurve) {
         for (let i = 0; i < projected.length - 1; i++) {
           const from = projected[i];
           const to = projected[i + 1];
@@ -148,13 +163,16 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
           const pulse = reducedMotion
             ? 1
             : 0.86 + Math.sin(time * 0.0014 + i * 0.35) * 0.14;
-          const alpha = depthAlpha(depth, 0.3, 0.06) * pulse;
-          const lineWidth = (depth > 0 ? 0.95 : 0.7) * ((from.scale + to.scale) / 2);
+          const frontAlpha = kind === "equator" ? 0.36 : kind === "meridian" ? 0.32 : 0.28;
+          const alpha = depthAlpha(depth, frontAlpha, 0.05) * pulse;
+          const lineWidth =
+            (kind === "equator" ? 1.05 : depth > 0 ? 0.95 : 0.7) *
+            ((from.scale + to.scale) / 2);
 
           ctx.beginPath();
           ctx.moveTo(from.x, from.y);
           ctx.lineTo(to.x, to.y);
-          ctx.strokeStyle = `rgba(55, 55, 55, ${alpha})`;
+          ctx.strokeStyle = strokeColor(kind, alpha);
           ctx.lineWidth = lineWidth;
           ctx.stroke();
         }
