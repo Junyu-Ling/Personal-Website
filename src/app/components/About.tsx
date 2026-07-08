@@ -35,6 +35,9 @@ export function About() {
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
+        <div className="about-piano-backdrop hidden md:block" aria-hidden>
+          <img src={steinwayPianoLineart} alt="" />
+        </div>
       </div>
 
       {/* corner accents */}
@@ -50,26 +53,20 @@ export function About() {
       <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
       <div className="container-site relative z-10">
-        <div className="relative">
-          <div className="about-piano-backdrop hidden md:block" aria-hidden>
-            <img src={steinwayPianoLineart} alt="" />
-          </div>
+        <SectionHeader
+          badge={t.about.badge}
+          title={t.about.title}
+          subtitle={t.about.subtitle}
+          icon={Sparkles}
+          isVisible={isVisible}
+        />
 
-          <div className="relative z-10">
-            <SectionHeader
-              badge={t.about.badge}
-              title={t.about.title}
-              subtitle={t.about.subtitle}
-              icon={Sparkles}
-              isVisible={isVisible}
-            />
-
-            <motion.div
-              className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={transition({ duration: 0.8, delay: 0.1 })}
-            >
+        <motion.div
+          className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={transition({ duration: 0.8, delay: 0.1 })}
+        >
           <div className="relative shrink-0">
             <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
             <motion.img
@@ -106,8 +103,6 @@ export function About() {
             </div>
           </div>
         </motion.div>
-          </div>
-        </div>
 
         <AboutTypewriterBody
           key={locale}
