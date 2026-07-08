@@ -4,6 +4,7 @@ import profileImage from "@/assets/profile.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SectionHeader } from "@/app/components/SectionHeader";
+import { AboutTypewriterBody } from "@/app/components/AboutTypewriterBody";
 
 const contactMeta = [
   { icon: Mail, color: "text-violet-600" },
@@ -13,7 +14,7 @@ const contactMeta = [
 ];
 
 export function About() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { ref, isVisible, transition } = useInViewOnScrollDown({
     margin: "-100px",
   });
@@ -100,16 +101,12 @@ export function About() {
           </div>
         </motion.div>
 
-        <motion.div
+        <AboutTypewriterBody
+          key={locale}
+          paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
+          active={isVisible}
           className="space-y-8 max-w-4xl mx-auto text-left"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8, delay: 0.25 })}
-        >
-          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p1}</p>
-          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p2}</p>
-          <p className="text-xl text-muted-foreground leading-relaxed">{t.about.p3}</p>
-        </motion.div>
+        />
       </div>
     </section>
   );
