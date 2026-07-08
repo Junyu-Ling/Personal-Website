@@ -35,13 +35,8 @@ export function About() {
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
-        <div className="about-piano-backdrop absolute inset-0 hidden items-center justify-center p-6 sm:p-10 md:flex">
-          <img
-            src={steinwayPianoLineart}
-            alt=""
-            aria-hidden
-            className="h-full w-full max-h-[min(88vh,820px)] max-w-[min(96vw,1180px)] object-contain"
-          />
+        <div className="about-piano-backdrop hidden md:block" aria-hidden>
+          <img src={steinwayPianoLineart} alt="" />
         </div>
       </div>
 
