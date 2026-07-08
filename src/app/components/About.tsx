@@ -28,7 +28,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="section-shell relative overflow-hidden bg-background section-divide"
+      className="section-shell relative overflow-hidden section-divide section-surface-alt"
       ref={ref}
     >
       {/* background */}

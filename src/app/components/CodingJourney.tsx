@@ -169,7 +169,7 @@ export function CodingJourney() {
   return (
     <section
       id="journey"
-      className="section-shell relative overflow-hidden section-divide section-surface-alt"
+      className="section-shell relative overflow-hidden section-divide bg-background"
       ref={ref}
     >
       <div className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots" />
