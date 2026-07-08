@@ -116,7 +116,7 @@ export function About() {
           paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
           layoutParagraphs={aboutIntroLayoutParagraphs}
           active={isVisible}
-          className="space-y-8 max-w-4xl mx-auto text-left"
+          className="space-y-8 max-w-4xl text-left"
         />
       </div>
     </section>
