@@ -216,8 +216,8 @@ function createParticles(template: Point[]): Particle[] {
     y: point.y,
     baseX: point.x,
     baseY: point.y,
-    size: 0.55 + Math.random() * 1.15,
-    alpha: 0.12 + Math.random() * 0.28,
+    size: 0.8 + Math.random() * 1.4,
+    alpha: 0.28 + Math.random() * 0.38,
     phase: Math.random() * Math.PI * 2,
     speed: 0.35 + Math.random() * 0.9,
   }));
@@ -255,10 +255,17 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
+    const media = window.matchMedia("(min-width: 768px)");
+
     const draw = (time: number) => {
+      if (width < 2 || height < 2) {
+        frameRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width / 100, height / 74) * 0.92;
+      const scale = Math.min(width / 100, height / 74) * 0.9;
       const offsetX = width * 0.5 - 50 * scale;
       const offsetY = height * 0.52 - 37 * scale;
 
@@ -271,35 +278,44 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
           : Math.cos(time * 0.0008 * particle.speed + particle.phase) * 0.25;
         const pulse = reducedMotion
           ? 1
-          : 0.72 + Math.sin(time * 0.0014 * particle.speed + particle.phase) * 0.28;
+          : 0.78 + Math.sin(time * 0.0014 * particle.speed + particle.phase) * 0.22;
 
         const x = offsetX + (particle.baseX + drift) * scale;
         const y = offsetY + (particle.baseY + lift) * scale;
         const alpha = particle.alpha * pulse;
+        const radius = Math.max(1.35, particle.size * scale * 0.42);
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(38, 36, 34, ${alpha})`;
-        ctx.arc(x, y, particle.size * scale * 0.11, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(24, 22, 20, ${alpha})`;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(120, 98, 72, ${alpha * 0.35})`;
-        ctx.arc(x, y, particle.size * scale * 0.05, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(140, 112, 78, ${alpha * 0.45})`;
+        ctx.arc(x, y, radius * 0.45, 0, Math.PI * 2);
         ctx.fill();
       }
 
       frameRef.current = requestAnimationFrame(draw);
     };
 
+    const handleResize = () => {
+      resize();
+    };
+
     resize();
     frameRef.current = requestAnimationFrame(draw);
 
-    const observer = new ResizeObserver(resize);
+    const observer = new ResizeObserver(handleResize);
     observer.observe(canvas);
+    media.addEventListener("change", handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(frameRef.current);
       observer.disconnect();
+      media.removeEventListener("change", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
