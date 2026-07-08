@@ -4,7 +4,6 @@ import profileImage from "@/assets/profile.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SectionHeader } from "@/app/components/SectionHeader";
-import { SteinwayParticlePiano } from "@/app/components/SteinwayParticlePiano";
 
 const contactMeta = [
   { icon: Mail, color: "text-violet-600" },
@@ -44,14 +43,10 @@ export function About() {
       <div className="absolute bottom-20 right-6 w-14 h-14 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
       {/* rings & dots */}
+      <div className="absolute top-40 right-[12%] w-24 h-24 rounded-full border border-gray-200/50 pointer-events-none hidden lg:block" />
       <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-gray-200/45 pointer-events-none hidden lg:block" />
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
-
-      <div className="pointer-events-none absolute inset-y-16 right-0 z-[1] hidden w-[min(64%,720px)] md:block">
-        <div className="absolute inset-0 bg-gradient-to-l from-background via-background/45 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/25" />
-        <SteinwayParticlePiano className="h-full w-full opacity-90" />
-      </div>
+      <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
       <div className="container-site relative z-10">
         <SectionHeader
