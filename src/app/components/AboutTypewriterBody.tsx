@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 type AboutTypewriterBodyProps = {
   paragraphs: string[];
   layoutParagraphs: readonly string[];
+  highlights?: readonly (readonly string[])[];
   active: boolean;
   className?: string;
 };
@@ -90,9 +91,35 @@ async function typeParagraph(
   }
 }
 
+function renderHighlightedText(text: string, keywords: readonly string[]) {
+  if (!text || keywords.length === 0) return text;
+
+  const terms = [...keywords].sort((a, b) => b.length - a.length);
+  const pattern = terms
+    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|");
+  const regex = new RegExp(`(${pattern})`, "gi");
+  const parts = text.split(regex).filter(Boolean);
+
+  return parts.map((part, index) => {
+    const isHighlight = terms.some(
+      (term) => term.toLowerCase() === part.toLowerCase()
+    );
+    if (isHighlight) {
+      return (
+        <strong key={`${part}-${index}`} className="about-intro-highlight">
+          {part}
+        </strong>
+      );
+    }
+    return part;
+  }) as ReactNode;
+}
+
 export function AboutTypewriterBody({
   paragraphs,
   layoutParagraphs,
+  highlights = [],
   active,
   className = "",
 }: AboutTypewriterBodyProps) {
@@ -164,18 +191,19 @@ export function AboutTypewriterBody({
       {paragraphs.map((paragraph, index) => {
         const displayed = lines[index] ?? "";
         const layoutText = layoutParagraphs[index] ?? paragraph;
+        const paragraphHighlights = highlights[index] ?? [];
         const isTyping = typingIndex === index && displayed.length < paragraph.length;
 
         return (
           <p
             key={index}
-            className="relative text-xl text-foreground leading-relaxed"
+            className="relative text-lg md:text-xl text-foreground leading-[1.75]"
           >
             <span className="invisible block" aria-hidden="true">
               {layoutText}
             </span>
             <span className="absolute inset-0 block">
-              {displayed}
+              {renderHighlightedText(displayed, paragraphHighlights)}
               {isTyping ? (
                 <span className="inline-block w-[2px] h-[1em] ml-0.5 align-[-0.12em] rounded-full bg-foreground/80 opacity-90" />
               ) : null}

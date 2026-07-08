@@ -43,7 +43,7 @@ export function SiteNav() {
       initial={false}
       animate={{ y: 0 }}
     >
-      <div className="container-site h-16 flex items-center gap-4">
+      <div className="container-site flex h-[4.25rem] items-center gap-4">
         <a
           href="#home"
           className="text-sm md:text-base font-semibold tracking-tight text-gray-900 shrink-0"

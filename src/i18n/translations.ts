@@ -100,6 +100,13 @@ const en = {
     music: "Music",
     musicValue: "ABRSM Piano Grade 7 | Learning Clarinet",
     profileAlt: "Junyu Ling",
+    viewProjects: "View My Projects",
+    contactMe: "Contact Me",
+    highlights: [
+      ["web development", "computer science"],
+      ["ABRSM Piano", "Grade 7", "clarinet"],
+      ["host for events", "Sounds of Nature"],
+    ],
   },
   journey: {
     badge: "Evolution of Skills",
@@ -484,6 +491,13 @@ const zh: typeof en = {
     music: "音乐",
     musicValue: "英皇钢琴七级 · 学习中：单簧管",
     profileAlt: "灵俊宇",
+    viewProjects: "查看项目",
+    contactMe: "联系我",
+    highlights: [
+      ["Web 开发", "计算机科学"],
+      ["英皇钢琴七级", "单簧管"],
+      ["主持", "天籁之音"],
+    ],
   },
   journey: {
     badge: "技能演进",
