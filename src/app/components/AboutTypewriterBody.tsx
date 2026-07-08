@@ -97,6 +97,7 @@ export function AboutTypewriterBody({
   const [lines, setLines] = useState<string[]>(() => paragraphs.map(() => ""));
   const [typingIndex, setTypingIndex] = useState<number | null>(null);
   const runIdRef = useRef(0);
+  const hasStartedRef = useRef(false);
 
   const reset = useCallback(() => {
     setLines(paragraphs.map(() => ""));
@@ -104,14 +105,17 @@ export function AboutTypewriterBody({
   }, [paragraphs]);
 
   useEffect(() => {
-    if (!active) {
-      runIdRef.current += 1;
-      reset();
+    if (hasStartedRef.current) {
+      setLines(paragraphs);
+      setTypingIndex(null);
       return;
     }
 
+    if (!active) return;
+
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {
+      hasStartedRef.current = true;
       setLines(paragraphs);
       setTypingIndex(null);
       return;
@@ -120,6 +124,7 @@ export function AboutTypewriterBody({
     const runId = ++runIdRef.current;
     const controller = new AbortController();
     const { signal } = controller;
+    hasStartedRef.current = true;
 
     const run = async () => {
       reset();
