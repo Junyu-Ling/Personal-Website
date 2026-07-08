@@ -241,10 +241,10 @@
 
 .about-piano-backdrop {
   position: absolute;
-  right: -6%;
+  right: 2%;
   bottom: 1.5rem;
-  width: min(74vw, 1020px);
-  height: min(88vh, 940px);
+  width: min(64vw, 900px);
+  height: min(78vh, 820px);
   pointer-events: none;
 }
 
@@ -254,7 +254,7 @@
   height: 100%;
   object-fit: contain;
   object-position: right bottom;
-  opacity: 0.34;
+  opacity: 0.36;
 }
 
 .dark .about-piano-backdrop img {
