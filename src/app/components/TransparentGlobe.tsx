@@ -2,6 +2,21 @@ import { useEffect, useRef } from "react";
 
 type Vec3 = { x: number; y: number; z: number };
 
+type Projected = { x: number; y: number; z: number; scale: number };
+
+type GridParticle = {
+  base: Vec3;
+  phase: number;
+  speed: number;
+  curveId: number;
+  index: number;
+};
+
+type GridCurve = {
+  id: number;
+  samples: Vec3[];
+};
+
 function rotateY(point: Vec3, angle: number): Vec3 {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -22,14 +37,57 @@ function rotateX(point: Vec3, angle: number): Vec3 {
   };
 }
 
-function spherePoint(lat: number, lon: number, radius: number): Vec3 {
+function spherePoint(lat: number, lon: number): Vec3 {
   const phi = ((90 - lat) * Math.PI) / 180;
   const theta = ((lon + 180) * Math.PI) / 180;
   return {
-    x: -radius * Math.sin(phi) * Math.cos(theta),
-    y: radius * Math.cos(phi),
-    z: radius * Math.sin(phi) * Math.sin(theta),
+    x: -Math.sin(phi) * Math.cos(theta),
+    y: Math.cos(phi),
+    z: Math.sin(phi) * Math.sin(theta),
   };
+}
+
+function depthAlpha(z: number, front = 0.34, back = 0.07): number {
+  const t = (z + 1) / 2;
+  return back + t * (front - back);
+}
+
+function buildGlobeFramework(): { curves: GridCurve[]; particles: GridParticle[] } {
+  const curves: GridCurve[] = [];
+  const particles: GridParticle[] = [];
+  let curveId = 0;
+
+  const addCurve = (samples: Vec3[]) => {
+    const id = curveId++;
+    curves.push({ id, samples });
+    samples.forEach((base, index) => {
+      particles.push({
+        base,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.35 + Math.random() * 0.75,
+        curveId: id,
+        index,
+      });
+    });
+  };
+
+  for (let lon = -180; lon < 180; lon += 15) {
+    const samples: Vec3[] = [];
+    for (let lat = -88; lat <= 88; lat += 2.2) {
+      samples.push(spherePoint(lat, lon));
+    }
+    addCurve(samples);
+  }
+
+  for (let lat = -75; lat <= 75; lat += 15) {
+    const samples: Vec3[] = [];
+    for (let lon = -180; lon <= 180; lon += 2.4) {
+      samples.push(spherePoint(lat, lon));
+    }
+    addCurve(samples);
+  }
+
+  return { curves, particles };
 }
 
 type TransparentGlobeProps = {
@@ -39,6 +97,7 @@ type TransparentGlobeProps = {
 export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(0);
+  const frameworkRef = useRef(buildGlobeFramework());
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -69,96 +128,16 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
       radius: number,
       rotY: number,
       tiltX: number
-    ) => {
+    ): Projected => {
       let rotated = rotateY(point, rotY);
       rotated = rotateX(rotated, tiltX);
-      const perspective = 1.15 / (1.15 - rotated.z * 0.35);
+      const perspective = 1.14 / (1.14 - rotated.z * 0.3);
       return {
         x: cx + rotated.x * radius * perspective,
         y: cy + rotated.y * radius * perspective,
         z: rotated.z,
         scale: perspective,
       };
-    };
-
-    const drawArc = (
-      latStart: number,
-      latEnd: number,
-      lon: number,
-      steps: number,
-      stroke: string,
-      widthPx: number,
-      cx: number,
-      cy: number,
-      radius: number,
-      rotY: number,
-      tiltX: number
-    ) => {
-      let started = false;
-      for (let i = 0; i <= steps; i++) {
-        const lat = latStart + ((latEnd - latStart) * i) / steps;
-        const point = project(spherePoint(lat, lon, 1), cx, cy, radius, rotY, tiltX);
-        const alpha = 0.08 + ((point.z + 1) / 2) * 0.26;
-        ctx.strokeStyle = stroke.replace("ALPHA", alpha.toFixed(3));
-        ctx.lineWidth = widthPx * point.scale;
-
-        if (point.z < -0.08) {
-          started = false;
-          continue;
-        }
-
-        if (!started) {
-          ctx.beginPath();
-          ctx.moveTo(point.x, point.y);
-          started = true;
-        } else {
-          ctx.lineTo(point.x, point.y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(point.x, point.y);
-        }
-      }
-      if (started) ctx.stroke();
-    };
-
-    const drawParallel = (
-      lat: number,
-      lonStart: number,
-      lonEnd: number,
-      steps: number,
-      stroke: string,
-      widthPx: number,
-      cx: number,
-      cy: number,
-      radius: number,
-      rotY: number,
-      tiltX: number
-    ) => {
-      let started = false;
-      for (let i = 0; i <= steps; i++) {
-        const lon = lonStart + ((lonEnd - lonStart) * i) / steps;
-        const point = project(spherePoint(lat, lon, 1), cx, cy, radius, rotY, tiltX);
-        const alpha = 0.07 + ((point.z + 1) / 2) * 0.22;
-        ctx.strokeStyle = stroke.replace("ALPHA", alpha.toFixed(3));
-        ctx.lineWidth = widthPx * point.scale;
-
-        if (point.z < -0.08) {
-          started = false;
-          continue;
-        }
-
-        if (!started) {
-          ctx.beginPath();
-          ctx.moveTo(point.x, point.y);
-          started = true;
-        } else {
-          ctx.lineTo(point.x, point.y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(point.x, point.y);
-        }
-      }
-      if (started) ctx.stroke();
     };
 
     const draw = (time: number) => {
@@ -174,53 +153,61 @@ export function TransparentGlobe({ className = "" }: TransparentGlobeProps) {
       const radius = Math.min(width, height) * 0.42;
       const rotY = reducedMotion ? 0.55 : time * 0.00018;
       const tiltX = -0.28;
+      const { curves, particles } = frameworkRef.current;
 
-      for (let lon = -180; lon < 180; lon += 18) {
-        drawArc(
-          -82,
-          82,
-          lon,
-          48,
-          "rgba(56, 189, 248, ALPHA)",
-          0.75,
-          cx,
-          cy,
-          radius,
-          rotY,
-          tiltX
-        );
-      }
-
-      for (let lat = -60; lat <= 60; lat += 15) {
-        if (lat === 0) continue;
-        drawParallel(
-          lat,
-          -180,
-          180,
-          72,
-          "rgba(99, 102, 241, ALPHA)",
-          0.65,
-          cx,
-          cy,
-          radius,
-          rotY,
-          tiltX
-        );
-      }
-
-      drawParallel(
-        0,
-        -180,
-        180,
-        72,
-        "rgba(56, 189, 248, ALPHA)",
-        0.95,
-        cx,
-        cy,
-        radius,
-        rotY,
-        tiltX
+      const projectedByCurve = curves.map((curve) =>
+        curve.samples.map((sample) => project(sample, cx, cy, radius, rotY, tiltX))
       );
+
+      for (const projected of projectedByCurve) {
+        for (let i = 0; i < projected.length - 1; i++) {
+          const from = projected[i];
+          const to = projected[i + 1];
+          const depth = (from.z + to.z) / 2;
+          const alpha = depthAlpha(depth, 0.28, 0.06);
+          const lineWidth = (depth > 0 ? 0.9 : 0.65) * ((from.scale + to.scale) / 2);
+
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y);
+          ctx.lineTo(to.x, to.y);
+          ctx.strokeStyle = `rgba(55, 55, 55, ${alpha})`;
+          ctx.lineWidth = lineWidth;
+          ctx.stroke();
+        }
+      }
+
+      for (const particle of particles) {
+        const drift = reducedMotion
+          ? 0
+          : Math.sin(time * 0.001 * particle.speed + particle.phase) * 0.012;
+        const lift = reducedMotion
+          ? 0
+          : Math.cos(time * 0.00085 * particle.speed + particle.phase) * 0.01;
+
+        const point = project(
+          {
+            x: particle.base.x + drift,
+            y: particle.base.y + lift,
+            z: particle.base.z,
+          },
+          cx,
+          cy,
+          radius,
+          rotY,
+          tiltX
+        );
+
+        const alpha = depthAlpha(point.z, 0.42, 0.1);
+        const pulse = reducedMotion
+          ? 1
+          : 0.82 + Math.sin(time * 0.0016 * particle.speed + particle.phase) * 0.18;
+        const size = Math.max(1.1, 1.35 * point.scale * (point.z > 0 ? 1 : 0.85));
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(40, 40, 40, ${alpha * pulse})`;
+        ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
       frameRef.current = requestAnimationFrame(draw);
     };
