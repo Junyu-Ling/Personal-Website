@@ -58,7 +58,7 @@ export function About() {
         />
 
         <motion.div
-          className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
+          className="relative mb-16 flex flex-col items-center gap-8 border-b border-border pb-16 text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.1 })}
@@ -74,28 +74,30 @@ export function About() {
             />
           </div>
 
-          <div className="min-w-0 flex-1 text-left">
+          <div className="min-w-0 w-full max-w-2xl">
             <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
             <p className="text-muted-foreground mb-8">{t.hero.role}</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 max-w-xl">
-              {contactItems.map((item, index) => {
-                const meta = contactMeta[index];
-                const Icon = meta.icon;
-                return (
-                  <div key={item.label} className="flex items-start gap-3 min-w-0">
-                    <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
-                    <div className="min-w-0">
-                      <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
-                      <p
-                        className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
-                      >
-                        {item.value}
-                      </p>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-left">
+                {contactItems.map((item, index) => {
+                  const meta = contactMeta[index];
+                  const Icon = meta.icon;
+                  return (
+                    <div key={item.label} className="flex items-start gap-3 min-w-0">
+                      <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
+                      <div className="min-w-0">
+                        <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
+                        <p
+                          className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
+                        >
+                          {item.value}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </motion.div>
