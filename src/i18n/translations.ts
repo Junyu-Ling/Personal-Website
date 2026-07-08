@@ -253,7 +253,7 @@ const en = {
         title: "WeChat Mini-Program Global Innovation Challenge",
         organization: "WeChat",
         description:
-          "Three-person team developed a carbon-footprint calculator mini-program and received Global Third Prize.",
+          "Served as team captain for a three-person team that developed a carbon-footprint calculator mini-program. Received Global Third Prize and a ¥500 cash award.",
         award: "Global Third Prize",
         certificateAlt:
           "WeChat Mini-Program Global Innovation Challenge — Carbon Footprint Tracker award list",
@@ -626,7 +626,7 @@ const zh: typeof en = {
         title: "微信小程序全球创新挑战赛",
         organization: "微信",
         description:
-          "三人团队开发碳足迹计算器微信小程序，获全球三等奖。",
+          "担任三人团队队长，开发碳足迹计算器微信小程序，获全球三等奖及 500 元奖金。",
         award: "全球三等奖",
         certificateAlt: "微信小程序全球创新挑战赛 — 碳足迹追踪器获奖公示",
       },
