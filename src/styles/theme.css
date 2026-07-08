@@ -239,6 +239,18 @@
   background-color: rgb(248 250 252);
 }
 
+.about-piano-backdrop img {
+  filter: contrast(2.4) brightness(0.5);
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+}
+
+.dark .about-piano-backdrop img {
+  filter: contrast(1.6) brightness(1.35) invert(1);
+  mix-blend-mode: screen;
+  opacity: 0.14;
+}
+
 .dark .section-dots {
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }

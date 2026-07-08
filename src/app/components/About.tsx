@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Mail, MapPin, Briefcase, Music, Sparkles } from "lucide-react";
 import profileImage from "@/assets/profile.png";
+import steinwayPianoLineart from "@/assets/steinway-piano-lineart.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SectionHeader } from "@/app/components/SectionHeader";
@@ -32,7 +33,19 @@ export function About() {
       className="section-shell relative overflow-hidden section-divide section-surface-alt"
       ref={ref}
     >
-      <div className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots" />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.22] section-dots" />
+        <div className="about-piano-backdrop absolute inset-y-[-6%] right-[-12%] hidden w-[min(105vw,1080px)] md:block lg:right-[-5%]">
+          <img
+            src={steinwayPianoLineart}
+            alt=""
+            aria-hidden
+            className="h-full w-full object-contain object-right"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(248,250,252)] via-[rgb(248,250,252)]/90 to-[rgb(248,250,252)]/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgb(248,250,252)] via-transparent to-[rgb(248,250,252)]/50" />
+      </div>
 
       {/* corner accents */}
       <div className="absolute top-24 left-6 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
