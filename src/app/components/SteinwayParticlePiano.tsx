@@ -1,28 +1,16 @@
 import { useEffect, useRef } from "react";
 import steinwayReference from "@/assets/steinway-grand-reference.png";
 
-type Point = { x: number; y: number };
-
-type Particle = Point & {
-  baseX: number;
-  baseY: number;
-  size: number;
-  alpha: number;
+type Segment = {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  strength: number;
   phase: number;
-  speed: number;
-  tint: "dark" | "gold" | "mid";
 };
 
-function shuffle<T>(items: T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
-function samplePianoFromReference(image: HTMLImageElement): Point[] {
+function buildWireSegments(image: HTMLImageElement): Segment[] {
   const canvas = document.createElement("canvas");
   const width = image.naturalWidth;
   const height = image.naturalHeight;
@@ -34,107 +22,68 @@ function samplePianoFromReference(image: HTMLImageElement): Point[] {
 
   ctx.drawImage(image, 0, 0, width, height);
   const { data } = ctx.getImageData(0, 0, width, height);
-
-  const edgeStrength = new Float32Array(width * height);
-  const darkness = new Float32Array(width * height);
+  const edge = new Float32Array(width * height);
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const index = y * width + x;
       const offset = index * 4;
-      const r = data[offset];
-      const g = data[offset + 1];
-      const b = data[offset + 2];
-      const alpha = data[offset + 3];
-      const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      const dark = alpha > 20 ? 1 - lum : 0;
-      darkness[index] = dark;
+      const lum =
+        (0.299 * data[offset] + 0.587 * data[offset + 1] + 0.114 * data[offset + 2]) /
+        255;
+      const alpha = data[offset + 3] / 255;
+      const dark = alpha > 0.2 ? 1 - lum : 0;
 
-      const left = x > 0 ? darkness[index - 1] : 0;
-      const up = y > 0 ? darkness[index - width] : 0;
-      edgeStrength[index] = Math.abs(dark - left) + Math.abs(dark - up);
+      const left = x > 0 ? 1 - (0.299 * data[(index - 1) * 4] + 0.587 * data[(index - 1) * 4 + 1] + 0.114 * data[(index - 1) * 4 + 2]) / 255 : dark;
+      const up =
+        y > 0
+          ? 1 -
+            (0.299 * data[(index - width) * 4] +
+              0.587 * data[(index - width) * 4 + 1] +
+              0.114 * data[(index - width) * 4 + 2]) /
+              255
+          : dark;
+
+      edge[index] = Math.abs(dark - left) + Math.abs(dark - up);
     }
   }
 
-  const candidates: Array<Point & { weight: number; tint: Particle["tint"] }> = [];
+  const segments: Segment[] = [];
+  const step = 2;
+  const threshold = 0.14;
 
-  for (let y = 1; y < height - 1; y += 2) {
-    for (let x = 1; x < width - 1; x += 2) {
-      const index = y * width + x;
-      const dark = darkness[index];
-      if (dark < 0.12) continue;
-
-      const edge = edgeStrength[index];
-      const offset = index * 4;
-      const r = data[offset];
-      const g = data[offset + 1];
-      const b = data[offset + 2];
-      const warmth = r - b;
-
-      const tint: Particle["tint"] =
-        warmth > 35 && dark > 0.2 ? "gold" : edge > 0.18 ? "dark" : "mid";
-
-      const weight = dark * 1.8 + edge * 2.4 + (tint === "gold" ? 0.35 : 0);
-      candidates.push({
-        x: (x / width) * 100,
-        y: (y / height) * 100,
-        weight,
-        tint,
-      });
-    }
-  }
-
-  const targetCount = 1500;
-  const weighted = shuffle(candidates);
-  const selected: Array<Point & { tint: Particle["tint"] }> = [];
-  const totalWeight = weighted.reduce((sum, point) => sum + point.weight, 0);
-  let cursor = 0;
-
-  while (selected.length < targetCount && cursor < weighted.length) {
-    const point = weighted[cursor++];
-    const keepChance = Math.min(0.95, (point.weight / totalWeight) * targetCount * 2.2);
-    if (Math.random() < keepChance) {
-      selected.push({
-        x: point.x + (Math.random() - 0.5) * 0.18,
-        y: point.y + (Math.random() - 0.5) * 0.18,
-        tint: point.tint,
-      });
-    }
-  }
-
-  if (selected.length < targetCount * 0.75) {
-    for (const point of weighted) {
-      if (selected.length >= targetCount) break;
-      selected.push({
-        x: point.x + (Math.random() - 0.5) * 0.15,
-        y: point.y + (Math.random() - 0.5) * 0.15,
-        tint: point.tint,
-      });
-    }
-  }
-
-  return selected;
-}
-
-function createParticles(
-  template: Array<Point & { tint?: Particle["tint"] }>
-): Particle[] {
-  return template.map((point) => {
-    const tint = point.tint ?? "mid";
-    const alphaBase = tint === "dark" ? 0.34 : tint === "gold" ? 0.3 : 0.22;
-
-    return {
-      x: point.x,
-      y: point.y,
-      baseX: point.x,
-      baseY: point.y,
-      size: tint === "dark" ? 1 + Math.random() * 1.2 : 0.75 + Math.random() * 1.1,
-      alpha: alphaBase + Math.random() * 0.28,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.3 + Math.random() * 0.85,
-      tint,
-    };
+  const toNorm = (x: number, y: number) => ({
+    x: (x / width) * 100,
+    y: (y / height) * 100,
   });
+
+  for (let y = 0; y < height - step; y += step) {
+    for (let x = 0; x < width - step; x += step) {
+      const index = y * width + x;
+      const strength = edge[index];
+      if (strength < threshold) continue;
+
+      const a = toNorm(x, y);
+      const phase = Math.random() * Math.PI * 2;
+
+      if (edge[index + step] >= threshold * 0.85) {
+        const b = toNorm(x + step, y);
+        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength, phase });
+      }
+
+      if (edge[index + width * step] >= threshold * 0.85) {
+        const b = toNorm(x, y + step);
+        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength, phase });
+      }
+
+      if (edge[index + width * step + step] >= threshold * 0.9) {
+        const b = toNorm(x + step, y + step);
+        segments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, strength: strength * 0.9, phase });
+      }
+    }
+  }
+
+  return segments;
 }
 
 type SteinwayParticlePianoProps = {
@@ -143,7 +92,7 @@ type SteinwayParticlePianoProps = {
 
 export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
+  const segmentsRef = useRef<Segment[]>([]);
   const frameRef = useRef(0);
 
   useEffect(() => {
@@ -174,69 +123,41 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
     const draw = (time: number) => {
       if (disposed) return;
 
-      if (width < 2 || height < 2 || particlesRef.current.length === 0) {
+      if (width < 2 || height < 2 || segmentsRef.current.length === 0) {
         frameRef.current = requestAnimationFrame(draw);
         return;
       }
 
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width / 100, height / 100) * 0.94;
-      const offsetX = width * 0.5 - 50 * scale;
+      const scale = Math.min(width / 100, height / 100) * 0.96;
+      const offsetX = width * 0.54 - 50 * scale;
       const offsetY = height * 0.5 - 50 * scale;
 
-      for (const particle of particlesRef.current) {
-        const drift = reducedMotion
-          ? 0
-          : Math.sin(time * 0.001 * particle.speed + particle.phase) * 0.22;
-        const lift = reducedMotion
-          ? 0
-          : Math.cos(time * 0.0008 * particle.speed + particle.phase) * 0.18;
+      for (const segment of segmentsRef.current) {
         const pulse = reducedMotion
           ? 1
-          : 0.8 + Math.sin(time * 0.0014 * particle.speed + particle.phase) * 0.2;
-
-        const x = offsetX + (particle.baseX + drift) * scale;
-        const y = offsetY + (particle.baseY + lift) * scale;
-        const alpha = particle.alpha * pulse;
-        const radius = Math.max(
-          1.2,
-          particle.size * scale * (particle.tint === "dark" ? 0.34 : 0.28)
-        );
-
-        if (particle.tint === "gold") {
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(168, 132, 72, ${alpha * 0.9})`;
-          ctx.arc(x, y, radius, 0, Math.PI * 2);
-          ctx.fill();
-          continue;
-        }
+          : 0.88 + Math.sin(time * 0.0012 + segment.phase) * 0.12;
+        const alpha = (0.05 + segment.strength * 0.22) * pulse;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(24, 22, 20, ${alpha})`;
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        if (particle.tint === "dark") {
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(120, 98, 72, ${alpha * 0.35})`;
-          ctx.arc(x, y, radius * 0.45, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        ctx.moveTo(offsetX + segment.x1 * scale, offsetY + segment.y1 * scale);
+        ctx.lineTo(offsetX + segment.x2 * scale, offsetY + segment.y2 * scale);
+        ctx.strokeStyle = `rgba(70, 70, 70, ${alpha})`;
+        ctx.lineWidth = 0.75 + segment.strength * 0.55;
+        ctx.stroke();
       }
 
       frameRef.current = requestAnimationFrame(draw);
     };
 
-    const handleResize = () => {
-      resize();
-    };
+    const handleResize = () => resize();
 
     const image = new Image();
     image.src = steinwayReference;
     image.onload = () => {
       if (disposed) return;
-      particlesRef.current = createParticles(samplePianoFromReference(image));
+      segmentsRef.current = buildWireSegments(image);
       resize();
       frameRef.current = requestAnimationFrame(draw);
     };

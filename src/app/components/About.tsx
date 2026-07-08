@@ -44,10 +44,14 @@ export function About() {
       <div className="absolute bottom-20 right-6 w-14 h-14 border-b border-r border-gray-200/80 pointer-events-none hidden md:block" />
 
       {/* rings & dots */}
-      <div className="absolute top-40 right-[12%] w-24 h-24 rounded-full border border-gray-200/50 pointer-events-none hidden lg:block" />
       <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-gray-200/45 pointer-events-none hidden lg:block" />
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
-      <div className="absolute top-[35%] right-[8%] w-1.5 h-1.5 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
+
+      <div className="pointer-events-none absolute inset-y-24 right-0 z-[1] hidden w-[min(52%,560px)] md:block">
+        <div className="absolute inset-0 bg-gradient-to-l from-background via-background/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-background/35" />
+        <SteinwayParticlePiano className="h-full w-full opacity-75" />
+      </div>
 
       <div className="container-site relative z-10">
         <SectionHeader
@@ -59,54 +63,45 @@ export function About() {
         />
 
         <motion.div
-          className="mb-16 grid grid-cols-1 items-start gap-8 border-b border-border pb-16 md:grid-cols-[minmax(0,1fr)_min(300px,34%)] md:gap-10 lg:grid-cols-[minmax(0,1fr)_min(360px,38%)]"
+          className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={transition({ duration: 0.8, delay: 0.1 })}
         >
-          <div className="flex flex-col items-start gap-8 sm:flex-row sm:gap-10">
-            <div className="relative shrink-0">
-              <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
-              <motion.img
-                src={profileImage}
-                alt={t.about.profileAlt}
-                className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-
-            <div className="min-w-0 flex-1 text-left">
-              <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
-              <p className="text-muted-foreground mb-8">{t.hero.role}</p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
-                {contactItems.map((item, index) => {
-                  const meta = contactMeta[index];
-                  const Icon = meta.icon;
-                  return (
-                    <div key={item.label} className="flex items-start gap-3 min-w-0">
-                      <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
-                      <div className="min-w-0">
-                        <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
-                        <p
-                          className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
-                        >
-                          {item.value}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          <div className="relative shrink-0">
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
+            <motion.img
+              src={profileImage}
+              alt={t.about.profileAlt}
+              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.3 }}
+            />
           </div>
 
-          <div
-            className="pointer-events-none hidden min-h-[280px] md:flex md:items-center md:justify-center lg:min-h-[320px]"
-            aria-hidden="true"
-          >
-            <SteinwayParticlePiano className="h-[280px] w-full max-w-[360px] lg:h-[320px]" />
+          <div className="min-w-0 flex-1 text-left">
+            <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
+            <p className="text-muted-foreground mb-8">{t.hero.role}</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 max-w-xl">
+              {contactItems.map((item, index) => {
+                const meta = contactMeta[index];
+                const Icon = meta.icon;
+                return (
+                  <div key={item.label} className="flex items-start gap-3 min-w-0">
+                    <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
+                    <div className="min-w-0">
+                      <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
+                      <p
+                        className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
+                      >
+                        {item.value}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </motion.div>
 
