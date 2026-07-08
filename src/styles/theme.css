@@ -241,24 +241,24 @@
 
 .about-piano-backdrop {
   position: absolute;
-  right: 3%;
+  right: 2%;
   bottom: 2.5rem;
-  width: 440px;
-  height: 383px;
+  width: 540px;
+  height: 470px;
   pointer-events: none;
 }
 
 @media (min-width: 1024px) {
   .about-piano-backdrop {
-    width: 520px;
-    height: 452px;
+    width: 640px;
+    height: 556px;
   }
 }
 
 @media (min-width: 1280px) {
   .about-piano-backdrop {
-    width: 560px;
-    height: 487px;
+    width: 680px;
+    height: 591px;
   }
 }
 
