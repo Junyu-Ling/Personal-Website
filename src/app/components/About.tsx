@@ -30,13 +30,20 @@ export function About() {
   return (
     <section
       id="about"
-      className="section-shell relative overflow-hidden section-divide section-surface-alt"
+      className="section-shell relative overflow-hidden section-divide section-surface-alt min-h-[58rem] md:min-h-[62rem]"
       ref={ref}
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
         <div className="about-piano-backdrop hidden md:block" aria-hidden>
-          <img src={steinwayPianoLineart} alt="" />
+          <img
+            src={steinwayPianoLineart}
+            alt=""
+            width={1024}
+            height={890}
+            decoding="async"
+            loading="eager"
+          />
         </div>
       </div>
 
@@ -108,7 +115,7 @@ export function About() {
           key={locale}
           paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
           active={isVisible}
-          className="space-y-8 max-w-4xl text-left"
+          className="space-y-8 max-w-4xl mx-auto text-left"
         />
       </div>
     </section>
