@@ -5,6 +5,7 @@ import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-do
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SectionHeader } from "@/app/components/SectionHeader";
 import { AboutTypewriterBody } from "@/app/components/AboutTypewriterBody";
+import { AboutPianoBackdrop } from "@/app/components/AboutPianoBackdrop";
 
 const contactMeta = [
   { icon: Mail, color: "text-violet-600" },
@@ -33,9 +34,14 @@ export function About() {
       ref={ref}
     >
       {/* background */}
-      <div
-        className="absolute inset-0 opacity-[0.22] pointer-events-none section-dots"
-      />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.22] section-dots" />
+        <div className="absolute inset-y-0 right-[-10%] hidden w-[min(92vw,980px)] md:block lg:right-[-6%]">
+          <AboutPianoBackdrop className="h-full w-full text-gray-900/[0.11]" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(248,250,252)] via-[rgb(248,250,252)]/88 to-[rgb(248,250,252)]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgb(248,250,252)] via-transparent to-[rgb(248,250,252)]/55" />
+      </div>
 
       {/* corner accents */}
       <div className="absolute top-24 left-6 w-14 h-14 border-t border-l border-gray-200/80 pointer-events-none hidden md:block" />
