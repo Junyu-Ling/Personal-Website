@@ -35,9 +35,6 @@ export function About() {
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 opacity-[0.22] section-dots" />
-        <div className="about-piano-backdrop hidden md:block" aria-hidden>
-          <img src={steinwayPianoLineart} alt="" />
-        </div>
       </div>
 
       {/* corner accents */}
@@ -61,55 +58,65 @@ export function About() {
           isVisible={isVisible}
         />
 
-        <motion.div
-          className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={transition({ duration: 0.8, delay: 0.1 })}
-        >
-          <div className="relative shrink-0">
-            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
-            <motion.img
-              src={profileImage}
-              alt={t.about.profileAlt}
-              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+        <div className="about-layout">
+          <div className="about-content min-w-0">
+            <motion.div
+              className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={transition({ duration: 0.8, delay: 0.1 })}
+            >
+              <div className="relative shrink-0">
+                <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
+                <motion.img
+                  src={profileImage}
+                  alt={t.about.profileAlt}
+                  className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+
+              <div className="min-w-0 flex-1 text-left">
+                <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
+                <p className="text-muted-foreground mb-8">{t.hero.role}</p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+                  {contactItems.map((item, index) => {
+                    const meta = contactMeta[index];
+                    const Icon = meta.icon;
+                    return (
+                      <div key={item.label} className="flex items-start gap-3 min-w-0">
+                        <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
+                        <div className="min-w-0">
+                          <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
+                          <p
+                            className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
+                          >
+                            {item.value}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+
+            <AboutTypewriterBody
+              key={locale}
+              paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
+              active={isVisible}
+              className="space-y-8 text-left"
             />
           </div>
 
-          <div className="min-w-0 flex-1 text-left">
-            <h3 className="text-3xl font-semibold mb-2">{t.hero.name}</h3>
-            <p className="text-muted-foreground mb-8">{t.hero.role}</p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
-              {contactItems.map((item, index) => {
-                const meta = contactMeta[index];
-                const Icon = meta.icon;
-                return (
-                  <div key={item.label} className="flex items-start gap-3 min-w-0">
-                    <Icon size={18} className={`${meta.color} shrink-0 mt-0.5`} />
-                    <div className="min-w-0">
-                      <p className="text-sm text-muted-foreground mb-0.5">{item.label}</p>
-                      <p
-                        className={`text-foreground ${item.breakAll ? "break-all" : ""}`}
-                      >
-                        {item.value}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+          <aside className="about-piano-panel hidden lg:block" aria-hidden>
+            <div className="about-piano-frame">
+              <img src={steinwayPianoLineart} alt="" />
             </div>
-          </div>
-        </motion.div>
-
-        <AboutTypewriterBody
-          key={locale}
-          paragraphs={[t.about.p1, t.about.p2, t.about.p3]}
-          active={isVisible}
-          className="space-y-8 max-w-4xl mr-auto text-left"
-        />
+          </aside>
+        </div>
       </div>
     </section>
   );

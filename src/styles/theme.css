@@ -239,25 +239,53 @@
   background-color: rgb(248 250 252);
 }
 
-.about-piano-backdrop {
-  position: absolute;
-  right: 3%;
-  bottom: 2.5rem;
-  width: min(62vw, 880px);
-  height: min(72vh, 760px);
-  pointer-events: none;
+.about-layout {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
 }
 
-.about-piano-backdrop img {
+@media (min-width: 1024px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 34%);
+    gap: 2.5rem;
+  }
+}
+
+.about-piano-panel {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+}
+
+.about-piano-frame {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: min(72vh, 640px);
+  padding: 1.25rem;
+  background-color: rgb(248 250 252);
+  border: 1px solid rgb(229 231 235 / 0.7);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.about-piano-frame img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: right bottom;
+  object-position: center bottom;
   opacity: 0.36;
 }
 
-.dark .about-piano-backdrop img {
+.dark .about-piano-frame {
+  background-color: oklch(0.11 0.012 280 / 0.95);
+  border-color: rgb(255 255 255 / 0.1);
+}
+
+.dark .about-piano-frame img {
   filter: invert(1);
   opacity: 0.2;
 }
