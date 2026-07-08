@@ -48,18 +48,18 @@ type AwardMeta = {
 
 const schoolMeta: AwardMeta[] = [
   {
-    icon: AppWindow,
-    year: "2025",
-    certificate: aiCampWishrelayAward,
-    iconClass: "bg-sky-50 text-sky-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
-  },
-  {
     icon: GraduationCap,
     year: "2026",
     featured: true,
     certificate: apCalculusStarCertificate,
     iconClass: "bg-emerald-50 text-emerald-600",
+    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+  },
+  {
+    icon: AppWindow,
+    year: "2025",
+    certificate: aiCampWishrelayAward,
+    iconClass: "bg-sky-50 text-sky-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
 ];

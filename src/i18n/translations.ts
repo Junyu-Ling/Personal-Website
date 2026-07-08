@@ -214,15 +214,6 @@ const en = {
     hideImages: "Hide photos & certificates",
     schoolItems: [
       {
-        title: "AI Camp × WeChat Mini Program Innovation Challenge",
-        organization: "AI Camp × WeChat Mini Program",
-        description:
-          "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay (Ling Junyu, Zuo Yingxin, Hu Kexin) received Second Prize.",
-        award: "Second Prize — Team WishRelay",
-        certificateAlt:
-          "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
-      },
-      {
         title: "AP Calculus Star of the Subject",
         organization: "Shanghai Soong Ching Ling School",
         description:
@@ -230,6 +221,15 @@ const en = {
         award: "AP Calculus Star — 2025–2026 Academic Year",
         certificateAlt:
           "Certificate of Honor — AP Calculus Star, Shanghai Soong Ching Ling School",
+      },
+      {
+        title: "AI Camp × WeChat Mini Program Innovation Challenge",
+        organization: "AI Camp × WeChat Mini Program",
+        description:
+          "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay (Ling Junyu, Zuo Yingxin, Hu Kexin) received Second Prize.",
+        award: "Second Prize — Team WishRelay",
+        certificateAlt:
+          "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
       },
     ] as AwardTranslation[],
     offCampusItems: [
@@ -590,20 +590,20 @@ const zh: typeof en = {
     hideImages: "收起照片与证书",
     schoolItems: [
       {
-        title: "AI Camp × 微信小程序创新大赛",
-        organization: "校内社团 AI Camp × 微信小程序",
-        description:
-          "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队（灵俊宇、左盈欣、胡可昕）获二等奖。",
-        award: "二等奖 — 心愿接力团队",
-        certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
-      },
-      {
         title: "AP 微积分学科之星",
         organization: "上海宋庆龄学校",
         description:
           "2025–2026 学年获上海宋庆龄学校「AP 微积分」学科之星。",
         award: "AP 微积分学科之星 — 2025–2026 学年",
         certificateAlt: "荣誉证书 — AP 微积分学科之星，上海宋庆龄学校",
+      },
+      {
+        title: "AI Camp × 微信小程序创新大赛",
+        organization: "校内社团 AI Camp × 微信小程序",
+        description:
+          "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队（灵俊宇、左盈欣、胡可昕）获二等奖。",
+        award: "二等奖 — 心愿接力团队",
+        certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
       },
     ],
     offCampusItems: [
