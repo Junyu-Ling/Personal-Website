@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import steinwayReference from "@/assets/steinway-grand-reference.png";
 
 type Point = { x: number; y: number };
 
@@ -9,218 +10,131 @@ type Particle = Point & {
   alpha: number;
   phase: number;
   speed: number;
+  tint: "dark" | "gold" | "mid";
 };
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-
-function sampleLine(a: Point, b: Point, count: number, jitter = 0.4): Point[] {
-  const points: Point[] = [];
-  for (let i = 0; i < count; i++) {
-    const t = count === 1 ? 0 : i / (count - 1);
-    points.push({
-      x: lerp(a.x, b.x, t) + (Math.random() - 0.5) * jitter,
-      y: lerp(a.y, b.y, t) + (Math.random() - 0.5) * jitter,
-    });
+function shuffle<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-  return points;
+  return copy;
 }
 
-function sampleQuadratic(
-  p0: Point,
-  p1: Point,
-  p2: Point,
-  count: number,
-  jitter = 0.35
-): Point[] {
-  const points: Point[] = [];
-  for (let i = 0; i < count; i++) {
-    const t = count === 1 ? 0 : i / (count - 1);
-    const u = 1 - t;
-    points.push({
-      x:
-        u * u * p0.x +
-        2 * u * t * p1.x +
-        t * t * p2.x +
-        (Math.random() - 0.5) * jitter,
-      y:
-        u * u * p0.y +
-        2 * u * t * p1.y +
-        t * t * p2.y +
-        (Math.random() - 0.5) * jitter,
-    });
-  }
-  return points;
-}
+function samplePianoFromReference(image: HTMLImageElement): Point[] {
+  const canvas = document.createElement("canvas");
+  const width = image.naturalWidth;
+  const height = image.naturalHeight;
+  canvas.width = width;
+  canvas.height = height;
 
-function sampleCubic(
-  p0: Point,
-  p1: Point,
-  p2: Point,
-  p3: Point,
-  count: number,
-  jitter = 0.3
-): Point[] {
-  const points: Point[] = [];
-  for (let i = 0; i < count; i++) {
-    const t = count === 1 ? 0 : i / (count - 1);
-    const u = 1 - t;
-    points.push({
-      x:
-        u * u * u * p0.x +
-        3 * u * u * t * p1.x +
-        3 * u * t * t * p2.x +
-        t * t * t * p3.x +
-        (Math.random() - 0.5) * jitter,
-      y:
-        u * u * u * p0.y +
-        3 * u * u * t * p1.y +
-        3 * u * t * t * p2.y +
-        t * t * t * p3.y +
-        (Math.random() - 0.5) * jitter,
-    });
-  }
-  return points;
-}
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return [];
 
-function fillRegion(
-  x0: number,
-  y0: number,
-  x1: number,
-  y1: number,
-  count: number
-): Point[] {
-  const points: Point[] = [];
-  for (let i = 0; i < count; i++) {
-    points.push({
-      x: lerp(x0, x1, Math.random()),
-      y: lerp(y0, y1, Math.random()),
-    });
-  }
-  return points;
-}
+  ctx.drawImage(image, 0, 0, width, height);
+  const { data } = ctx.getImageData(0, 0, width, height);
 
-function buildGrandPianoSilhouette(): Point[] {
-  const points: Point[] = [];
+  const edgeStrength = new Float32Array(width * height);
+  const darkness = new Float32Array(width * height);
 
-  // Keyboard & fallboard
-  points.push(...fillRegion(14, 49, 36, 54, 90));
-  for (let i = 0; i < 26; i++) {
-    const x = 14.5 + i * 0.82;
-    points.push({ x, y: 51.5 + (Math.random() - 0.5) * 0.25 });
-    if (i % 3 !== 2 && i < 25) {
-      points.push({ x: x + 0.45, y: 50.2 + (Math.random() - 0.5) * 0.15 });
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const index = y * width + x;
+      const offset = index * 4;
+      const r = data[offset];
+      const g = data[offset + 1];
+      const b = data[offset + 2];
+      const alpha = data[offset + 3];
+      const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      const dark = alpha > 20 ? 1 - lum : 0;
+      darkness[index] = dark;
+
+      const left = x > 0 ? darkness[index - 1] : 0;
+      const up = y > 0 ? darkness[index - width] : 0;
+      edgeStrength[index] = Math.abs(dark - left) + Math.abs(dark - up);
     }
   }
 
-  // Case rim — front to tail
-  points.push(
-    ...sampleCubic(
-      { x: 12, y: 54 },
-      { x: 8, y: 58 },
-      { x: 18, y: 63 },
-      { x: 34, y: 61 },
-      28
-    )
-  );
-  points.push(
-    ...sampleCubic(
-      { x: 34, y: 61 },
-      { x: 58, y: 64 },
-      { x: 82, y: 58 },
-      { x: 94, y: 46 },
-      42
-    )
-  );
-  points.push(
-    ...sampleQuadratic(
-      { x: 94, y: 46 },
-      { x: 98, y: 34 },
-      { x: 86, y: 24 },
-      24
-    )
-  );
-  points.push(
-    ...sampleCubic(
-      { x: 86, y: 24 },
-      { x: 68, y: 18 },
-      { x: 42, y: 22 },
-      { x: 24, y: 34 },
-      34
-    )
-  );
-  points.push(...sampleLine({ x: 24, y: 34 }, { x: 12, y: 54 }, 18));
+  const candidates: Array<Point & { weight: number; tint: Particle["tint"] }> = [];
 
-  // Inner rim / soundboard hint
-  points.push(
-    ...sampleCubic(
-      { x: 28, y: 38 },
-      { x: 48, y: 30 },
-      { x: 72, y: 32 },
-      { x: 84, y: 42 },
-      30,
-      0.25
-    )
-  );
+  for (let y = 1; y < height - 1; y += 2) {
+    for (let x = 1; x < width - 1; x += 2) {
+      const index = y * width + x;
+      const dark = darkness[index];
+      if (dark < 0.12) continue;
 
-  // Open lid — Steinway signature curve
-  points.push(
-    ...sampleCubic(
-      { x: 30, y: 35 },
-      { x: 52, y: 18 },
-      { x: 78, y: 14 },
-      { x: 92, y: 22 },
-      36
-    )
-  );
-  points.push(
-    ...sampleCubic(
-      { x: 30, y: 35 },
-      { x: 34, y: 30 },
-      { x: 58, y: 24 },
-      { x: 88, y: 26 },
-      22,
-      0.2
-    )
-  );
+      const edge = edgeStrength[index];
+      const offset = index * 4;
+      const r = data[offset];
+      const g = data[offset + 1];
+      const b = data[offset + 2];
+      const warmth = r - b;
 
-  // Lid prop stick
-  points.push(...sampleLine({ x: 54, y: 28 }, { x: 58, y: 42 }, 10, 0.15));
+      const tint: Particle["tint"] =
+        warmth > 35 && dark > 0.2 ? "gold" : edge > 0.18 ? "dark" : "mid";
 
-  // Legs
-  for (const x of [22, 48, 76]) {
-    points.push(...sampleLine({ x, y: 61 }, { x, y: 70 }, 14, 0.12));
-    points.push(...fillRegion(x - 1.2, 69.5, x + 1.2, 71.2, 8));
+      const weight = dark * 1.8 + edge * 2.4 + (tint === "gold" ? 0.35 : 0);
+      candidates.push({
+        x: (x / width) * 100,
+        y: (y / height) * 100,
+        weight,
+        tint,
+      });
+    }
   }
 
-  // Pedal lyre
-  points.push(...sampleLine({ x: 24, y: 61 }, { x: 22, y: 68 }, 8, 0.1));
-  points.push(...sampleLine({ x: 28, y: 61 }, { x: 30, y: 68 }, 8, 0.1));
-  points.push(...sampleLine({ x: 22, y: 68 }, { x: 30, y: 68 }, 10, 0.1));
-  points.push(...fillRegion(23, 67.5, 29, 69.5, 12));
+  const targetCount = 1500;
+  const weighted = shuffle(candidates);
+  const selected: Array<Point & { tint: Particle["tint"] }> = [];
+  const totalWeight = weighted.reduce((sum, point) => sum + point.weight, 0);
+  let cursor = 0;
 
-  // Music desk
-  points.push(...sampleLine({ x: 16, y: 47 }, { x: 16, y: 42 }, 8, 0.1));
-  points.push(...sampleLine({ x: 16, y: 42 }, { x: 24, y: 41 }, 8, 0.1));
+  while (selected.length < targetCount && cursor < weighted.length) {
+    const point = weighted[cursor++];
+    const keepChance = Math.min(0.95, (point.weight / totalWeight) * targetCount * 2.2);
+    if (Math.random() < keepChance) {
+      selected.push({
+        x: point.x + (Math.random() - 0.5) * 0.18,
+        y: point.y + (Math.random() - 0.5) * 0.18,
+        tint: point.tint,
+      });
+    }
+  }
 
-  // Subtle interior sparkle
-  points.push(...fillRegion(38, 36, 78, 52, 55));
+  if (selected.length < targetCount * 0.75) {
+    for (const point of weighted) {
+      if (selected.length >= targetCount) break;
+      selected.push({
+        x: point.x + (Math.random() - 0.5) * 0.15,
+        y: point.y + (Math.random() - 0.5) * 0.15,
+        tint: point.tint,
+      });
+    }
+  }
 
-  return points;
+  return selected;
 }
 
-function createParticles(template: Point[]): Particle[] {
-  return template.map((point) => ({
-    x: point.x,
-    y: point.y,
-    baseX: point.x,
-    baseY: point.y,
-    size: 0.8 + Math.random() * 1.4,
-    alpha: 0.28 + Math.random() * 0.38,
-    phase: Math.random() * Math.PI * 2,
-    speed: 0.35 + Math.random() * 0.9,
-  }));
+function createParticles(
+  template: Array<Point & { tint?: Particle["tint"] }>
+): Particle[] {
+  return template.map((point) => {
+    const tint = point.tint ?? "mid";
+    const alphaBase = tint === "dark" ? 0.34 : tint === "gold" ? 0.3 : 0.22;
+
+    return {
+      x: point.x,
+      y: point.y,
+      baseX: point.x,
+      baseY: point.y,
+      size: tint === "dark" ? 1 + Math.random() * 1.2 : 0.75 + Math.random() * 1.1,
+      alpha: alphaBase + Math.random() * 0.28,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.3 + Math.random() * 0.85,
+      tint,
+    };
+  });
 }
 
 type SteinwayParticlePianoProps = {
@@ -229,9 +143,8 @@ type SteinwayParticlePianoProps = {
 
 export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>(createParticles(buildGrandPianoSilhouette()));
+  const particlesRef = useRef<Particle[]>([]);
   const frameRef = useRef(0);
-  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -240,10 +153,13 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let disposed = false;
     let width = 0;
     let height = 0;
     let dpr = 1;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const media = window.matchMedia("(min-width: 768px)");
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -255,45 +171,58 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const media = window.matchMedia("(min-width: 768px)");
-
     const draw = (time: number) => {
-      if (width < 2 || height < 2) {
+      if (disposed) return;
+
+      if (width < 2 || height < 2 || particlesRef.current.length === 0) {
         frameRef.current = requestAnimationFrame(draw);
         return;
       }
 
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width / 100, height / 74) * 0.9;
+      const scale = Math.min(width / 100, height / 100) * 0.94;
       const offsetX = width * 0.5 - 50 * scale;
-      const offsetY = height * 0.52 - 37 * scale;
+      const offsetY = height * 0.5 - 50 * scale;
 
       for (const particle of particlesRef.current) {
         const drift = reducedMotion
           ? 0
-          : Math.sin(time * 0.001 * particle.speed + particle.phase) * 0.35;
+          : Math.sin(time * 0.001 * particle.speed + particle.phase) * 0.22;
         const lift = reducedMotion
           ? 0
-          : Math.cos(time * 0.0008 * particle.speed + particle.phase) * 0.25;
+          : Math.cos(time * 0.0008 * particle.speed + particle.phase) * 0.18;
         const pulse = reducedMotion
           ? 1
-          : 0.78 + Math.sin(time * 0.0014 * particle.speed + particle.phase) * 0.22;
+          : 0.8 + Math.sin(time * 0.0014 * particle.speed + particle.phase) * 0.2;
 
         const x = offsetX + (particle.baseX + drift) * scale;
         const y = offsetY + (particle.baseY + lift) * scale;
         const alpha = particle.alpha * pulse;
-        const radius = Math.max(1.35, particle.size * scale * 0.42);
+        const radius = Math.max(
+          1.2,
+          particle.size * scale * (particle.tint === "dark" ? 0.34 : 0.28)
+        );
+
+        if (particle.tint === "gold") {
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(168, 132, 72, ${alpha * 0.9})`;
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fill();
+          continue;
+        }
 
         ctx.beginPath();
         ctx.fillStyle = `rgba(24, 22, 20, ${alpha})`;
         ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(140, 112, 78, ${alpha * 0.45})`;
-        ctx.arc(x, y, radius * 0.45, 0, Math.PI * 2);
-        ctx.fill();
+        if (particle.tint === "dark") {
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(120, 98, 72, ${alpha * 0.35})`;
+          ctx.arc(x, y, radius * 0.45, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       frameRef.current = requestAnimationFrame(draw);
@@ -303,8 +232,14 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
       resize();
     };
 
-    resize();
-    frameRef.current = requestAnimationFrame(draw);
+    const image = new Image();
+    image.src = steinwayReference;
+    image.onload = () => {
+      if (disposed) return;
+      particlesRef.current = createParticles(samplePianoFromReference(image));
+      resize();
+      frameRef.current = requestAnimationFrame(draw);
+    };
 
     const observer = new ResizeObserver(handleResize);
     observer.observe(canvas);
@@ -312,6 +247,7 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
     window.addEventListener("resize", handleResize);
 
     return () => {
+      disposed = true;
       cancelAnimationFrame(frameRef.current);
       observer.disconnect();
       media.removeEventListener("change", handleResize);
