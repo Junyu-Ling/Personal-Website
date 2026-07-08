@@ -47,10 +47,10 @@ export function About() {
       <div className="absolute bottom-40 left-[10%] w-16 h-16 rounded-full border border-gray-200/45 pointer-events-none hidden lg:block" />
       <div className="absolute top-[55%] left-[5%] w-2 h-2 rounded-full bg-gray-300/40 pointer-events-none hidden md:block" />
 
-      <div className="pointer-events-none absolute inset-y-24 right-0 z-[1] hidden w-[min(52%,560px)] md:block">
-        <div className="absolute inset-0 bg-gradient-to-l from-background via-background/55 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-background/35" />
-        <SteinwayParticlePiano className="h-full w-full opacity-75" />
+      <div className="pointer-events-none absolute inset-y-16 right-0 z-[1] hidden w-[min(64%,720px)] md:block">
+        <div className="absolute inset-0 bg-gradient-to-l from-background via-background/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/25" />
+        <SteinwayParticlePiano className="h-full w-full opacity-90" />
       </div>
 
       <div className="container-site relative z-10">

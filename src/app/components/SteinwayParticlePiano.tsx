@@ -50,7 +50,7 @@ function buildWireSegments(image: HTMLImageElement): Segment[] {
 
   const segments: Segment[] = [];
   const step = 2;
-  const threshold = 0.14;
+  const threshold = 0.11;
 
   const toNorm = (x: number, y: number) => ({
     x: (x / width) * 100,
@@ -130,21 +130,21 @@ export function SteinwayParticlePiano({ className = "" }: SteinwayParticlePianoP
 
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width / 100, height / 100) * 0.96;
-      const offsetX = width * 0.54 - 50 * scale;
+      const scale = Math.min(width / 100, height / 100) * 1.12;
+      const offsetX = width * 0.56 - 50 * scale;
       const offsetY = height * 0.5 - 50 * scale;
 
       for (const segment of segmentsRef.current) {
         const pulse = reducedMotion
           ? 1
-          : 0.88 + Math.sin(time * 0.0012 + segment.phase) * 0.12;
-        const alpha = (0.05 + segment.strength * 0.22) * pulse;
+          : 0.9 + Math.sin(time * 0.0012 + segment.phase) * 0.1;
+        const alpha = (0.14 + segment.strength * 0.42) * pulse;
 
         ctx.beginPath();
         ctx.moveTo(offsetX + segment.x1 * scale, offsetY + segment.y1 * scale);
         ctx.lineTo(offsetX + segment.x2 * scale, offsetY + segment.y2 * scale);
-        ctx.strokeStyle = `rgba(70, 70, 70, ${alpha})`;
-        ctx.lineWidth = 0.75 + segment.strength * 0.55;
+        ctx.strokeStyle = `rgba(55, 55, 55, ${alpha})`;
+        ctx.lineWidth = 1.25 + segment.strength * 1.1;
         ctx.stroke();
       }
 
