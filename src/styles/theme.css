@@ -239,23 +239,27 @@
   background-color: rgb(248 250 252);
 }
 
-.about-layout {
-  display: grid;
-  gap: 2rem;
-  align-items: start;
+.about-main {
+  position: relative;
 }
 
-@media (min-width: 1024px) {
-  .about-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(17rem, 34%);
-    gap: 2.5rem;
+.about-content {
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    max-width: calc(100% - min(44vw, 500px) - 1.25rem);
   }
 }
 
 .about-piano-panel {
-  position: sticky;
-  top: 5.5rem;
-  align-self: start;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(44vw, 500px);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .about-piano-frame {
@@ -263,8 +267,8 @@
   align-items: flex-end;
   justify-content: center;
   width: 100%;
-  height: min(72vh, 640px);
-  padding: 1.25rem;
+  height: min(58vh, 540px);
+  padding: 1rem;
   background-color: rgb(248 250 252);
   border: 1px solid rgb(229 231 235 / 0.7);
   border-radius: 1rem;

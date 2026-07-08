@@ -58,8 +58,14 @@ export function About() {
           isVisible={isVisible}
         />
 
-        <div className="about-layout">
-          <div className="about-content min-w-0">
+        <div className="about-main relative">
+          <aside className="about-piano-panel hidden md:block" aria-hidden>
+            <div className="about-piano-frame">
+              <img src={steinwayPianoLineart} alt="" />
+            </div>
+          </aside>
+
+          <div className="about-content relative z-10">
             <motion.div
               className="relative mb-16 flex flex-col items-start gap-8 border-b border-border pb-16 sm:flex-row sm:gap-10"
               initial={{ opacity: 0, y: 30 }}
@@ -110,12 +116,6 @@ export function About() {
               className="space-y-8 text-left"
             />
           </div>
-
-          <aside className="about-piano-panel hidden lg:block" aria-hidden>
-            <div className="about-piano-frame">
-              <img src={steinwayPianoLineart} alt="" />
-            </div>
-          </aside>
         </div>
       </div>
     </section>
