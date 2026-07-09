@@ -273,7 +273,7 @@
   max-height: 100%;
   object-fit: contain;
   object-position: right bottom;
-  opacity: 1;
+  opacity: 0.28;
 }
 
 .dark .about-piano-backdrop img {
