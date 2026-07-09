@@ -273,44 +273,21 @@
   max-height: 100%;
   object-fit: contain;
   object-position: right bottom;
-  opacity: 0.12;
+  opacity: 1;
 }
 
 .dark .about-piano-backdrop img {
   filter: invert(1);
-  opacity: 0.08;
+  opacity: 0.28;
 }
 
-.about-intro-panel {
-  position: relative;
-  padding: 1.75rem 1.5rem;
-  border-radius: 1.25rem;
-  border: 1px solid rgb(255 255 255 / 0.75);
-  background: rgb(255 255 255 / 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 12px 40px rgb(15 23 42 / 0.06);
-}
-
-@media (min-width: 768px) {
-  .about-intro-panel {
-    padding: 2rem 2.25rem;
-  }
-}
-
-.dark .about-intro-panel {
-  background: rgb(15 23 42 / 0.55);
-  border-color: rgb(255 255 255 / 0.08);
-  box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+.about-intro-paragraph {
+  font-family: var(--font-heading);
 }
 
 .about-intro-highlight {
   font-weight: 600;
-  color: rgb(67 56 202);
-}
-
-.dark .about-intro-highlight {
-  color: rgb(165 180 252);
+  color: #4b4bbd;
 }
 
 .dark .section-dots {

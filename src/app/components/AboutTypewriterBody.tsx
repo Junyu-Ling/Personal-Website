@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  aboutIntroPlainText,
+  type AboutIntroSegment,
+} from "@/i18n/translations";
 
 type AboutTypewriterBodyProps = {
-  paragraphs: string[];
+  paragraphs: readonly (readonly AboutIntroSegment[])[];
   layoutParagraphs: readonly string[];
-  highlights?: readonly (readonly string[])[];
   active: boolean;
   className?: string;
 };
@@ -91,51 +94,56 @@ async function typeParagraph(
   }
 }
 
-function renderHighlightedText(text: string, keywords: readonly string[]) {
-  if (!text || keywords.length === 0) return text;
+function renderDisplayedSegments(
+  displayed: string,
+  segments: readonly AboutIntroSegment[]
+) {
+  const nodes: ReactNode[] = [];
+  let offset = 0;
 
-  const terms = [...keywords].sort((a, b) => b.length - a.length);
-  const pattern = terms
-    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-    .join("|");
-  const regex = new RegExp(`(${pattern})`, "gi");
-  const parts = text.split(regex).filter(Boolean);
+  for (const [index, segment] of segments.entries()) {
+    if (offset >= displayed.length) break;
 
-  return parts.map((part, index) => {
-    const isHighlight = terms.some(
-      (term) => term.toLowerCase() === part.toLowerCase()
+    const segmentEnd = offset + segment.text.length;
+    const visibleEnd = Math.min(displayed.length, segmentEnd);
+    if (visibleEnd <= offset) continue;
+
+    const chunk = displayed.slice(offset, visibleEnd);
+    nodes.push(
+      segment.highlight ? (
+        <span key={`${index}-${offset}`} className="about-intro-highlight">
+          {chunk}
+        </span>
+      ) : (
+        <span key={`${index}-${offset}`}>{chunk}</span>
+      )
     );
-    if (isHighlight) {
-      return (
-        <strong key={`${part}-${index}`} className="about-intro-highlight">
-          {part}
-        </strong>
-      );
-    }
-    return part;
-  }) as ReactNode;
+    offset = segmentEnd;
+  }
+
+  return nodes;
 }
 
 export function AboutTypewriterBody({
   paragraphs,
   layoutParagraphs,
-  highlights = [],
   active,
   className = "",
 }: AboutTypewriterBodyProps) {
-  const [lines, setLines] = useState<string[]>(() => paragraphs.map(() => ""));
+  const plainParagraphs = paragraphs.map((segments) => aboutIntroPlainText(segments));
+  const [lines, setLines] = useState<string[]>(() => plainParagraphs.map(() => ""));
   const [typingIndex, setTypingIndex] = useState<number | null>(null);
   const runIdRef = useRef(0);
   const hasStartedRef = useRef(false);
 
   const reset = useCallback(() => {
-    setLines(paragraphs.map(() => ""));
+    setLines(plainParagraphs.map(() => ""));
     setTypingIndex(null);
-  }, [paragraphs]);
+  }, [plainParagraphs]);
 
   useEffect(() => {
     if (hasStartedRef.current) {
-      setLines(paragraphs);
+      setLines(plainParagraphs);
       setTypingIndex(null);
       return;
     }
@@ -145,7 +153,7 @@ export function AboutTypewriterBody({
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {
       hasStartedRef.current = true;
-      setLines(paragraphs);
+      setLines(plainParagraphs);
       setTypingIndex(null);
       return;
     }
@@ -158,10 +166,10 @@ export function AboutTypewriterBody({
     const run = async () => {
       reset();
       try {
-        for (let index = 0; index < paragraphs.length; index++) {
+        for (let index = 0; index < plainParagraphs.length; index++) {
           if (runId !== runIdRef.current) return;
           setTypingIndex(index);
-          await typeParagraph(paragraphs[index], signal, (value) => {
+          await typeParagraph(plainParagraphs[index], signal, (value) => {
             if (runId !== runIdRef.current) return;
             setLines((current) => {
               const next = [...current];
@@ -169,7 +177,7 @@ export function AboutTypewriterBody({
               return next;
             });
           });
-          if (index < paragraphs.length - 1) {
+          if (index < plainParagraphs.length - 1) {
             await wait(180, signal);
           }
         }
@@ -184,26 +192,26 @@ export function AboutTypewriterBody({
     return () => {
       controller.abort();
     };
-  }, [active, paragraphs, reset]);
+  }, [active, plainParagraphs, reset]);
 
   return (
     <div className={className} aria-live="polite">
-      {paragraphs.map((paragraph, index) => {
+      {paragraphs.map((segments, index) => {
+        const paragraph = plainParagraphs[index] ?? "";
         const displayed = lines[index] ?? "";
         const layoutText = layoutParagraphs[index] ?? paragraph;
-        const paragraphHighlights = highlights[index] ?? [];
         const isTyping = typingIndex === index && displayed.length < paragraph.length;
 
         return (
           <p
             key={index}
-            className="relative text-lg md:text-xl text-foreground leading-[1.75]"
+            className="about-intro-paragraph relative text-xl leading-relaxed text-foreground"
           >
             <span className="invisible block" aria-hidden="true">
               {layoutText}
             </span>
             <span className="absolute inset-0 block">
-              {renderHighlightedText(displayed, paragraphHighlights)}
+              {renderDisplayedSegments(displayed, segments)}
               {isTyping ? (
                 <span className="inline-block w-[2px] h-[1em] ml-0.5 align-[-0.12em] rounded-full bg-foreground/80 opacity-90" />
               ) : null}

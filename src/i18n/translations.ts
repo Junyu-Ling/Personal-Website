@@ -29,6 +29,15 @@ export type ProjectItem = {
   featured?: boolean;
 };
 
+export type AboutIntroSegment = {
+  text: string;
+  highlight?: boolean;
+};
+
+export function aboutIntroPlainText(segments: readonly AboutIntroSegment[]) {
+  return segments.map((segment) => segment.text).join("");
+}
+
 const en = {
   lang: { en: "EN", zh: "中文", switchTo: "Switch to Chinese" },
   nav: {
@@ -89,9 +98,41 @@ const en = {
     subtitle:
       "Developer by curiosity, musician by heart, host on stage.",
     pillars: ["Development", "Music", "Campus & Arts"],
-    p1: "I'm Junyu Ling, a 17-year-old high school student from Shanghai with a deep passion for web development and computer science. I love exploring new technologies and turning creative ideas into functional projects.",
-    p2: "Beyond coding, I'm passionate about music. I started learning piano at the age of 4.5 and have achieved Grade 7 in ABRSM Piano. Currently, I'm also learning the clarinet. In my free time, I often serve as a piano accompanist for children, finding joy and creative inspiration in collaborative performance.",
-    p3: "I'm also deeply involved in school activities, frequently serving as a host for events like the Flag-Raising Ceremony, Sports Meet, and the New Year's Song and Dance Party. I enjoy collaborating with co-hosts to draft and refine scripts. Additionally, I actively participate in talent showcases such as the \"Sounds of Nature\" competition and school galas to share my artistic passion.",
+    p1Segments: [
+      {
+        text: "I'm Junyu Ling, a 17-year-old high school student from Shanghai with a deep passion for ",
+      },
+      { text: "web development", highlight: true },
+      { text: " and " },
+      { text: "computer science", highlight: true },
+      {
+        text: ". I love exploring new technologies and turning creative ideas into functional projects.",
+      },
+    ] as AboutIntroSegment[],
+    p2Segments: [
+      {
+        text: "Beyond coding, I'm passionate about music. I started learning piano at the age of 4.5 and have achieved ",
+      },
+      { text: "Grade 7 in ABRSM Piano", highlight: true },
+      { text: ". Currently, I'm also learning the " },
+      { text: "clarinet", highlight: true },
+      {
+        text: ". In my free time, I often serve as a piano accompanist for children, finding joy and creative inspiration in collaborative performance.",
+      },
+    ] as AboutIntroSegment[],
+    p3Segments: [
+      {
+        text: "I'm also deeply involved in school activities, frequently serving as a ",
+      },
+      { text: "host for events", highlight: true },
+      {
+        text: " like the Flag-Raising Ceremony, Sports Meet, and the New Year's Song and Dance Party. I enjoy collaborating with co-hosts to draft and refine scripts. Additionally, I actively participate in talent showcases such as the ",
+      },
+      { text: "\"Sounds of Nature\"", highlight: true },
+      {
+        text: " competition and school galas to share my artistic passion.",
+      },
+    ] as AboutIntroSegment[],
     email: "Email",
     age: "Age",
     ageValue: "17 Years Old",
@@ -100,13 +141,6 @@ const en = {
     music: "Music",
     musicValue: "ABRSM Piano Grade 7 | Learning Clarinet",
     profileAlt: "Junyu Ling",
-    viewProjects: "View My Projects",
-    contactMe: "Contact Me",
-    highlights: [
-      ["web development", "computer science"],
-      ["ABRSM Piano", "Grade 7", "clarinet"],
-      ["host for events", "Sounds of Nature"],
-    ],
   },
   journey: {
     badge: "Evolution of Skills",
@@ -480,9 +514,27 @@ const zh: typeof en = {
     badge: "认识我",
     subtitle: "因好奇而编程，因热爱而演奏，因舞台而发光。",
     pillars: ["开发", "音乐", "校园与艺术"],
-    p1: "我是灵俊宇，来自上海的 17 岁高中生，热爱 Web 开发与计算机科学，喜欢探索新技术，把创意变成可用的项目。",
-    p2: "除编程外，我热爱音乐。4 岁半开始学习钢琴，已取得英皇钢琴七级，目前也在学习单簧管。课余时常为小朋友钢琴伴奏，在合作演奏中获得快乐与灵感。",
-    p3: "我也积极参与校内活动，多次担任升旗仪式、运动会、元旦歌舞晚会等活动主持，并与搭档一起撰写、打磨主持稿；还参加「天籁之音」等才艺比赛与学校晚会，分享对艺术的热爱。",
+    p1Segments: [
+      { text: "我是灵俊宇，来自上海的 17 岁高中生，热爱 " },
+      { text: "Web 开发", highlight: true },
+      { text: "与" },
+      { text: "计算机科学", highlight: true },
+      { text: "，喜欢探索新技术，把创意变成可用的项目。" },
+    ] as AboutIntroSegment[],
+    p2Segments: [
+      { text: "除编程外，我热爱音乐。4 岁半开始学习钢琴，已取得" },
+      { text: "英皇钢琴七级", highlight: true },
+      { text: "，目前也在学习" },
+      { text: "单簧管", highlight: true },
+      { text: "。课余时常为小朋友钢琴伴奏，在合作演奏中获得快乐与灵感。" },
+    ] as AboutIntroSegment[],
+    p3Segments: [
+      { text: "我也积极参与校内活动，多次担任升旗仪式、运动会、元旦歌舞晚会等" },
+      { text: "活动主持", highlight: true },
+      { text: "，并与搭档一起撰写、打磨主持稿；还参加" },
+      { text: "「天籁之音」", highlight: true },
+      { text: "等才艺比赛与学校晚会，分享对艺术的热爱。" },
+    ] as AboutIntroSegment[],
     email: "邮箱",
     age: "年龄",
     ageValue: "17 岁",
@@ -491,13 +543,6 @@ const zh: typeof en = {
     music: "音乐",
     musicValue: "英皇钢琴七级 · 学习中：单簧管",
     profileAlt: "灵俊宇",
-    viewProjects: "查看项目",
-    contactMe: "联系我",
-    highlights: [
-      ["Web 开发", "计算机科学"],
-      ["英皇钢琴七级", "单簧管"],
-      ["主持", "天籁之音"],
-    ],
   },
   journey: {
     badge: "技能演进",
@@ -787,9 +832,9 @@ const zh: typeof en = {
 };
 
 export const aboutIntroLayoutParagraphs = [
-  en.about.p1,
-  en.about.p2,
-  en.about.p3,
+  aboutIntroPlainText(en.about.p1Segments),
+  aboutIntroPlainText(en.about.p2Segments),
+  aboutIntroPlainText(en.about.p3Segments),
 ] as const;
 
 export const translations = { en, zh } as const;
