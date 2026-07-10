@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   aboutIntroPlainText,
   type AboutIntroSegment,
@@ -130,47 +130,62 @@ export function AboutTypewriterBody({
   active,
   className = "",
 }: AboutTypewriterBodyProps) {
-  const plainParagraphs = paragraphs.map((segments) => aboutIntroPlainText(segments));
-  const [lines, setLines] = useState<string[]>(() => plainParagraphs.map(() => ""));
-  const [typingIndex, setTypingIndex] = useState<number | null>(null);
-  const runIdRef = useRef(0);
-  const hasStartedRef = useRef(false);
+  const contentKey = paragraphs
+    .map((segments) => aboutIntroPlainText(segments))
+    .join("\u0000");
 
-  const reset = useCallback(() => {
-    setLines(plainParagraphs.map(() => ""));
-    setTypingIndex(null);
-  }, [plainParagraphs]);
+  const plainParagraphs = useMemo(
+    () => contentKey.split("\u0000"),
+    [contentKey]
+  );
+
+  const [lines, setLines] = useState<string[]>(() =>
+    plainParagraphs.map(() => "")
+  );
+  const [typingIndex, setTypingIndex] = useState<number | null>(null);
+  const completedKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (hasStartedRef.current) {
-      setLines(plainParagraphs);
-      setTypingIndex(null);
-      return;
-    }
-
     if (!active) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) {
-      hasStartedRef.current = true;
+    // Already finished this copy — keep full text (e.g. scroll back into view).
+    if (completedKeyRef.current === contentKey) {
       setLines(plainParagraphs);
       setTypingIndex(null);
       return;
     }
 
-    const runId = ++runIdRef.current;
+    // Locale switched after the first run — swap text without replaying.
+    if (completedKeyRef.current !== null) {
+      completedKeyRef.current = contentKey;
+      setLines(plainParagraphs);
+      setTypingIndex(null);
+      return;
+    }
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reducedMotion) {
+      completedKeyRef.current = contentKey;
+      setLines(plainParagraphs);
+      setTypingIndex(null);
+      return;
+    }
+
     const controller = new AbortController();
     const { signal } = controller;
-    hasStartedRef.current = true;
+    let cancelled = false;
 
     const run = async () => {
-      reset();
+      setLines(plainParagraphs.map(() => ""));
+      setTypingIndex(null);
       try {
         for (let index = 0; index < plainParagraphs.length; index++) {
-          if (runId !== runIdRef.current) return;
+          if (cancelled) return;
           setTypingIndex(index);
           await typeParagraph(plainParagraphs[index], signal, (value) => {
-            if (runId !== runIdRef.current) return;
+            if (cancelled) return;
             setLines((current) => {
               const next = [...current];
               next[index] = value;
@@ -181,7 +196,10 @@ export function AboutTypewriterBody({
             await wait(180, signal);
           }
         }
-        if (runId === runIdRef.current) setTypingIndex(null);
+        if (!cancelled) {
+          completedKeyRef.current = contentKey;
+          setTypingIndex(null);
+        }
       } catch {
         // aborted
       }
@@ -190,9 +208,10 @@ export function AboutTypewriterBody({
     void run();
 
     return () => {
+      cancelled = true;
       controller.abort();
     };
-  }, [active, plainParagraphs, reset]);
+  }, [active, contentKey, plainParagraphs]);
 
   return (
     <div className={className} aria-live="polite">
@@ -200,7 +219,8 @@ export function AboutTypewriterBody({
         const paragraph = plainParagraphs[index] ?? "";
         const displayed = lines[index] ?? "";
         const layoutText = layoutParagraphs[index] ?? paragraph;
-        const isTyping = typingIndex === index && displayed.length < paragraph.length;
+        const isTyping =
+          typingIndex === index && displayed.length < paragraph.length;
 
         return (
           <p
