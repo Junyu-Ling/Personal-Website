@@ -437,13 +437,6 @@ const en = {
         tags: ["Developer Tools", "API", "Testing"],
         category: "webApps",
       },
-      {
-        title: "Echo Chamber",
-        description:
-          "A showcase website for our school band with member profiles and an interactive song request system",
-        tags: ["React", "Web App", "Music"],
-        category: "webApps",
-      },
     ] as ProjectItem[],
   },
   footer: {
@@ -811,13 +804,6 @@ const zh: typeof en = {
         title: "API 测试工具",
         description: "面向开发者的 API 测试与监控工具，实时返回结果。",
         tags: ["开发工具", "API", "测试"],
-        category: "webApps",
-      },
-      {
-        title: "Echo Chamber",
-        description:
-          "为学校乐队打造的展示网站，包含成员介绍与点歌系统。",
-        tags: ["React", "Web 应用", "音乐"],
         category: "webApps",
       },
     ],

@@ -9,7 +9,7 @@ import { TransparentGlobe } from "@/app/components/TransparentGlobe";
 
 const statValues = [
   { value: 10, suffix: "+" },
-  { value: 10, suffix: "+" },
+  { value: 9, suffix: "+" },
   { value: 17, suffix: "" },
 ];
 

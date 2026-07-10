@@ -9,7 +9,6 @@ import {
   Gift,
   Grid3x3,
   LineChart,
-  Music,
   Puzzle,
   Store,
   Webhook,
@@ -29,7 +28,6 @@ const projectLinks = [
   "https://scs.figma.site",
   "https://wishrelay.figma.site",
   "https://api-check.figma.site",
-  "https://echo-chamber.band",
 ];
 
 const projectStyles = [
@@ -95,13 +93,6 @@ const projectStyles = [
     text: "text-cyan-600",
     cardHover: "group-hover:bg-cyan-50 group-hover:border-cyan-200/80",
     btnHover: "hover:bg-cyan-600 hover:border-cyan-600 hover:text-white",
-  },
-  {
-    icon: Music,
-    bg: "bg-indigo-50",
-    text: "text-indigo-600",
-    cardHover: "group-hover:bg-indigo-50 group-hover:border-indigo-200/80",
-    btnHover: "hover:bg-indigo-600 hover:border-indigo-600 hover:text-white",
   },
 ];
 
