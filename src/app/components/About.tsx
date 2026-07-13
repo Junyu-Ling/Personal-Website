@@ -76,11 +76,11 @@ export function About() {
           transition={transition({ duration: 0.8, delay: 0.1 })}
         >
           <div className="relative shrink-0">
-            <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
+            <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-violet-100/60 via-sky-50/40 to-emerald-50/40 blur-sm pointer-events-none" />
             <motion.img
               src={profileImage}
               alt={t.about.profileAlt}
-              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-card shadow-lg"
+              className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-2xl object-cover border-4 border-card shadow-lg"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
             />
