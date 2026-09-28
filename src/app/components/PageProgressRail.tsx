@@ -41,7 +41,7 @@ export function PageProgressRail() {
     >
       <div className="relative h-72 w-5">
         <div
-          className="absolute inset-y-0 right-0 w-0.5 rounded-full bg-gray-300"
+          className="absolute inset-y-0 right-0 w-px rounded-full bg-border"
           aria-hidden="true"
         />
 
@@ -55,10 +55,10 @@ export function PageProgressRail() {
               : (index / (railSectionIds.length - 1)) * 100;
 
           const dotClass = isActive
-            ? "bg-gray-900 border-2 border-gray-900"
+            ? "bg-foreground border border-foreground"
             : isPassed
-              ? "bg-white border-2 border-gray-500 shadow-[0_0_0_1px_rgba(0,0,0,0.06)]"
-              : "bg-gray-100 border-2 border-gray-300";
+              ? "bg-card border border-foreground/40"
+              : "bg-secondary border border-border";
 
           return (
             <a

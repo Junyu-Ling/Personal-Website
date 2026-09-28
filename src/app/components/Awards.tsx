@@ -52,15 +52,15 @@ const schoolMeta: AwardMeta[] = [
     year: "2026",
     featured: true,
     certificate: apCalculusStarCertificate,
-    iconClass: "bg-emerald-50 text-emerald-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: AppWindow,
     year: "2025",
     certificate: aiCampWishrelayAward,
-    iconClass: "bg-sky-50 text-sky-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
 ];
 
@@ -70,58 +70,58 @@ const offCampusMeta: AwardMeta[] = [
     year: "2026",
     featured: true,
     certificate: immcOAwardCertificate,
-    iconClass: "bg-violet-50 text-violet-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Zap,
     year: "2026",
     featured: true,
-    iconClass: "bg-amber-50 text-amber-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Trophy,
     year: "2025",
     featured: true,
     certificate: wechatMiniprogramCarbonFootprintAward,
-    iconClass: "bg-emerald-50 text-emerald-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Calculator,
     year: "2026",
     certificate: immcMAwardCertificate,
-    iconClass: "bg-indigo-50 text-indigo-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Award,
     year: "2025",
     certificate: amc12Certificate,
-    iconClass: "bg-blue-50 text-blue-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Palette,
     year: "2025",
     certificate: aiMeetsHeritageSugarSilkAward,
-    iconClass: "bg-rose-50 text-rose-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Video,
     year: "2025",
     certificate: aigcShortVideoThirdPrize,
-    iconClass: "bg-cyan-50 text-cyan-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Rocket,
     year: "2025",
     certificate: himcmHonorableMentionCertificate,
-    iconClass: "bg-orange-50 text-orange-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
   {
     icon: Presentation,
@@ -132,8 +132,8 @@ const offCampusMeta: AwardMeta[] = [
       { src: dukeBestVisualDesignSchools },
       { src: dukeFourierPoster },
     ],
-    iconClass: "bg-purple-50 text-purple-600",
-    yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
+    iconClass: "bg-secondary text-foreground",
+    yearClass: "bg-secondary text-muted-foreground border-border",
   },
 ];
 
@@ -205,10 +205,11 @@ function AwardCard({
       })}
     >
       <motion.div
-        className={`bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-lg transition-shadow duration-300 relative overflow-hidden ${
-          award.featured ? "ring-1 ring-amber-200/70" : ""
+        className={`bg-card p-4 sm:p-6 md:p-8 rounded-[12px] border border-border transition-shadow duration-300 relative overflow-hidden ${
+          award.featured ? "border-foreground/20" : ""
         }`}
-        whileHover={{ y: -4 }}
+        style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}
+        whileHover={{ y: -3 }}
       >
         <div className="flex items-start gap-4 sm:gap-6 relative z-10 min-w-0">
           <motion.div
@@ -222,8 +223,8 @@ function AwardCard({
             })}
           >
             <motion.div
-              className={`p-3 rounded-xl ${award.iconClass}`}
-              whileHover={{ rotate: 360, scale: 1.05 }}
+              className={`p-3 rounded-[10px] ${award.iconClass}`}
+              whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               <Icon size={28} />
@@ -243,7 +244,7 @@ function AwardCard({
                 <p className="text-sm text-gray-500 italic">{award.award}</p>
               </div>
               <span
-                className={`shrink-0 px-3 py-1 rounded-full border text-sm font-medium ${award.yearClass}`}
+                className={`shrink-0 px-3 py-1 rounded-[10px] border text-sm font-medium ${award.yearClass}`}
               >
                 {award.year}
               </span>
@@ -256,7 +257,7 @@ function AwardCard({
                 <button
                   type="button"
                   onClick={() => setExpanded((open) => !open)}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 px-4 py-2 rounded-[10px] border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
                   aria-expanded={expanded}
                   aria-controls={`${sectionKey}-images-${index}`}
                 >
@@ -282,7 +283,7 @@ function AwardCard({
                           key={imageIndex}
                           type="button"
                           onClick={() => setLightboxIndex(imageIndex)}
-                          className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm hover:ring-2 hover:ring-violet-300/50 transition-all text-left"
+                          className="w-full rounded-[10px] overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm hover:border-foreground/20 transition-all text-left"
                         >
                           <img
                             src={image.src}

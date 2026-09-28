@@ -155,7 +155,7 @@ function PreviewModal({
               <a
                 href={preview.url}
                 download
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-[10px] bg-foreground text-background hover:opacity-90"
               >
                 <Download size={14} />
                 {labels.download}
@@ -313,9 +313,9 @@ export function StudyMaterials() {
         >
           <div className="flex items-center gap-2 px-4 py-2.5 bg-accent border-b border-border">
             <div className="flex gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-              <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-              <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+              <span className="w-3 h-3 rounded-full bg-neutral-300" />
+              <span className="w-3 h-3 rounded-full bg-neutral-300" />
+              <span className="w-3 h-3 rounded-full bg-neutral-300" />
             </div>
             <span className="flex-1 text-center text-sm font-medium text-gray-600 pr-14">
               {t.studyMaterials.windowTitle}
@@ -360,7 +360,7 @@ export function StudyMaterials() {
                 </button>
 
                 <div className="flex-1 flex items-center gap-1.5 mx-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm min-w-0 overflow-x-auto shadow-sm">
-                  <FolderOpen size={15} className="text-amber-500 shrink-0" />
+                  <FolderOpen size={15} className="text-muted-foreground shrink-0" />
                   <button
                     type="button"
                     onClick={() => navigateTo(null)}
@@ -455,7 +455,7 @@ export function StudyMaterials() {
                                 <div className="flex items-center gap-3 min-w-0">
                                   <Folder
                                     size={20}
-                                    className="text-amber-400 fill-amber-100 shrink-0"
+                                    className="text-foreground/40 fill-foreground/10 shrink-0"
                                   />
                                   <span className="truncate font-medium text-gray-900">
                                     {folderName(item.folder)}
@@ -475,7 +475,7 @@ export function StudyMaterials() {
                                     e.stopPropagation();
                                     handleItemOpen(item);
                                   }}
-                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] bg-secondary hover:bg-border/60 text-foreground border border-border transition-colors"
                                 >
                                   <FolderOpen size={13} />
                                   {t.studyMaterials.open}
@@ -519,7 +519,7 @@ export function StudyMaterials() {
                                     e.stopPropagation();
                                     openPreview(item.file, item.storagePath);
                                   }}
-                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] bg-secondary hover:bg-border/60 text-foreground border border-border transition-colors"
                                 >
                                   <Eye size={13} />
                                   {t.studyMaterials.preview}
@@ -528,7 +528,7 @@ export function StudyMaterials() {
                                   href={url}
                                   download
                                   onClick={(e) => e.stopPropagation()}
-                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 hover:bg-gray-200/80 text-gray-700 border border-gray-200/60 transition-colors"
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] bg-secondary hover:bg-border/60 text-foreground border border-border transition-colors"
                                 >
                                   <Download size={13} />
                                   {t.studyMaterials.download}
