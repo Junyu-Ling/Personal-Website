@@ -9,17 +9,17 @@ export function LanguageToggle({ className = "" }: LanguageToggleProps) {
 
   return (
     <div
-      className={`flex rounded-[10px] border border-border bg-card p-1 shrink-0 ${className}`}
+      className={`flex rounded-full border border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm p-1 shrink-0 ${className}`}
       role="group"
       aria-label={locale === "en" ? "Language" : "语言"}
     >
       <button
         type="button"
         onClick={() => setLocale("en")}
-        className={`px-3 py-1.5 text-sm font-medium rounded-[8px] transition-colors ${
+        className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors ${
           locale === "en"
-            ? "bg-foreground text-background"
-            : "text-muted-foreground hover:text-foreground"
+            ? "bg-gray-900 text-white"
+            : "text-gray-600 hover:text-gray-900"
         }`}
       >
         {t.lang.en}
@@ -27,10 +27,10 @@ export function LanguageToggle({ className = "" }: LanguageToggleProps) {
       <button
         type="button"
         onClick={() => setLocale("zh")}
-        className={`px-3 py-1.5 text-sm font-medium rounded-[8px] transition-colors ${
+        className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors ${
           locale === "zh"
-            ? "bg-foreground text-background"
-            : "text-muted-foreground hover:text-foreground"
+            ? "bg-gray-900 text-white"
+            : "text-gray-600 hover:text-gray-900"
         }`}
       >
         {t.lang.zh}

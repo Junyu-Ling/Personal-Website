@@ -72,9 +72,11 @@ export function HeroTypewriterName({
         className={`absolute inset-0 block overflow-visible ${textTypography} pb-[0.08em]`}
         aria-hidden="true"
       >
-        <span className="text-foreground">{displayed}</span>
+        <span className="bg-gradient-to-b from-gray-950 via-gray-900 to-gray-600 bg-clip-text text-transparent">
+          {displayed}
+        </span>
         {showCursor && (
-          <span className="inline-block w-[2px] h-[0.72em] ml-1 md:ml-1.5 rounded-sm bg-foreground/80 align-middle" />
+          <span className="inline-block w-[3px] md:w-1 h-[0.72em] ml-1 md:ml-1.5 rounded-full bg-gray-800 align-middle opacity-90" />
         )}
       </span>
     </h1>

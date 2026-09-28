@@ -30,16 +30,70 @@ const projectLinks = [
   "https://api-check.figma.site",
 ];
 
-const projectIcons = [
-  LineChart,
-  BookOpen,
-  Calculator,
-  Grid3x3,
-  Puzzle,
-  Gamepad2,
-  Store,
-  Gift,
-  Webhook,
+const projectStyles = [
+  {
+    icon: LineChart,
+    bg: "bg-emerald-50",
+    text: "text-emerald-600",
+    cardHover: "group-hover:bg-emerald-50 group-hover:border-emerald-200/80",
+    btnHover: "hover:bg-emerald-600 hover:border-emerald-600 hover:text-white",
+  },
+  {
+    icon: BookOpen,
+    bg: "bg-amber-50",
+    text: "text-amber-600",
+    cardHover: "group-hover:bg-amber-50 group-hover:border-amber-200/80",
+    btnHover: "hover:bg-amber-500 hover:border-amber-500 hover:text-white",
+  },
+  {
+    icon: Calculator,
+    bg: "bg-teal-50",
+    text: "text-teal-600",
+    cardHover: "group-hover:bg-teal-50 group-hover:border-teal-200/80",
+    btnHover: "hover:bg-teal-600 hover:border-teal-600 hover:text-white",
+  },
+  {
+    icon: Grid3x3,
+    bg: "bg-blue-50",
+    text: "text-blue-600",
+    cardHover: "group-hover:bg-blue-50 group-hover:border-blue-200/80",
+    btnHover: "hover:bg-blue-600 hover:border-blue-600 hover:text-white",
+  },
+  {
+    icon: Puzzle,
+    bg: "bg-orange-50",
+    text: "text-orange-600",
+    cardHover: "group-hover:bg-orange-50 group-hover:border-orange-200/80",
+    btnHover: "hover:bg-orange-500 hover:border-orange-500 hover:text-white",
+  },
+  {
+    icon: Gamepad2,
+    bg: "bg-violet-50",
+    text: "text-violet-600",
+    cardHover: "group-hover:bg-violet-50 group-hover:border-violet-200/80",
+    btnHover: "hover:bg-violet-600 hover:border-violet-600 hover:text-white",
+  },
+  {
+    icon: Store,
+    bg: "bg-purple-50",
+    text: "text-purple-600",
+    cardHover: "group-hover:bg-purple-50 group-hover:border-purple-200/80",
+    btnHover: "hover:bg-purple-600 hover:border-purple-600 hover:text-white",
+  },
+  {
+    icon: Gift,
+    bg: "bg-rose-50",
+    text: "text-rose-600",
+    cardHover: "group-hover:bg-rose-50 group-hover:border-rose-200/80",
+    btnHover: "hover:bg-rose-600 hover:border-rose-600 hover:text-white",
+  },
+  {
+    icon: Webhook,
+    bg: "bg-cyan-50",
+    text: "text-cyan-600",
+    cardHover: "group-hover:bg-cyan-50 group-hover:border-cyan-200/80",
+    btnHover: "hover:bg-cyan-600 hover:border-cyan-600 hover:text-white",
+  },
 ];
 
 const categoryOrder: ProjectItem["category"][] = [
@@ -52,16 +106,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 28 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] },
+    transition: { duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] },
   },
 };
 
@@ -72,40 +126,44 @@ type ProjectCardProps = {
 };
 
 function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
-  const Icon = projectIcons[index] ?? FolderGit2;
+  const style = projectStyles[index];
+  const Icon = style.icon;
   const isFeatured = Boolean(project.featured);
 
   return (
     <motion.div variants={cardVariants} className="group relative h-full">
       <motion.div
-        className={`relative h-full bg-card rounded-[12px] p-7 border border-border transition-all duration-300 overflow-hidden flex flex-col group-hover:bg-secondary ${
-          isFeatured ? "border-foreground/20" : ""
-        }`}
-        style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.04)" }}
-        whileHover={{ y: -4 }}
+        className={`relative h-full bg-white rounded-2xl p-8 border shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col ${
+          isFeatured
+            ? "border-amber-200/70 ring-1 ring-amber-100/50"
+            : "border-gray-200/70"
+        } ${style.cardHover}`}
+        whileHover={{ y: -6 }}
       >
         <div className="relative z-10 flex flex-col h-full">
           <div className="flex justify-between items-start mb-6">
-            <div className="p-3 rounded-[10px] bg-secondary text-foreground group-hover:bg-card transition-colors duration-300">
-              <Icon size={20} strokeWidth={1.75} />
+            <div
+              className={`p-3 rounded-xl ${style.bg} ${style.text} group-hover:scale-110 transition-transform duration-300`}
+            >
+              <Icon size={22} strokeWidth={1.75} />
             </div>
             {isFeatured && <FeaturedStar />}
           </div>
 
-          <h3 className="text-xl font-semibold mb-3 text-foreground tracking-tight">
+          <h3 className="text-2xl font-semibold mb-3 text-gray-900">
             {project.title}
           </h3>
 
-          <p className="text-muted-foreground mb-8 leading-[1.6] flex-grow">
+          <p className="text-gray-500 mb-8 leading-relaxed flex-grow group-hover:text-gray-600 transition-colors">
             {project.description}
           </p>
 
-          <div className="space-y-5 mt-auto">
+          <div className="space-y-6 mt-auto">
             <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
+              {project.tags.map((tag, tagIndex) => (
                 <span
-                  key={tag}
-                  className="px-2.5 py-1 bg-secondary rounded-[8px] text-xs font-medium text-muted-foreground border border-border"
+                  key={tagIndex}
+                  className="px-3 py-1 bg-gray-50 rounded-full text-xs font-medium text-gray-600 border border-gray-200/60"
                 >
                   {tag}
                 </span>
@@ -116,11 +174,11 @@ function ProjectCard({ project, index, viewProjectLabel }: ProjectCardProps) {
               href={projectLinks[index]}
               target="_blank"
               rel="noopener noreferrer"
-              className="project-cta flex items-center justify-between w-full px-4 py-2.5 bg-foreground text-background rounded-[10px] transition-opacity duration-300 group/btn hover:opacity-90"
+              className={`project-cta flex items-center justify-between w-full px-5 py-3 bg-gray-100 text-gray-800 rounded-full border border-gray-200/60 transition-all duration-300 group/btn ${style.btnHover}`}
               whileTap={{ scale: 0.98 }}
             >
               <span className="font-medium text-sm">{viewProjectLabel}</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              <ArrowUpRight className="w-4.5 h-4.5 transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
             </motion.a>
           </div>
         </div>
@@ -170,10 +228,10 @@ export function Projects() {
             return (
               <div key={category}>
                 <motion.h3
-                  className="text-2xl md:text-3xl font-semibold text-foreground mb-8 tracking-tight"
-                  initial={{ opacity: 0, y: 16 }}
+                  className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 tracking-tight"
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={transition({ duration: 0.5 })}
+                  transition={transition({ duration: 0.6 })}
                 >
                   {t.projects.categories[category]}
                 </motion.h3>

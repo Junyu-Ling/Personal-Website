@@ -37,7 +37,7 @@ export function SiteNav() {
     <motion.header
       className={`fixed top-0 inset-x-0 z-[90] transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-md border-b border-border"
+          ? "bg-white/85 backdrop-blur-xl border-b border-gray-200/80 shadow-sm"
           : "bg-transparent"
       }`}
       initial={false}
@@ -46,14 +46,14 @@ export function SiteNav() {
       <div className="container-site h-16 flex items-center gap-4">
         <a
           href="#home"
-          className="text-sm md:text-base font-semibold tracking-tight text-foreground shrink-0"
+          className="text-sm md:text-base font-semibold tracking-tight text-gray-900 shrink-0"
         >
           {t.nav.brand}
         </a>
 
         <div className="ml-auto flex items-center gap-3">
           <nav
-            className="hidden lg:flex items-center gap-0.5"
+            className="hidden lg:flex items-center gap-1"
             aria-label={t.nav.sections}
           >
             {links.map((link) => {
@@ -62,16 +62,16 @@ export function SiteNav() {
                 <a
                   key={link.id}
                   href={`#${link.id}`}
-                  className={`relative px-3.5 py-2 text-sm font-medium rounded-[10px] transition-colors ${
+                  className={`relative px-3.5 py-2 text-sm font-medium rounded-full transition-colors ${
                     isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-gray-900"
+                      : "text-gray-500 hover:text-gray-900"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="site-nav-pill"
-                      className="absolute inset-0 rounded-[10px] bg-secondary border border-border"
+                      className="absolute inset-0 rounded-full bg-gray-100 border border-gray-200/80"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}

@@ -19,16 +19,16 @@ export function SectionHeader({
   return (
     <motion.div
       className="mb-16 md:mb-20 flex w-full flex-col"
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 36 }}
       animate={isVisible ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, ease: [0.21, 0.47, 0.32, 0.98] }}
+      transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
     >
       <div className="badge-pill mb-6 self-center">
-        <Icon className="w-3.5 h-3.5 text-foreground/70" strokeWidth={1.75} />
+        <Icon className="w-4 h-4 text-violet-500" />
         <span>{badge}</span>
       </div>
       <h2 className="heading-display mb-4 overflow-visible text-center">{title}</h2>
-      <p className="text-base md:text-lg text-muted-foreground leading-[1.6] max-w-2xl self-center text-center">
+      <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl self-center text-left">
         {subtitle}
       </p>
     </motion.div>
