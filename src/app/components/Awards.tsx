@@ -15,6 +15,7 @@ import {
   AppWindow,
   GraduationCap,
   ChevronDown,
+  Download,
   type LucideIcon,
 } from "lucide-react";
 import immcOAwardCertificate from "@/assets/immc-o-award-certificate.png";
@@ -173,7 +174,19 @@ type AwardCardProps = {
   transition: (base: object) => object;
   viewImagesLabel: string;
   hideImagesLabel: string;
+  downloadLabel: string;
 };
+
+function fileNameFromSrc(src: string, fallback: string) {
+  const path = src.split("?")[0];
+  const last = path.split("/").pop();
+  if (last && last.includes(".")) return last;
+  const slug = fallback
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  return `${slug || "certificate"}.png`;
+}
 
 function AwardCard({
   award,
@@ -183,6 +196,7 @@ function AwardCard({
   transition,
   viewImagesLabel,
   hideImagesLabel,
+  downloadLabel,
 }: AwardCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -278,18 +292,32 @@ function AwardCard({
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       {images.map((image, imageIndex) => (
-                        <button
+                        <div
                           key={imageIndex}
-                          type="button"
-                          onClick={() => setLightboxIndex(imageIndex)}
-                          className="w-full rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm hover:ring-2 hover:ring-violet-300/50 transition-all text-left"
+                          className="rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
                         >
-                          <img
-                            src={image.src}
-                            alt={image.alt}
-                            className="block w-full h-auto max-w-full object-contain"
-                          />
-                        </button>
+                          <button
+                            type="button"
+                            onClick={() => setLightboxIndex(imageIndex)}
+                            className="w-full hover:ring-2 hover:ring-violet-300/50 transition-all text-left"
+                          >
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              className="block w-full h-auto max-w-full object-contain"
+                            />
+                          </button>
+                          <div className="flex justify-end px-3 py-2 border-t border-gray-200/80 bg-white/80">
+                            <a
+                              href={image.src}
+                              download={fileNameFromSrc(image.src, image.alt)}
+                              className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-full border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+                            >
+                              <Download size={14} />
+                              {downloadLabel}
+                            </a>
+                          </div>
+                        </div>
                       ))}
                     </motion.div>
                   )}
@@ -318,6 +346,7 @@ type AwardSectionProps = {
   transition: (base: object) => object;
   viewImagesLabel: string;
   hideImagesLabel: string;
+  downloadLabel: string;
 };
 
 function AwardSection({
@@ -328,6 +357,7 @@ function AwardSection({
   transition,
   viewImagesLabel,
   hideImagesLabel,
+  downloadLabel,
   variant,
 }: AwardSectionProps & { variant: "school" | "off-campus" }) {
   return (
@@ -350,6 +380,7 @@ function AwardSection({
             transition={transition}
             viewImagesLabel={viewImagesLabel}
             hideImagesLabel={hideImagesLabel}
+            downloadLabel={downloadLabel}
           />
         ))}
       </div>
@@ -389,6 +420,7 @@ export function Awards() {
           transition={transition}
           viewImagesLabel={t.awards.viewImages}
           hideImagesLabel={t.awards.hideImages}
+          downloadLabel={t.awards.downloadCertificate}
           variant="school"
         />
 
@@ -400,6 +432,7 @@ export function Awards() {
           transition={transition}
           viewImagesLabel={t.awards.viewImages}
           hideImagesLabel={t.awards.hideImages}
+          downloadLabel={t.awards.downloadCertificate}
           variant="off-campus"
         />
       </div>

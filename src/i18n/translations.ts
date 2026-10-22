@@ -253,6 +253,7 @@ const en = {
     offCampusSection: "Off Campus",
     viewImages: "View photos & certificates",
     hideImages: "Hide photos & certificates",
+    downloadCertificate: "Download certificate",
     schoolItems: [
       {
         title: "AP Calculus Star of the Subject",
@@ -640,6 +641,7 @@ const zh: typeof en = {
     offCampusSection: "校外",
     viewImages: "查看照片与证书",
     hideImages: "收起照片与证书",
+    downloadCertificate: "下载证书",
     schoolItems: [
       {
         title: "AP 微积分学科之星",
