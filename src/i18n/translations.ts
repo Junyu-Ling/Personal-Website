@@ -455,6 +455,82 @@ const en = {
     live: "Live",
     contact: "Contact",
     generated: "Curriculum vitae compiled from my personal website.",
+    objectiveTitle: "Objective",
+    educationTitle: "Education",
+    projectsTitle: "Project Experience",
+    skillsTitle: "Skills & Certificates",
+    honorsTitle: "Activities & Honors",
+    appendixTitle: "Certificates",
+    city: "Shanghai",
+    github: "GitHub",
+    portfolio: "Portfolio",
+    objective:
+      "High school student and self-taught developer seeking a software engineering / frontend internship. Focused on shipping web apps, AI-assisted tools, and competition-grade modeling work.",
+    schoolName: "Shanghai Soong Ching Ling School",
+    schoolDegree: "High School",
+    schoolDates: "Expected graduation: 2027.06",
+    schoolBullets: [
+      "AP Computer Science A, AP Physics 1, AP Precalculus — score 5 on each (Grade 10)",
+      "AP Calculus Star of the Subject, 2025–2026 academic year",
+      "Core coursework: Java programming, mechanics, functions and mathematical modeling",
+    ],
+    languagesLabel: "Languages",
+    languages:
+      "Mandarin (native); English (academic writing & speaking; currently preparing for TOEFL)",
+    techLabel: "Technical",
+    tech: "React, TypeScript, JavaScript, Java, Python, C++, HTML/CSS, WeChat Mini Programs, Figma, mathematical modeling",
+    certsLabel: "Certificates",
+    certsHighlight:
+      "IMMC Outstanding Award (O Award); PhysicsBowl National Honorable Award (Division 2); WeChat Mini-Program Global Third Prize; AP Calculus Star; AMC 12 global top 25%. Scans are attached.",
+    projectRoleSolo: "Independent Developer",
+    projectRoleTeam: "Core Developer (Team)",
+    projectBullets: [
+      [
+        "Designed and shipped an AI-assisted graphing calculator for advanced mathematical visualization.",
+        "Turned natural-language and symbolic input into interactive Desmos-style plots for study and exploration.",
+      ],
+      [
+        "Built a TOEFL vocabulary flashcard app with spaced review and an embedded AI practice loop.",
+        "Used the product while preparing for TOEFL to deepen retention of each term.",
+      ],
+      [
+        "Shipped a lightweight GPA calculator that helps students track academic performance.",
+      ],
+      [
+        "Rebuilt the classic 2048 puzzle with smoother animation, extra modes, and a cleaner interaction model.",
+      ],
+      [
+        "Developed a dragon-themed match-3 game with original animation and canvas gameplay.",
+      ],
+      [
+        "Implemented a Chrome-dino-style endless runner with power-ups and fast-paced controls.",
+      ],
+      [
+        "Built a tabletop-game arcade for STEAM Week and MATH Week, covering Da Vinci Code, UNO, Gomoku, Werewolf, Blackjack, and more.",
+        "Added CPU practice and online play so classmates can join a table or train solo.",
+      ],
+      [
+        "Co-developed WishRelay, a WeChat mini-program for wish relay and fulfillment, later published as a web app.",
+        "Team received Second Prize in the on-campus AI Camp × WeChat Mini Program Innovation Challenge.",
+      ],
+      [
+        "Built a developer-facing API testing tool with live request results for endpoint checks.",
+      ],
+    ],
+    activities: [
+      {
+        title: "School Event Host",
+        org: "Shanghai Soong Ching Ling School",
+        detail:
+          "Regularly host flag-raising ceremonies, the sports meet, and the New Year song-and-dance party; draft and revise scripts with co-hosts.",
+      },
+      {
+        title: "Music",
+        org: "ABRSM Piano Grade 7",
+        detail:
+          "Piano since age 4.5; currently studying clarinet. Accompanies younger students and performs in school showcases including “Sounds of Nature.”",
+      },
+    ],
   },
 };
 
@@ -836,6 +912,71 @@ const zh: typeof en = {
     live: "在线",
     contact: "联系方式",
     generated: "本简历由个人网站内容整理生成。",
+    objectiveTitle: "求职意向",
+    educationTitle: "教育背景",
+    projectsTitle: "项目经历",
+    skillsTitle: "技能与证书",
+    honorsTitle: "校园活动与荣誉",
+    appendixTitle: "证书附件",
+    city: "上海",
+    github: "GitHub",
+    portfolio: "个人网站",
+    objective:
+      "高中在读、自学 Web 开发，意向前端 / 软件工程实习。能独立上线 Web 应用与小程序，并有数学建模与竞赛项目经验。",
+    schoolName: "上海宋庆龄学校",
+    schoolDegree: "高中",
+    schoolDates: "预计毕业：2027.06",
+    schoolBullets: [
+      "AP Computer Science A、AP Physics 1、AP Precalculus 均为 5 分（十年级）",
+      "2025–2026 学年 AP 微积分学科之星",
+      "核心课程：Java 程序设计、力学、函数与数学建模",
+    ],
+    languagesLabel: "语言",
+    languages: "中文（母语）；英语（学术读写与口语，正在备考托福）",
+    techLabel: "专业技能",
+    tech: "React、TypeScript、JavaScript、Java、Python、C++、HTML/CSS、微信小程序、Figma、数学建模",
+    certsLabel: "资格与证书",
+    certsHighlight:
+      "IMMC 国际特等奖（O 奖）；PhysicsBowl National Honorable Award（Division 2）；微信小程序全球三等奖；AP 微积分学科之星；AMC 12 全球前 25%。证书扫描件附后。",
+    projectRoleSolo: "独立开发",
+    projectRoleTeam: "核心开发（团队）",
+    projectBullets: [
+      [
+        "设计并上线 AI 辅助绘图计算器，用于高阶数学可视化。",
+        "将自然语言与符号输入转为可交互的 Desmos 风格图像，服务学习与探究。",
+      ],
+      [
+        "开发托福词汇卡片应用，支持间隔复习，并接入内置 AI 练习。",
+        "备考期间实际使用，加深对每个词的记忆。",
+      ],
+      ["上线轻量 GPA 计算器，帮助学生跟踪学业表现。"],
+      ["重做经典 2048，补充更流畅的动画、额外模式与更清晰的交互。"],
+      ["开发龙主题三消游戏，含原创动画与 Canvas 玩法。"],
+      ["实现 Chrome 小恐龙风格无尽跑酷，含道具与快节奏操作。"],
+      [
+        "为 STEAM Week 与 MATH Week 制作桌游合集站，覆盖达芬奇密码、UNO、五子棋、狼人杀、二十一点等。",
+        "支持人机练习与在线开桌，方便同学组局或独自训练。",
+      ],
+      [
+        "参与开发「心愿接力」微信小程序（许愿与接力），并发布 Web 版。",
+        "团队获校内 AI Camp × 微信小程序创新大赛二等奖。",
+      ],
+      ["开发面向开发者的 API 测试工具，实时返回接口检测结果。"],
+    ],
+    activities: [
+      {
+        title: "校内活动主持",
+        org: "上海宋庆龄学校",
+        detail:
+          "常年主持升旗仪式、运动会与元旦歌舞晚会，并与搭档共同起草、修改主持稿。",
+      },
+      {
+        title: "音乐",
+        org: "英皇钢琴七级",
+        detail:
+          "4.5 岁起学习钢琴，目前同时学习单簧管；为低年级同学钢琴伴奏，并参加「天籁之音」等校内展演。",
+      },
+    ],
   },
 };
 

@@ -1,8 +1,11 @@
 export const EMAIL = "jy.ling.cc@gmail.com";
 export const GITHUB_URL = "https://github.com/Junyu-Ling";
 export const GITHUB_LABEL = "github.com/Junyu-Ling";
+export const SITE_URL = "https://junyu-ling.vercel.app";
 export const MAILTO_URL =
   "https://mail.google.com/mail/?view=cm&fs=1&to=jy.ling.cc@gmail.com";
+
+export const cvProjectOrder = [0, 6, 7, 1, 3, 2, 8, 4, 5] as const;
 
 export const projectLinks = [
   "https://ai-desmos.online",

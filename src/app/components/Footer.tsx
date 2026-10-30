@@ -37,7 +37,7 @@ export function Footer() {
       }
       const filename =
         locale === "zh" ? "灵俊宇-简历.pdf" : "Junyu-Ling-CV.pdf";
-      await exportElementToPdf(element, filename);
+      await exportElementToPdf(element, filename, t.hero.name);
     } catch (error) {
       console.error("Failed to export CV", error);
     } finally {
