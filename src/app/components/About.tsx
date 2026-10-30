@@ -22,7 +22,7 @@ export function About() {
   });
 
   const contactItems = [
-    { label: t.about.email, value: "LingJunYu20081201@gmail.com", breakAll: true },
+    { label: t.about.email, value: "jy.ling.cc@gmail.com", breakAll: true },
     { label: t.about.age, value: t.about.ageValue },
     { label: t.about.status, value: t.about.statusValue },
     { label: t.about.music, value: t.about.musicValue },

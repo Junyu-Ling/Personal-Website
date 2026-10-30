@@ -4,31 +4,20 @@ import {
   ArrowUpRight,
   BookOpen,
   Calculator,
+  Dices,
   FolderGit2,
   Gamepad2,
   Gift,
   Grid3x3,
   LineChart,
   Puzzle,
-  Store,
   Webhook,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
 import { SectionHeader } from "@/app/components/SectionHeader";
+import { projectLinks } from "@/data/site";
 import type { ProjectItem } from "@/i18n/translations";
-
-const projectLinks = [
-  "https://ai-desmos.online",
-  "https://toefl-6666.vercel.app/",
-  "https://gpa-calculator.figma.site/",
-  "https://2048pro.online",
-  "https://dragon.figma.site",
-  "https://pony.figma.site",
-  "https://scs.figma.site",
-  "https://wishrelay.figma.site",
-  "https://api-check.figma.site",
-];
 
 const projectStyles = [
   {
@@ -74,11 +63,11 @@ const projectStyles = [
     btnHover: "hover:bg-violet-600 hover:border-violet-600 hover:text-white",
   },
   {
-    icon: Store,
-    bg: "bg-purple-50",
-    text: "text-purple-600",
-    cardHover: "group-hover:bg-purple-50 group-hover:border-purple-200/80",
-    btnHover: "hover:bg-purple-600 hover:border-purple-600 hover:text-white",
+    icon: Dices,
+    bg: "bg-fuchsia-50",
+    text: "text-fuchsia-600",
+    cardHover: "group-hover:bg-fuchsia-50 group-hover:border-fuchsia-200/80",
+    btnHover: "hover:bg-fuchsia-600 hover:border-fuchsia-600 hover:text-white",
   },
   {
     icon: Gift,

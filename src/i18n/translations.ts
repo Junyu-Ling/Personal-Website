@@ -270,8 +270,6 @@ const en = {
         description:
           "On-campus competition hosted by AI Camp and the WeChat Mini Program team. Team WishRelay received Second Prize.",
         award: "Second Prize — Team WishRelay",
-        certificateAlt:
-          "AI Camp × WeChat Mini Program Innovation Challenge — Second Prize team photo",
       },
     ] as AwardTranslation[],
     offCampusItems: [
@@ -288,8 +286,9 @@ const en = {
         title: "Physics Bowl — Asian Camp Qualification",
         organization: "American Association of Physics Teachers",
         description:
-          "Scored ≥ 25 in the 2026 Physics Bowl, qualifying for the Asian training camp.",
-        award: "Asian Training Camp Qualification (Score ≥ 25)",
+          "Received the National Honorable Award (Division 2) in the 2026 AAPT PhysicsBowl contest.",
+        award: "National Honorable Award (Division 2)",
+        certificateAlt: "PhysicsBowl 2026 National Honorable Award certificate",
       },
       {
         title: "WeChat Mini-Program Global Innovation Challenge",
@@ -324,7 +323,7 @@ const en = {
           "Team project on AI and sugar-painting narrative; received Second Prize in Shanghai.",
         award: "Team Second Prize — Shanghai",
         certificateAlt:
-          "When AI Meets Intangible Cultural Heritage — The Chinese Soul in Sugar Silk award list",
+          "Honor certificate — When AI Meets Intangible Cultural Heritage, Second Prize, The Chinese Soul in Sugar Silk",
       },
       {
         title: "Youth AI Innovation Competition (AIGC)",
@@ -418,11 +417,12 @@ const en = {
         category: "games",
       },
       {
-        title: "Store Management System",
+        title: "ByteGame",
         description:
-          "A comprehensive website maintenance and management system for small businesses",
-        tags: ["React", "Admin Panel", "CMS"],
-        category: "webApps",
+          "A tabletop game arcade I built for STEAM Week and MATH Week — Da Vinci Code, UNO, Halli Galli, Gomoku, Werewolf, Blackjack, and more, with CPU practice and online play.",
+        tags: ["Game Dev", "Multiplayer", "STEAM"],
+        category: "games",
+        featured: true,
       },
       {
         title: "WishRelay",
@@ -446,6 +446,15 @@ const en = {
     githubAria: "GitHub profile",
     rights: "All rights reserved.",
     copyrightName: "Junyu Ling",
+    exportCv: "Export CV (PDF)",
+    exportingCv: "Preparing PDF…",
+    exportCvAria: "Download resume as PDF",
+  },
+  cv: {
+    skills: "Skills",
+    live: "Live",
+    contact: "Contact",
+    generated: "Curriculum vitae compiled from my personal website.",
   },
 };
 
@@ -657,7 +666,6 @@ const zh: typeof en = {
         description:
           "校内社团 AI Camp 与微信小程序团队联合举办的校内比赛。心愿接力团队获二等奖。",
         award: "二等奖 — 心愿接力团队",
-        certificateAlt: "AI Camp × 微信小程序创新大赛二等奖团队合影",
       },
     ],
     offCampusItems: [
@@ -673,8 +681,9 @@ const zh: typeof en = {
         title: "Physics Bowl 物理碗",
         organization: "美国物理教师协会",
         description:
-          "2026 年 Physics Bowl 得分 ≥ 25，获亚洲训练营晋级资格。",
-        award: "亚洲训练营晋级资格（得分 ≥ 25）",
+          "2026 年 AAPT PhysicsBowl 获 National Honorable Award（Division 2）。",
+        award: "National Honorable Award（Division 2）",
+        certificateAlt: "PhysicsBowl 2026 National Honorable Award 证书",
       },
       {
         title: "微信小程序全球创新挑战赛",
@@ -704,7 +713,7 @@ const zh: typeof en = {
         organization: "上海市学生活动",
         description: "团队以 AI 糖画为主题参赛，获上海市二等奖。",
         award: "团队二等奖 — 上海",
-        certificateAlt: "当 AI 遇见非遗 —「糖丝里的中国魂」获奖公示",
+        certificateAlt: "荣誉证书 — 当 AI 遇见非遗「糖丝里的中国魂」二等奖",
       },
       {
         title: "青年 AI 创新大赛 (AIGC)",
@@ -791,10 +800,12 @@ const zh: typeof en = {
         category: "games",
       },
       {
-        title: "店铺管理系统",
-        description: "面向小商家的网站维护与管理系统。",
-        tags: ["React", "管理后台", "CMS"],
-        category: "webApps",
+        title: "ByteGame",
+        description:
+          "为 STEAM Week 与 MATH Week 制作的桌游合集站，包含达芬奇密码、UNO、Halli Galli、五子棋、狼人杀、二十一点等，支持人机练习与在线对战。",
+        tags: ["游戏开发", "联机", "STEAM"],
+        category: "games",
+        featured: true,
       },
       {
         title: "心愿接力",
@@ -816,6 +827,15 @@ const zh: typeof en = {
     githubAria: "GitHub 主页",
     rights: "版权所有。",
     copyrightName: "灵俊宇",
+    exportCv: "导出简历 PDF",
+    exportingCv: "正在生成 PDF…",
+    exportCvAria: "下载 PDF 格式简历",
+  },
+  cv: {
+    skills: "技能",
+    live: "在线",
+    contact: "联系方式",
+    generated: "本简历由个人网站内容整理生成。",
   },
 };
 

@@ -18,23 +18,14 @@ import {
   Download,
   type LucideIcon,
 } from "lucide-react";
-import immcOAwardCertificate from "@/assets/immc-o-award-certificate.png";
-import immcMAwardCertificate from "@/assets/immc-m-award-certificate.png";
-import himcmHonorableMentionCertificate from "@/assets/himcm-honorable-mention-certificate.png";
-import amc12Certificate from "@/assets/amc12-certificate.png";
-import dukeParticipationCertificate from "@/assets/duke-participation-certificate.png";
-import dukeBestVisualDesign from "@/assets/duke-best-visual-design.png";
-import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.png";
-import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
-import aiCampWishrelayAward from "@/assets/ai-camp-wishrelay-award.png";
-import apCalculusStarCertificate from "@/assets/ap-calculus-star-certificate.png";
-import aiMeetsHeritageSugarSilkAward from "@/assets/ai-meets-heritage-sugar-silk-award.png";
-import wechatMiniprogramCarbonFootprintAward from "@/assets/wechat-miniprogram-carbon-footprint-award.png";
-import aigcShortVideoThirdPrize from "@/assets/aigc-short-video-third-prize.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { FeaturedStar } from "@/app/components/FeaturedStar";
 import { ImageLightbox } from "@/app/components/ImageLightbox";
 import { SectionHeader } from "@/app/components/SectionHeader";
+import {
+  offCampusAwardMedia,
+  schoolAwardMedia,
+} from "@/data/awardsMedia";
 import type { AwardTranslation } from "@/i18n/translations";
 
 type AwardMeta = {
@@ -47,96 +38,89 @@ type AwardMeta = {
   yearClass: string;
 };
 
-const schoolMeta: AwardMeta[] = [
+const schoolVisuals: Pick<AwardMeta, "icon" | "iconClass" | "yearClass">[] = [
   {
     icon: GraduationCap,
-    year: "2026",
-    featured: true,
-    certificate: apCalculusStarCertificate,
     iconClass: "bg-emerald-50 text-emerald-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: AppWindow,
-    year: "2025",
-    certificate: aiCampWishrelayAward,
     iconClass: "bg-sky-50 text-sky-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
 ];
 
-const offCampusMeta: AwardMeta[] = [
+const offCampusVisuals: Pick<AwardMeta, "icon" | "iconClass" | "yearClass">[] = [
   {
     icon: Globe,
-    year: "2026",
-    featured: true,
-    certificate: immcOAwardCertificate,
     iconClass: "bg-violet-50 text-violet-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Zap,
-    year: "2026",
-    featured: true,
     iconClass: "bg-amber-50 text-amber-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Trophy,
-    year: "2025",
-    featured: true,
-    certificate: wechatMiniprogramCarbonFootprintAward,
     iconClass: "bg-emerald-50 text-emerald-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Calculator,
-    year: "2026",
-    certificate: immcMAwardCertificate,
     iconClass: "bg-indigo-50 text-indigo-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Award,
-    year: "2025",
-    certificate: amc12Certificate,
     iconClass: "bg-blue-50 text-blue-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Palette,
-    year: "2025",
-    certificate: aiMeetsHeritageSugarSilkAward,
     iconClass: "bg-rose-50 text-rose-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Video,
-    year: "2025",
-    certificate: aigcShortVideoThirdPrize,
     iconClass: "bg-cyan-50 text-cyan-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Rocket,
-    year: "2025",
-    certificate: himcmHonorableMentionCertificate,
     iconClass: "bg-orange-50 text-orange-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
   {
     icon: Presentation,
-    year: "2025",
-    certificates: [
-      { src: dukeParticipationCertificate },
-      { src: dukeBestVisualDesign },
-      { src: dukeBestVisualDesignSchools },
-      { src: dukeFourierPoster },
-    ],
     iconClass: "bg-purple-50 text-purple-600",
     yearClass: "bg-gray-100 text-gray-600 border-gray-200/60",
   },
 ];
+
+function mergeAwardMeta(
+  visuals: Pick<AwardMeta, "icon" | "iconClass" | "yearClass">[],
+  media: typeof schoolAwardMedia
+): AwardMeta[] {
+  return visuals.map((visual, index) => {
+    const item = media[index];
+    const certificates = item.certificates;
+    return {
+      ...visual,
+      year: item.year,
+      featured: item.featured,
+      certificate: certificates.length === 1 ? certificates[0] : undefined,
+      certificates:
+        certificates.length > 1
+          ? certificates.map((src) => ({ src }))
+          : undefined,
+    };
+  });
+}
+
+const schoolMeta = mergeAwardMeta(schoolVisuals, schoolAwardMedia);
+const offCampusMeta = mergeAwardMeta(offCampusVisuals, offCampusAwardMedia);
 
 type ResolvedAward = AwardTranslation &
   AwardMeta & {
