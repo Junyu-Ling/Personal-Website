@@ -11,6 +11,7 @@ import {
   offCampusAwardMedia,
   schoolAwardMedia,
 } from "@/data/awardsMedia";
+import cvPortrait from "@/assets/cv-portrait.png";
 
 type CvDocumentProps = {
   t: Translation;
@@ -86,33 +87,67 @@ export function CvDocument({ t }: CvDocumentProps) {
       }}
     >
       <Keep>
-        <header style={{ textAlign: "center", paddingBottom: 10 }}>
-          <h1
+        <header
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: 18,
+            paddingBottom: 12,
+          }}
+        >
+          <div style={{ minWidth: 0, flex: 1, paddingTop: 2 }}>
+            <a
+              href={SITE_URL}
+              style={{
+                display: "inline-block",
+                margin: 0,
+                fontSize: 14.5,
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                color: "#111111",
+                textDecoration: "underline",
+                textUnderlineOffset: 3,
+              }}
+            >
+              {SITE_URL.replace(/^https:\/\//, "")}
+            </a>
+            <h1
+              style={{
+                margin: "6px 0 0",
+                fontSize: 28,
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                lineHeight: 1.15,
+              }}
+            >
+              {t.hero.name}
+            </h1>
+            <p style={{ margin: "8px 0 0", fontSize: 12, color: "#333333" }}>
+              {t.cv.city}
+              <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
+              <a href={`mailto:${EMAIL}`} style={{ color: "#111111" }}>
+                {EMAIL}
+              </a>
+              <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
+              <a href={GITHUB_URL} style={{ color: "#111111" }}>
+                {t.cv.github}
+              </a>
+            </p>
+          </div>
+          <img
+            src={cvPortrait}
+            alt={t.about.profileAlt}
             style={{
-              margin: 0,
-              fontSize: 28,
-              fontWeight: 700,
-              letterSpacing: "0.04em",
-              lineHeight: 1.15,
+              width: 102,
+              height: 128,
+              objectFit: "cover",
+              objectPosition: "center top",
+              border: "1px solid #dddddd",
+              background: "#ffffff",
+              flexShrink: 0,
             }}
-          >
-            {t.hero.name}
-          </h1>
-          <p style={{ margin: "8px 0 0", fontSize: 12, color: "#333333" }}>
-            {t.cv.city}
-            <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
-            <a href={`mailto:${EMAIL}`} style={{ color: "#111111" }}>
-              {EMAIL}
-            </a>
-            <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
-            <a href={GITHUB_URL} style={{ color: "#111111" }}>
-              {t.cv.github}
-            </a>
-            <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
-            <a href={SITE_URL} style={{ color: "#111111" }}>
-              {t.cv.portfolio}
-            </a>
-          </p>
+          />
         </header>
       </Keep>
 
@@ -139,13 +174,39 @@ export function CvDocument({ t }: CvDocumentProps) {
         <p style={{ margin: "2px 0 4px", color: "#444444" }}>
           {t.cv.schoolDegree} · {t.cv.city}
         </p>
-        <ul style={{ margin: "0 0 14px", paddingLeft: 18 }}>
+        <ul style={{ margin: "0 0 8px", paddingLeft: 18 }}>
           {t.cv.schoolBullets.map((bullet) => (
             <li key={bullet} style={{ marginBottom: 2 }}>
               {bullet}
             </li>
           ))}
         </ul>
+        <p style={{ margin: "0 0 4px", fontWeight: 700 }}>{t.cv.apScoresTitle}</p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            columnGap: 24,
+            rowGap: 2,
+            margin: "0 0 14px",
+          }}
+        >
+          {t.cv.apScores.map((item) => (
+            <div
+              key={item.name}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 12,
+                borderBottom: "1px dotted #cccccc",
+                padding: "1px 0",
+              }}
+            >
+              <span>{item.name}</span>
+              <span style={{ fontWeight: 700 }}>{item.score}</span>
+            </div>
+          ))}
+        </div>
       </Keep>
 
       {cvProjectOrder.map((index, orderIndex) => {
