@@ -12,6 +12,8 @@ import {
   schoolAwardMedia,
 } from "@/data/awardsMedia";
 import cvPortrait from "@/assets/cv-portrait.png";
+import dukeBestVisualDesign from "@/assets/duke-best-visual-design.png";
+import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.png";
 import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 
 type CvDocumentProps = {
@@ -27,16 +29,12 @@ type AppendixItem = {
   award: string;
   year: string;
   alt: string;
-  pairable: boolean;
 };
 
-function chunkPairs<T>(items: T[]) {
-  const pairs: T[][] = [];
-  for (let i = 0; i < items.length; i += 2) {
-    pairs.push(items.slice(i, i + 2));
-  }
-  return pairs;
-}
+const dukeConnectedSrcs = new Set([
+  dukeBestVisualDesign,
+  dukeBestVisualDesignSchools,
+]);
 
 function AppendixFigure({
   item,
@@ -103,6 +101,81 @@ function AppendixFigure({
   );
 }
 
+function ConnectedAppendix({ items }: { items: AppendixItem[] }) {
+  const lead = items[0];
+  if (!lead) return null;
+  return (
+    <div data-cv-figure>
+      <p
+        style={{
+          margin: "0 0 4px",
+          fontWeight: 700,
+          fontSize: 12,
+          lineHeight: 1.35,
+          overflowWrap: "anywhere",
+        }}
+      >
+        {lead.award}
+        <span style={{ fontWeight: 400, color: "#555555" }}> · {lead.year}</span>
+      </p>
+      <p
+        style={{
+          margin: "0 0 8px",
+          fontSize: 11,
+          color: "#555555",
+          lineHeight: 1.35,
+          overflowWrap: "anywhere",
+        }}
+      >
+        {lead.title}
+      </p>
+      <div
+        style={{
+          border: "1px solid #dddddd",
+          background: "#f7f7f7",
+          overflow: "hidden",
+        }}
+      >
+        {items.map((item, index) => (
+          <div
+            key={item.src}
+            style={{
+              borderTop: index === 0 ? undefined : "1px solid #dddddd",
+              padding: 8,
+            }}
+          >
+            <p
+              style={{
+                margin: "0 0 6px",
+                fontSize: 11,
+                color: "#555555",
+                lineHeight: 1.35,
+              }}
+            >
+              {item.alt}
+            </p>
+            <img
+              src={item.src}
+              alt={item.alt}
+              style={{
+                display: "block",
+                margin: "0 auto",
+                width: "auto",
+                height: "auto",
+                maxWidth: "100%",
+                maxHeight: 340,
+                objectFit: "contain",
+                objectPosition: "center",
+                background: "#ffffff",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Keep({ children }: { children: ReactNode }) {
   return <div data-cv-keep>{children}</div>;
 }
@@ -154,13 +227,15 @@ export function CvDocument({ t }: CvDocumentProps) {
       award: award.award,
       year: award.year,
       alt: alts?.[imageIndex] ?? award.certificateAlt ?? award.title,
-      pairable: award.certificates.length > 1 && src !== dukeFourierPoster,
     }));
   });
   const soloAppendix = appendixItems.filter(
-    (item) => !item.pairable && item.src !== dukeFourierPoster
+    (item) =>
+      item.src !== dukeFourierPoster && !dukeConnectedSrcs.has(item.src)
   );
-  const dukePairs = chunkPairs(appendixItems.filter((item) => item.pairable));
+  const dukeConnected = appendixItems.filter((item) =>
+    dukeConnectedSrcs.has(item.src)
+  );
   const closingAppendix = appendixItems.filter(
     (item) => item.src === dukeFourierPoster
   );
@@ -409,17 +484,11 @@ export function CvDocument({ t }: CvDocumentProps) {
           <AppendixFigure item={item} />
         </Keep>
       ))}
-      {dukePairs.map((pair, pairIndex) => (
-        <Keep key={`duke-pair-${pairIndex}`}>
-          {pair.map((item) => (
-            <AppendixFigure
-              key={`${item.alt}-${item.src}`}
-              item={item}
-              compact={pair.length > 1}
-            />
-          ))}
+      {dukeConnected.length > 0 ? (
+        <Keep>
+          <ConnectedAppendix items={dukeConnected} />
         </Keep>
-      ))}
+      ) : null}
       {closingAppendix.map((item) => (
         <Keep key={`closing-${item.src}`}>
           <AppendixFigure item={item} />
