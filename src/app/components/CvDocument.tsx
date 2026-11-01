@@ -12,6 +12,7 @@ import {
   schoolAwardMedia,
 } from "@/data/awardsMedia";
 import cvPortrait from "@/assets/cv-portrait.png";
+import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 
 type CvDocumentProps = {
   t: Translation;
@@ -153,11 +154,16 @@ export function CvDocument({ t }: CvDocumentProps) {
       award: award.award,
       year: award.year,
       alt: alts?.[imageIndex] ?? award.certificateAlt ?? award.title,
-      pairable: award.certificates.length > 1,
+      pairable: award.certificates.length > 1 && src !== dukeFourierPoster,
     }));
   });
-  const soloAppendix = appendixItems.filter((item) => !item.pairable);
+  const soloAppendix = appendixItems.filter(
+    (item) => !item.pairable && item.src !== dukeFourierPoster
+  );
   const dukePairs = chunkPairs(appendixItems.filter((item) => item.pairable));
+  const closingAppendix = appendixItems.filter(
+    (item) => item.src === dukeFourierPoster
+  );
 
   return (
     <div
@@ -409,9 +415,14 @@ export function CvDocument({ t }: CvDocumentProps) {
             <AppendixFigure
               key={`${item.alt}-${item.src}`}
               item={item}
-              compact
+              compact={pair.length > 1}
             />
           ))}
+        </Keep>
+      ))}
+      {closingAppendix.map((item) => (
+        <Keep key={`closing-${item.src}`}>
+          <AppendixFigure item={item} />
         </Keep>
       ))}
     </div>
