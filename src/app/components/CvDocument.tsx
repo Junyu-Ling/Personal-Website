@@ -20,6 +20,57 @@ type CvDocumentProps = {
 const cvFont =
   '"Times New Roman", Times, "Songti SC", SimSun, "Noto Serif SC", serif';
 
+type AppendixItem = {
+  src: string;
+  title: string;
+  award: string;
+  year: string;
+  alt: string;
+  pairable: boolean;
+};
+
+function chunkPairs<T>(items: T[]) {
+  const pairs: T[][] = [];
+  for (let i = 0; i < items.length; i += 2) {
+    pairs.push(items.slice(i, i + 2));
+  }
+  return pairs;
+}
+
+function AppendixFigure({
+  item,
+  compact,
+}: {
+  item: AppendixItem;
+  compact?: boolean;
+}) {
+  return (
+    <div data-cv-figure style={{ marginBottom: compact ? 18 : 0 }}>
+      <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12 }}>
+        {item.alt}
+        <span style={{ fontWeight: 400, color: "#555555" }}>
+          {" "}
+          · {item.title} · {item.year}
+        </span>
+      </p>
+      <img
+        src={item.src}
+        alt={item.alt}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "auto",
+          maxHeight: compact ? 420 : 840,
+          objectFit: "contain",
+          objectPosition: "top center",
+          background: "#ffffff",
+          border: "1px solid #dddddd",
+        }}
+      />
+    </div>
+  );
+}
+
 function Keep({ children }: { children: ReactNode }) {
   return <div data-cv-keep>{children}</div>;
 }
@@ -71,8 +122,11 @@ export function CvDocument({ t }: CvDocumentProps) {
       award: award.award,
       year: award.year,
       alt: alts?.[imageIndex] ?? award.certificateAlt ?? award.title,
+      pairable: award.certificates.length > 1,
     }));
   });
+  const soloAppendix = appendixItems.filter((item) => !item.pairable);
+  const dukePairs = chunkPairs(appendixItems.filter((item) => item.pairable));
 
   return (
     <div
@@ -295,39 +349,28 @@ export function CvDocument({ t }: CvDocumentProps) {
         </Keep>
       ))}
 
-      {appendixItems.map((item, index) => (
+      {soloAppendix.map((item, index) => (
         <Keep key={`${item.title}-${item.src}`}>
-          <div data-cv-figure>
-            {index === 0 ? (
-              <>
-                <SectionRule title={t.cv.appendixTitle} />
-                <p style={{ margin: "0 0 10px", color: "#444444", fontSize: 11.5 }}>
-                  {t.cv.generated}
-                </p>
-              </>
-            ) : null}
-            <p style={{ margin: "0 0 8px", fontWeight: 700, fontSize: 12 }}>
-              {item.alt}
-              <span style={{ fontWeight: 400, color: "#555555" }}>
-                {" "}
-                · {item.title} · {item.year}
-              </span>
-            </p>
-            <img
-              src={item.src}
-              alt={item.alt}
-              style={{
-                display: "block",
-                width: "100%",
-                height: "auto",
-                maxHeight: 840,
-                objectFit: "contain",
-                objectPosition: "top center",
-                background: "#ffffff",
-                border: "1px solid #dddddd",
-              }}
+          {index === 0 ? (
+            <>
+              <SectionRule title={t.cv.appendixTitle} />
+              <p style={{ margin: "0 0 10px", color: "#444444", fontSize: 11.5 }}>
+                {t.cv.generated}
+              </p>
+            </>
+          ) : null}
+          <AppendixFigure item={item} />
+        </Keep>
+      ))}
+      {dukePairs.map((pair, pairIndex) => (
+        <Keep key={`duke-pair-${pairIndex}`}>
+          {pair.map((item) => (
+            <AppendixFigure
+              key={`${item.alt}-${item.src}`}
+              item={item}
+              compact
             />
-          </div>
+          ))}
         </Keep>
       ))}
     </div>
