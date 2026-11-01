@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Mail, MapPin, Briefcase, Music, Sparkles } from "lucide-react";
-import profileImage from "@/assets/profile.png";
+import profileImage from "@/assets/profile.jpg";
 import steinwayPianoLineart from "@/assets/steinway-piano-lineart.png";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { useLanguage } from "@/i18n/LanguageContext";

@@ -163,13 +163,15 @@ type AwardCardProps = {
 
 function fileNameFromSrc(src: string, fallback: string) {
   const path = src.split("?")[0];
-  const last = path.split("/").pop();
-  if (last && last.includes(".")) return last;
+  const last = path.split("/").pop() ?? "";
+  const stem = last
+    .replace(/\.[a-z0-9]+$/i, "")
+    .replace(/-[A-Za-z0-9_-]{8}$/, "");
   const slug = fallback
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
-  return `${slug || "certificate"}.png`;
+  return `${stem || slug || "certificate"}.jpg`;
 }
 
 function AwardCard({

@@ -11,10 +11,10 @@ import {
   offCampusAwardMedia,
   schoolAwardMedia,
 } from "@/data/awardsMedia";
-import cvPortrait from "@/assets/cv-portrait.png";
-import dukeBestVisualDesign from "@/assets/duke-best-visual-design.png";
-import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.png";
-import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
+import cvPortrait from "@/assets/cv-portrait.jpg";
+import dukeBestVisualDesign from "@/assets/duke-best-visual-design.jpg";
+import dukeBestVisualDesignSchools from "@/assets/duke-best-visual-design-schools.jpg";
+import dukeFourierPoster from "@/assets/duke-fourier-poster.jpg";
 
 type CvDocumentProps = {
   t: Translation;

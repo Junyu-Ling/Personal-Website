@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
 import { useInViewOnScrollDown } from "@/app/components/ui/use-in-view-scroll-down";
 import { BookOpen, Calculator, Atom } from "lucide-react";
-import apCsAScore from "@/assets/ap-cs-a-score.png";
-import apPhysics1Score from "@/assets/ap-physics-1-score.png";
-import apPrecalculusScore from "@/assets/ap-precalculus-score.png";
+import apCsAScore from "@/assets/ap-cs-a-score.jpg";
+import apPhysics1Score from "@/assets/ap-physics-1-score.jpg";
+import apPrecalculusScore from "@/assets/ap-precalculus-score.jpg";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const apMeta = [
