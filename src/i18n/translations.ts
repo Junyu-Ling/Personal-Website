@@ -483,8 +483,7 @@ const en = {
       { name: "Physics 2", score: "5" },
     ],
     languagesLabel: "Languages",
-    languages:
-      "Mandarin (native); English (academic writing & speaking; currently preparing for TOEFL)",
+    languages: "Mandarin (native); English (academic writing & speaking)",
     techLabel: "Technical",
     tech: "React, TypeScript, JavaScript, Java, Python, C++, HTML/CSS, WeChat Mini Programs, Figma, mathematical modeling",
     certsLabel: "Certificates",
@@ -499,7 +498,7 @@ const en = {
       ],
       [
         "Built a TOEFL vocabulary flashcard app with spaced review and an embedded AI practice loop.",
-        "Used the product while preparing for TOEFL to deepen retention of each term.",
+        "Designed card-based review to deepen retention of each term.",
       ],
       [
         "Shipped a lightweight GPA calculator that helps students track academic performance.",
@@ -948,7 +947,7 @@ const zh: typeof en = {
       { name: "Physics 2", score: "5" },
     ],
     languagesLabel: "语言",
-    languages: "中文（母语）；英语（学术读写与口语，正在备考托福）",
+    languages: "中文（母语）；英语（学术读写与口语）",
     techLabel: "专业技能",
     tech: "React、TypeScript、JavaScript、Java、Python、C++、HTML/CSS、微信小程序、Figma、数学建模",
     certsLabel: "资格与证书",
@@ -963,7 +962,7 @@ const zh: typeof en = {
       ],
       [
         "开发托福词汇卡片应用，支持间隔复习，并接入内置 AI 练习。",
-        "备考期间实际使用，加深对每个词的记忆。",
+        "通过单词卡片加深对每个词的记忆。",
       ],
       ["上线轻量 GPA 计算器，帮助学生跟踪学业表现。"],
       ["重做经典 2048，补充更流畅的动画、额外模式与更清晰的交互。"],
