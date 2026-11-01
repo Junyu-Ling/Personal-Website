@@ -168,21 +168,18 @@ export function CvDocument({ t }: CvDocumentProps) {
           }}
         >
           <div style={{ minWidth: 0, flex: 1, paddingTop: 2 }}>
-            <a
-              href={SITE_URL}
+            <p
               style={{
-                display: "inline-block",
                 margin: 0,
-                fontSize: 14.5,
+                fontSize: 11,
                 fontWeight: 700,
-                letterSpacing: "0.04em",
-                color: "#111111",
-                textDecoration: "underline",
-                textUnderlineOffset: 3,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#555555",
               }}
             >
-              {SITE_URL.replace(/^https:\/\//, "")}
-            </a>
+              {t.cv.portfolio}
+            </p>
             <h1
               style={{
                 margin: "6px 0 0",
@@ -203,6 +200,19 @@ export function CvDocument({ t }: CvDocumentProps) {
               <span style={{ margin: "0 8px", color: "#bbbbbb" }}>|</span>
               <a href={GITHUB_URL} style={{ color: "#111111" }}>
                 {t.cv.github}
+              </a>
+            </p>
+            <p style={{ margin: "4px 0 0", fontSize: 12 }}>
+              <a
+                href={SITE_URL}
+                style={{
+                  color: "#111111",
+                  fontWeight: 700,
+                  textDecoration: "underline",
+                  textUnderlineOffset: 3,
+                }}
+              >
+                {SITE_URL.replace(/^https:\/\//, "")}
               </a>
             </p>
           </div>
@@ -226,6 +236,47 @@ export function CvDocument({ t }: CvDocumentProps) {
         <SectionRule title={t.cv.objectiveTitle} />
         <p style={{ margin: "0 0 14px", color: "#222222" }}>{t.cv.objective}</p>
       </Keep>
+
+      {cvProjectOrder.map((index, orderIndex) => {
+        const project = t.projects.items[index];
+        const bullets = t.cv.projectBullets[index] ?? [project.description];
+        const role =
+          index === 7 ? t.cv.projectRoleTeam : t.cv.projectRoleSolo;
+        return (
+          <Keep key={project.title}>
+            {orderIndex === 0 ? <SectionRule title={t.cv.projectsTitle} /> : null}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 12,
+                alignItems: "baseline",
+              }}
+            >
+              <p style={{ margin: 0, fontWeight: 700 }}>
+                {project.title}
+                <span style={{ fontWeight: 400, color: "#444444" }}>
+                  {" "}
+                  · {role}
+                </span>
+              </p>
+            </div>
+            <p style={{ margin: "2px 0 4px", fontSize: 11.5 }}>
+              <span style={{ color: "#555555" }}>{t.cv.live}: </span>
+              <a href={projectLinks[index]} style={{ color: "#111111" }}>
+                {projectLinks[index]}
+              </a>
+            </p>
+            <ul style={{ margin: "0 0 12px", paddingLeft: 18 }}>
+              {bullets.map((bullet) => (
+                <li key={bullet} style={{ marginBottom: 2 }}>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </Keep>
+        );
+      })}
 
       <Keep>
         <SectionRule title={t.cv.educationTitle} />
@@ -279,47 +330,6 @@ export function CvDocument({ t }: CvDocumentProps) {
           ))}
         </div>
       </Keep>
-
-      {cvProjectOrder.map((index, orderIndex) => {
-        const project = t.projects.items[index];
-        const bullets = t.cv.projectBullets[index] ?? [project.description];
-        const role =
-          index === 7 ? t.cv.projectRoleTeam : t.cv.projectRoleSolo;
-        return (
-          <Keep key={project.title}>
-            {orderIndex === 0 ? <SectionRule title={t.cv.projectsTitle} /> : null}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: 12,
-                alignItems: "baseline",
-              }}
-            >
-              <p style={{ margin: 0, fontWeight: 700 }}>
-                {project.title}
-                <span style={{ fontWeight: 400, color: "#444444" }}>
-                  {" "}
-                  · {role}
-                </span>
-              </p>
-            </div>
-            <p style={{ margin: "2px 0 4px", fontSize: 11.5 }}>
-              <span style={{ color: "#555555" }}>{t.cv.live}: </span>
-              <a href={projectLinks[index]} style={{ color: "#111111" }}>
-                {projectLinks[index]}
-              </a>
-            </p>
-            <ul style={{ margin: "0 0 12px", paddingLeft: 18 }}>
-              {bullets.map((bullet) => (
-                <li key={bullet} style={{ marginBottom: 2 }}>
-                  {bullet}
-                </li>
-              ))}
-            </ul>
-          </Keep>
-        );
-      })}
 
       <Keep>
         <SectionRule title={t.cv.skillsTitle} />

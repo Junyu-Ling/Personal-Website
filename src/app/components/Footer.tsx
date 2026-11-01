@@ -33,13 +33,17 @@ export function Footer() {
       });
       const element = host.querySelector("[data-cv-root]");
       if (!(element instanceof HTMLElement)) {
-        throw new Error("CV document did not render");
+        throw new Error("Portfolio document did not render");
       }
       const filename =
-        locale === "zh" ? "灵俊宇-简历.pdf" : "Junyu-Ling-CV.pdf";
-      await exportElementToPdf(element, filename, t.hero.name);
+        locale === "zh" ? "灵俊宇-作品集.pdf" : "Junyu-Ling-Portfolio.pdf";
+      await exportElementToPdf(
+        element,
+        filename,
+        `${t.hero.name} · ${t.cv.portfolio}`
+      );
     } catch (error) {
-      console.error("Failed to export CV", error);
+      console.error("Failed to export portfolio", error);
     } finally {
       root.unmount();
       host.remove();
