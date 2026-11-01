@@ -44,15 +44,31 @@ function AppendixFigure({
   item: AppendixItem;
   compact?: boolean;
 }) {
-  const stageHeight = compact ? 400 : 640;
+  const imageMaxHeight = compact ? 360 : 680;
   return (
     <div data-cv-figure style={{ marginBottom: compact ? 16 : 0 }}>
-      <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12 }}>
-        {item.alt}
-        <span style={{ fontWeight: 400, color: "#555555" }}>
-          {" "}
-          · {item.title} · {item.year}
-        </span>
+      <p
+        style={{
+          margin: "0 0 4px",
+          fontWeight: 700,
+          fontSize: 12,
+          lineHeight: 1.35,
+          overflowWrap: "anywhere",
+        }}
+      >
+        {item.award}
+        <span style={{ fontWeight: 400, color: "#555555" }}> · {item.year}</span>
+      </p>
+      <p
+        style={{
+          margin: "0 0 8px",
+          fontSize: 11,
+          color: "#555555",
+          lineHeight: 1.35,
+          overflowWrap: "anywhere",
+        }}
+      >
+        {item.title}
       </p>
       <div
         style={{
@@ -60,13 +76,11 @@ function AppendixFigure({
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          height: compact ? stageHeight : undefined,
-          minHeight: compact ? undefined : 300,
-          maxHeight: stageHeight,
           boxSizing: "border-box",
-          padding: compact ? 10 : 14,
+          padding: compact ? 8 : 12,
           background: "#f7f7f7",
           border: "1px solid #dddddd",
+          overflow: "hidden",
         }}
       >
         <img
@@ -77,7 +91,7 @@ function AppendixFigure({
             width: "auto",
             height: "auto",
             maxWidth: "100%",
-            maxHeight: "100%",
+            maxHeight: imageMaxHeight,
             objectFit: "contain",
             objectPosition: "center",
             background: "#ffffff",

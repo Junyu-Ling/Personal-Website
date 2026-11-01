@@ -60,23 +60,25 @@ function overflows(page: HTMLElement) {
 function fitBlockToPage(block: HTMLElement, page: HTMLElement) {
   const images = Array.from(block.querySelectorAll("img"));
   let guard = 0;
-  while (overflows(page) && guard < 12 && images.length > 0) {
+  while (overflows(page) && guard < 16 && images.length > 0) {
     const overflow = Math.max(8, page.scrollHeight - page.clientHeight);
     for (const img of images) {
       const current = img.getBoundingClientRect().height || img.offsetHeight;
-      const next = Math.max(280, Math.floor(current - overflow - 16));
+      const next = Math.max(240, Math.floor(current - overflow - 24));
       img.style.maxHeight = `${next}px`;
       img.style.width = "auto";
+      img.style.height = "auto";
       img.style.maxWidth = "100%";
+      img.style.objectFit = "contain";
       img.style.display = "block";
       img.style.marginLeft = "auto";
       img.style.marginRight = "auto";
       const stage = img.parentElement;
       if (stage instanceof HTMLElement) {
-        const stageHeight = Math.max(next + 24, 300);
-        stage.style.height = `${stageHeight}px`;
-        stage.style.maxHeight = `${stageHeight}px`;
+        stage.style.height = "auto";
+        stage.style.maxHeight = "none";
         stage.style.minHeight = "0";
+        stage.style.overflow = "hidden";
       }
     }
     guard += 1;
