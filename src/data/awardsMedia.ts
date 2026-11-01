@@ -9,7 +9,7 @@ import dukeFourierPoster from "@/assets/duke-fourier-poster.png";
 import apCalculusStarCertificate from "@/assets/ap-calculus-star-certificate.png";
 import aiMeetsHeritageSugarSilkAward from "@/assets/ai-meets-heritage-sugar-silk-award.jpg";
 import wechatMiniprogramCarbonFootprintAward from "@/assets/wechat-miniprogram-carbon-footprint-award.png";
-import aigcShortVideoThirdPrize from "@/assets/aigc-short-video-third-prize.png";
+import aigcMultimediaThirdPrize from "@/assets/aigc-multimedia-third-prize.jpg";
 import physicsBowlCertificate from "@/assets/physicsbowl-2026-certificate.jpg";
 
 export type AwardMedia = {
@@ -60,7 +60,7 @@ export const offCampusAwardMedia: AwardMedia[] = [
   },
   {
     year: "2025",
-    certificates: [aigcShortVideoThirdPrize],
+    certificates: [aigcMultimediaThirdPrize],
   },
   {
     year: "2025",

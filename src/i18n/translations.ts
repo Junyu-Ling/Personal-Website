@@ -326,13 +326,14 @@ const en = {
           "Honor certificate — When AI Meets Intangible Cultural Heritage, Second Prize, The Chinese Soul in Sugar Silk",
       },
       {
-        title: "Youth AI Innovation Competition (AIGC)",
-        organization: "China–Shanghai AIGC Program",
+        title:
+          "8th China·Shanghai Youth AI Innovation Competition — AIGC Multimedia Design",
+        organization: "Shanghai Youth AI Innovation Competition Committee",
         description:
-          "Submitted an independent AIGC short film on future cities and received Third Prize.",
-        award: "Individual Third Prize",
+          "Entered the AIGC Multimedia Works Design activity (individual, high school) with an independent short film on future cities, and received Third Prize.",
+        award: "Individual Third Prize — High School",
         certificateAlt:
-          "Youth AI Innovation Competition (AIGC) — High School Third Prize award list",
+          "Certificate — 8th China·Shanghai Youth AI Innovation Competition, AIGC Multimedia Design, Individual High School Third Prize",
       },
       {
         title: "HiMCM — High School Mathematical Contest in Modeling",
@@ -799,11 +800,13 @@ const zh: typeof en = {
         certificateAlt: "荣誉证书 — 当 AI 遇见非遗「糖丝里的中国魂」二等奖",
       },
       {
-        title: "青年 AI 创新大赛 (AIGC)",
-        organization: "中国—上海 AIGC 项目",
-        description: "提交独立制作的未来城市 AIGC 短片，获个人三等奖。",
-        award: "个人三等奖",
-        certificateAlt: "青年 AI 创新大赛 (AIGC) — 高中组三等奖获奖公示",
+        title: "中国·上海第八届青少年人工智能创新大赛 — AIGC 多媒体作品设计",
+        organization: "上海市青少年人工智能创新大赛组委会",
+        description:
+          "参加全国邀请赛特别活动「AIGC 多媒体作品设计」（个人赛·高中组），提交独立制作的未来城市短片，获三等奖。",
+        award: "个人赛（高中组）三等奖",
+        certificateAlt:
+          "证书 — 中国·上海第八届青少年人工智能创新大赛 AIGC 多媒体作品设计，个人赛高中组三等奖",
       },
       {
         title: "HiMCM 高中数学建模竞赛",
