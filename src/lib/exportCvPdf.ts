@@ -64,13 +64,20 @@ function fitBlockToPage(block: HTMLElement, page: HTMLElement) {
     const overflow = Math.max(8, page.scrollHeight - page.clientHeight);
     for (const img of images) {
       const current = img.getBoundingClientRect().height || img.offsetHeight;
-      const next = Math.max(160, Math.floor(current - overflow - 16));
+      const next = Math.max(280, Math.floor(current - overflow - 16));
       img.style.maxHeight = `${next}px`;
       img.style.width = "auto";
       img.style.maxWidth = "100%";
       img.style.display = "block";
       img.style.marginLeft = "auto";
       img.style.marginRight = "auto";
+      const stage = img.parentElement;
+      if (stage instanceof HTMLElement) {
+        const stageHeight = Math.max(next + 24, 300);
+        stage.style.height = `${stageHeight}px`;
+        stage.style.maxHeight = `${stageHeight}px`;
+        stage.style.minHeight = "0";
+      }
     }
     guard += 1;
   }

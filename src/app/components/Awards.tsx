@@ -269,7 +269,11 @@ function AwardCard({
                   {expanded && (
                     <motion.div
                       id={`${sectionKey}-images-${index}`}
-                      className="mt-4 space-y-3 w-full max-w-full md:max-w-xl lg:max-w-2xl xl:max-w-3xl overflow-hidden"
+                      className={`mt-4 overflow-hidden ${
+                        images.length > 1
+                          ? "grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl"
+                          : "max-w-xl"
+                      }`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -278,18 +282,26 @@ function AwardCard({
                       {images.map((image, imageIndex) => (
                         <div
                           key={imageIndex}
-                          className="rounded-xl overflow-hidden border border-gray-200/80 bg-gray-50 shadow-sm"
+                          className="rounded-xl overflow-hidden border border-gray-200/80 bg-white shadow-sm"
                         >
                           <button
                             type="button"
                             onClick={() => setLightboxIndex(imageIndex)}
                             className="w-full hover:ring-2 hover:ring-violet-300/50 transition-all text-left"
                           >
-                            <img
-                              src={image.src}
-                              alt={image.alt}
-                              className="block w-full h-auto max-w-full object-contain"
-                            />
+                            <div
+                              className={`flex items-center justify-center bg-slate-50 px-3 py-3 ${
+                                images.length > 1
+                                  ? "h-52 sm:h-56"
+                                  : "h-64 sm:h-72 md:h-80"
+                              }`}
+                            >
+                              <img
+                                src={image.src}
+                                alt={image.alt}
+                                className="max-h-full max-w-full w-auto h-auto object-contain"
+                              />
+                            </div>
                           </button>
                           <div className="flex justify-end px-3 py-2 border-t border-gray-200/80 bg-white/80">
                             <a

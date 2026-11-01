@@ -44,8 +44,9 @@ function AppendixFigure({
   item: AppendixItem;
   compact?: boolean;
 }) {
+  const stageHeight = compact ? 400 : 640;
   return (
-    <div data-cv-figure style={{ marginBottom: compact ? 18 : 0 }}>
+    <div data-cv-figure style={{ marginBottom: compact ? 16 : 0 }}>
       <p style={{ margin: "0 0 6px", fontWeight: 700, fontSize: 12 }}>
         {item.alt}
         <span style={{ fontWeight: 400, color: "#555555" }}>
@@ -53,20 +54,36 @@ function AppendixFigure({
           · {item.title} · {item.year}
         </span>
       </p>
-      <img
-        src={item.src}
-        alt={item.alt}
+      <div
         style={{
-          display: "block",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           width: "100%",
-          height: "auto",
-          maxHeight: compact ? 420 : 840,
-          objectFit: "contain",
-          objectPosition: "top center",
-          background: "#ffffff",
+          height: compact ? stageHeight : undefined,
+          minHeight: compact ? undefined : 300,
+          maxHeight: stageHeight,
+          boxSizing: "border-box",
+          padding: compact ? 10 : 14,
+          background: "#f7f7f7",
           border: "1px solid #dddddd",
         }}
-      />
+      >
+        <img
+          src={item.src}
+          alt={item.alt}
+          style={{
+            display: "block",
+            width: "auto",
+            height: "auto",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain",
+            objectPosition: "center",
+            background: "#ffffff",
+          }}
+        />
+      </div>
     </div>
   );
 }
