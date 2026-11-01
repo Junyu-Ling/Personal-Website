@@ -488,7 +488,7 @@ const en = {
     tech: "React, TypeScript, JavaScript, Java, Python, C++, HTML/CSS, WeChat Mini Programs, Figma, mathematical modeling",
     certsLabel: "Certificates",
     certsHighlight:
-      "IMMC Outstanding Award (O Award); PhysicsBowl National Honorable Award (Division 2); WeChat Mini-Program Global Third Prize; AP Calculus Star; AMC 12 global top 25%. Scans are attached.",
+      "IMMC Outstanding Award (O Award); PhysicsBowl National Honorable Award (Division 2); WeChat Mini-Program Global Third Prize; AP Calculus Star; AMC 12 global top 25%; Duke Math Meet China (Top 40% and Best Visual Design for the Fourier: Math & Music poster). Scans are attached.",
     projectRoleSolo: "Independent Developer",
     projectRoleTeam: "Core Developer (Team)",
     projectBullets: [
@@ -952,7 +952,7 @@ const zh: typeof en = {
     tech: "React、TypeScript、JavaScript、Java、Python、C++、HTML/CSS、微信小程序、Figma、数学建模",
     certsLabel: "资格与证书",
     certsHighlight:
-      "IMMC 国际特等奖（O 奖）；PhysicsBowl National Honorable Award（Division 2）；微信小程序全球三等奖；AP 微积分学科之星；AMC 12 全球前 25%。证书扫描件附后。",
+      "IMMC 国际特等奖（O 奖）；PhysicsBowl National Honorable Award（Division 2）；微信小程序全球三等奖；AP 微积分学科之星；AMC 12 全球前 25%；Duke Math Meet China（前 40%，Fourier: Math & Music 海报最佳视觉设计）。证书扫描件附后。",
     projectRoleSolo: "独立开发",
     projectRoleTeam: "核心开发（团队）",
     projectBullets: [

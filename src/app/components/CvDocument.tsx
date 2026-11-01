@@ -283,10 +283,15 @@ export function CvDocument({ t }: CvDocumentProps) {
       </Keep>
       {honors.map((item) => (
         <Keep key={item.title}>
-          <p style={{ margin: "0 0 6px", paddingLeft: 2 }}>
+          <p style={{ margin: "0 0 2px", paddingLeft: 2 }}>
             <strong>{item.award}</strong>
             {` · ${item.title} · ${item.organization} (${item.year})`}
           </p>
+          {item.description ? (
+            <p style={{ margin: "0 0 8px", paddingLeft: 2, color: "#333333" }}>
+              {item.description}
+            </p>
+          ) : null}
         </Keep>
       ))}
 
@@ -302,10 +307,10 @@ export function CvDocument({ t }: CvDocumentProps) {
               </>
             ) : null}
             <p style={{ margin: "0 0 8px", fontWeight: 700, fontSize: 12 }}>
-              {item.title}
+              {item.alt}
               <span style={{ fontWeight: 400, color: "#555555" }}>
                 {" "}
-                · {item.award} · {item.year}
+                · {item.title} · {item.year}
               </span>
             </p>
             <img
