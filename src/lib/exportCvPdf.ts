@@ -130,6 +130,53 @@ function addPageLinks(
   }
 }
 
+const MAX_PDF_BYTES = 1000 * 1000;
+const JPEG_QUALITIES = [0.78, 0.7, 0.62, 0.54, 0.46, 0.4, 0.34];
+const CANVAS_SCALES = [1, 0.88, 0.76, 0.64];
+
+function scaleCanvas(canvas: HTMLCanvasElement, factor: number) {
+  if (factor >= 0.999) return canvas;
+  const next = document.createElement("canvas");
+  next.width = Math.max(1, Math.round(canvas.width * factor));
+  next.height = Math.max(1, Math.round(canvas.height * factor));
+  const ctx = next.getContext("2d");
+  if (!ctx) return canvas;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, next.width, next.height);
+  ctx.drawImage(canvas, 0, 0, next.width, next.height);
+  return next;
+}
+
+function buildPdf(
+  pages: HTMLElement[],
+  canvases: HTMLCanvasElement[],
+  quality: number
+) {
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4",
+    compress: true,
+  });
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  for (let i = 0; i < canvases.length; i += 1) {
+    const img = canvases[i].toDataURL("image/jpeg", quality);
+    if (i > 0) pdf.addPage();
+    pdf.addImage(img, "JPEG", 0, 0, pageWidth, pageHeight);
+    addPageLinks(pdf, pages[i], pageWidth, pageHeight);
+  }
+
+  return pdf;
+}
+
+function pdfFits(pdf: jsPDF) {
+  return pdf.output("blob").size <= MAX_PDF_BYTES;
+}
+
 export async function exportElementToPdf(
   element: HTMLElement,
   filename: string,
@@ -147,27 +194,44 @@ export async function exportElementToPdf(
     throw new Error("CV pagination produced no pages");
   }
 
-  const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-
-  for (let i = 0; i < pages.length; i += 1) {
-    const page = pages[i];
-    const canvas = await html2canvas(page, {
-      scale: 1.6,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-      width: CV_PAGE_WIDTH_PX,
-      height: CV_PAGE_HEIGHT_PX,
-      windowWidth: CV_PAGE_WIDTH_PX,
-      windowHeight: CV_PAGE_HEIGHT_PX,
-    });
-    const img = canvas.toDataURL("image/jpeg", 0.92);
-    if (i > 0) pdf.addPage();
-    pdf.addImage(img, "JPEG", 0, 0, pageWidth, pageHeight);
-    addPageLinks(pdf, page, pageWidth, pageHeight);
+  const captured: HTMLCanvasElement[] = [];
+  for (const page of pages) {
+    captured.push(
+      await html2canvas(page, {
+        scale: 1.1,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+        width: CV_PAGE_WIDTH_PX,
+        height: CV_PAGE_HEIGHT_PX,
+        windowWidth: CV_PAGE_WIDTH_PX,
+        windowHeight: CV_PAGE_HEIGHT_PX,
+      })
+    );
   }
 
-  pdf.save(filename);
+  let chosen: jsPDF | null = null;
+
+  search: for (const canvasScale of CANVAS_SCALES) {
+    const canvases = captured.map((canvas) => scaleCanvas(canvas, canvasScale));
+    for (const quality of JPEG_QUALITIES) {
+      const candidate = buildPdf(pages, canvases, quality);
+      if (pdfFits(candidate)) {
+        chosen = candidate;
+        break search;
+      }
+    }
+  }
+
+  for (let factor = 0.55; !chosen && factor >= 0.38; factor -= 0.07) {
+    const canvases = captured.map((canvas) => scaleCanvas(canvas, factor));
+    const candidate = buildPdf(pages, canvases, 0.3);
+    if (pdfFits(candidate)) chosen = candidate;
+  }
+
+  if (!chosen) {
+    throw new Error("Portfolio PDF could not be compressed under 1 MB");
+  }
+
+  chosen.save(filename);
 }
