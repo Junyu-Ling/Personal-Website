@@ -4,6 +4,7 @@ import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 const railSectionIds = [
   "about",
+  "piano",
   "journey",
   "study-materials",
   "awards",
@@ -28,6 +29,7 @@ export function PageProgressRail() {
 
   const labels: Record<RailSectionId, string> = {
     about: t.nav.about,
+    piano: t.nav.piano,
     journey: t.nav.journey,
     "study-materials": t.nav.studyMaterials,
     awards: t.nav.awards,
@@ -39,7 +41,7 @@ export function PageProgressRail() {
       className="fixed right-5 xl:right-8 top-1/2 z-[85] hidden -translate-y-1/2 lg:block"
       aria-label={t.nav.sections}
     >
-      <div className="relative h-72 w-5">
+      <div className="relative h-80 w-5">
         <div
           className="absolute inset-y-0 right-0 w-0.5 rounded-full bg-gray-300"
           aria-hidden="true"

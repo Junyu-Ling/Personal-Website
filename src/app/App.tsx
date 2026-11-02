@@ -1,5 +1,6 @@
 import { Hero } from "@/app/components/Hero";
 import { About } from "@/app/components/About";
+import { Piano } from "@/app/components/Piano";
 import { CodingJourney } from "@/app/components/CodingJourney";
 import { StudyMaterials } from "@/app/components/StudyMaterials";
 import { Awards } from "@/app/components/Awards";
@@ -18,6 +19,7 @@ export default function App() {
       <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
         <Hero />
         <About />
+        <Piano />
         <CodingJourney />
         <StudyMaterials />
         <Awards />
