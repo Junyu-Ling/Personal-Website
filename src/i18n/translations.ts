@@ -44,7 +44,6 @@ const en = {
     brand: "Junyu Ling",
     home: "Home",
     about: "About",
-    piano: "Piano",
     journey: "Journey",
     achievements: "Academics",
     studyMaterials: "Materials",
@@ -142,16 +141,6 @@ const en = {
     music: "Music",
     musicValue: "ABRSM Piano Grade 7 | Learning Clarinet",
     profileAlt: "Junyu Ling",
-  },
-  piano: {
-    badge: "Interactive Studio",
-    title: "Steinway Grand",
-    subtitle:
-      "A playable 3D concert grand. Click any key to hear its pitch, drag across the keyboard for a glissando, or use A–L on your computer starting from middle C.",
-    hint: "Click a key · A–L starts at middle C",
-    note: "Last note",
-    idleNote: "—",
-    loading: "Preparing the piano…",
   },
   journey: {
     badge: "Evolution of Skills",
@@ -559,7 +548,6 @@ const zh: typeof en = {
     brand: "灵俊宇",
     home: "首页",
     about: "关于",
-    piano: "钢琴",
     journey: "编程历程",
     achievements: "学术成绩",
     studyMaterials: "学习资料",
@@ -642,16 +630,6 @@ const zh: typeof en = {
     music: "音乐",
     musicValue: "英皇钢琴七级 · 学习中：单簧管",
     profileAlt: "灵俊宇",
-  },
-  piano: {
-    badge: "互动琴房",
-    title: "斯坦威风格三角钢琴",
-    subtitle:
-      "可演奏的 3D 音乐会三角钢琴。点击琴键即可发声，按住拖过键盘可滑奏；电脑键盘 A–L 从中央 C 起对应白键与黑键。",
-    hint: "点击琴键发声 · A–L 从中央 C 起",
-    note: "当前音符",
-    idleNote: "—",
-    loading: "正在调琴…",
   },
   journey: {
     badge: "技能演进",

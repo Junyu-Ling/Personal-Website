@@ -7,7 +7,6 @@ import { LanguageToggle } from "@/app/components/LanguageToggle";
 const sectionIds = [
   "home",
   "about",
-  "piano",
   "journey",
   "study-materials",
   "awards",
@@ -21,7 +20,6 @@ export function SiteNav() {
 
   const links = [
     { id: "about", label: t.nav.about },
-    { id: "piano", label: t.nav.piano },
     { id: "journey", label: t.nav.journey },
     { id: "study-materials", label: t.nav.studyMaterials },
     { id: "awards", label: t.nav.awards },
